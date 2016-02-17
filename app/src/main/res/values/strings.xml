@@ -1,0 +1,48 @@
+<resources>
+    <string name="app_name">Расчет отчислений</string>
+    <string name="action_settings">Настройки</string>
+    <string name="action_addPers">Добавить</string>
+    <string name="action_addPersSave">Сохранить</string>
+    <string name="action_PersEdit">Изменить</string>
+    <string name="action_savePersToDB">Сохранить список</string>
+    <string name="action_newOrg">Новая организация</string>
+    <string name="action_editOrg">Изменить организацию</string>
+    <string name="action_saveOrg">Сохранить</string>
+    <string name="action_cancelOrg">Отмена</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="toastAddPers">Все поля должны быть заполнены</string>
+
+    <string name="dialog_1">Dialog 1</string>
+    <string name="dialog_2">Организация</string>
+    <string name="dialog_2_text">Сохранить изменения?</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+    <string name="maybe">Maybe</string>
+
+    <string name="section1">Организация</string>
+    <string name="section2">Параметры</string>
+    <string name="section3">Сотрудники</string>
+
+    <string name="sectionP1">Инфо</string>
+    <string name="sectionP2">Отпуск</string>
+
+    <string name="org_txt1">Выбранная организация</string>
+    <string name="org_edit1">Название</string>
+    <string name="org_txt2">Список организаций</string>
+    <string name="org_spOrg">Список</string>
+
+    <string name="par_txt1">Срок расчета</string>
+    <string name="par_year_hint">Год</string>
+    <string name="par_month_hint">Месяц</string>
+    <string name="par_txt2">Налоговые ставки</string>
+    <string name="par_txt3">НДФЛ,%</string>
+    <string name="par_txt4">ПФР,%</string>
+    <string name="par_txt5">ФФОМС,%</string>
+    <string name="par_txt6">ФСС,%</string>
+    <string name="par_ndfl_hint">13</string>
+    <string name="par_pfr_hint">22</string>
+    <string name="par_ffoms_hint">5,10</string>
+    <string name="par_fss_hint">2,90</string>
+    <string name="title_activity_pers">Сотрудник</string>
+
+</resources>

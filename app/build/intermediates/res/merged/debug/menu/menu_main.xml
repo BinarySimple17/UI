@@ -1,0 +1,77 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" tools:context=".Main">
+    <group
+        android:id="@+id/grMain">
+    <item
+        android:id="@+id/action_settings"
+        android:title="@string/action_settings"
+        android:icon="@drawable/ic_calc"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom" />
+    </group>
+
+    <group
+        android:id="@+id/grOrg">
+        <item
+            android:id="@+id/action_newOrg"
+            android:title="@string/action_newOrg"
+            android:icon="@drawable/ic_neworg"
+            android:orderInCategory="100"
+            app:showAsAction="ifRoom" />
+        <item
+            android:id="@+id/action_editOrg"
+            android:title="@string/action_editOrg"
+            android:icon="@drawable/ic_editorg"
+            android:orderInCategory="100"
+            app:showAsAction="ifRoom" />
+        <item
+            android:id="@+id/action_saveOrg"
+            android:title="@string/action_saveOrg"
+            android:icon="@drawable/ic_save"
+            android:orderInCategory="100"
+            app:showAsAction="ifRoom" />
+        <item
+            android:id="@+id/action_cancelOrg"
+            android:title="@string/action_cancelOrg"
+            android:icon="@drawable/ic_cancelorg"
+            android:orderInCategory="100"
+            app:showAsAction="ifRoom" />
+    </group>
+
+    <group
+        android:id="@+id/grPers">
+        <item
+            android:id="@+id/action_savePersToDB"
+            android:title="@string/action_savePersToDB"
+            android:icon="@drawable/ic_save"
+            android:orderInCategory="100"
+            app:showAsAction="ifRoom" />
+
+        <item
+            android:id="@+id/action_addPers"
+            android:title="@string/action_addPers"
+            android:icon="@drawable/ic_add"
+            android:orderInCategory="100"
+            app:showAsAction="ifRoom" />
+
+        <item
+            android:id="@+id/action_editPers"
+            android:title="@string/action_PersEdit"
+            android:icon="@drawable/ic_editorg"
+            android:orderInCategory="100"
+            app:showAsAction="ifRoom" />
+    </group>
+
+    <group
+        android:id="@+id/grPersAdd">
+        <item
+        android:id="@+id/action_savePers"
+        android:title="@string/action_addPersSave"
+        android:icon="@drawable/ic_save"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom"/>
+    </group>
+
+</menu>
+<!-- From: file:/C:/android5/projects/UI/app/src/main/res/menu/menu_main.xml -->
