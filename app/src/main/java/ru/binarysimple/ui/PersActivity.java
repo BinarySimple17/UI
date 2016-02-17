@@ -25,6 +25,7 @@ public class PersActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     FragmentPersInfo fragmentPersInfo;
     Menu menu;
+    Person person;
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
@@ -113,13 +114,13 @@ public class PersActivity extends AppCompatActivity {
         View rootView = inflater.inflate(R.layout.fragment_pers_info, container, false);
 
         PersActivity persActivity = (PersActivity) this.getActivity();
-        Person person = persActivity.getPersonData();
+        persActivity.person = persActivity.getPersonData();
         EditText etFio = (EditText) rootView.findViewById(R.id.etFIO);
         EditText etPosition = (EditText) rootView.findViewById(R.id.etPosition);
         EditText etSalary = (EditText) rootView.findViewById(R.id.etSalary);
-        etFio.setText(person.name);
-        etPosition.setText(person.position);
-        etSalary.setText(person.salary);
+        etFio.setText(persActivity.person.name);
+        etPosition.setText(persActivity.person.position);
+        etSalary.setText(persActivity.person.salary);
 
         return rootView;
     }
@@ -223,14 +224,15 @@ public class PersActivity extends AppCompatActivity {
             }
 
             Intent intent = new Intent();
-
             intent.putExtra("name", etFio.getText().toString());
             intent.putExtra("position",etPosition.getText().toString());
             intent.putExtra("salary",etSalary.getText().toString());
-            intent.putExtra("id",-1);
-            //TODO put here id of person from DB or -1 if new person
-            // TODO add another result codes
-            setResult(Main.RESULTCODE_PERS_ADDED, intent);
+            //put here id of person from DB or -1 if new person
+            intent.putExtra("id", this.person.id);
+            if (this.person.id > -1) {
+                setResult(Main.RESULTCODE_PERS_EDITED, intent);
+            }
+            else setResult(Main.RESULTCODE_PERS_ADDED, intent);
 
             finish();
         }

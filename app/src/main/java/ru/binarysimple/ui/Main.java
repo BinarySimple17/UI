@@ -378,7 +378,7 @@ public class Main extends AppCompatActivity {
         }
 
         if (item.getItemId()==R.id.action_editPers) {
-            //TODO edit persons to db
+
             Log.d(LOG_TAG, "menu edit pressed");
             fragmentPers.editPerson();
             menu.setGroupVisible(R.id.grMain, false);
@@ -411,7 +411,7 @@ public class Main extends AppCompatActivity {
             etCompName.setEnabled(false);
         }
         if (item.getItemId()==R.id.action_saveOrg) {
-            //TODO set saveOrg routine
+
             /**
              * если полеввода заблокировано то выход+
              * есди поле ввода пустое то выход+
@@ -472,10 +472,11 @@ public class Main extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //TODO add another result codes
-        if (data == null) {return;}
-        Log.d(LOG_TAG, "Activity result");
-        fragmentPers.addPers(data);
+        if (data == null) return;
+        Log.d(LOG_TAG, "Activity result " + resultCode);
+        if (resultCode == RESULTCODE_PERS_ADDED) fragmentPers.addPers(data);
+        if (resultCode == RESULTCODE_PERS_EDITED) fragmentPers.saveEditedPers(data);
+
     }
 
     /**
@@ -658,15 +659,16 @@ public class Main extends AppCompatActivity {
             /**
              * fill spinner
              */
+            sPref = getActivity().getSharedPreferences("mPref", MODE_PRIVATE); // get preferences
             Main main= ((Main) getActivity());
-            main.setSpinner(rootView,-1);
+            main.setSpinner(rootView,sPref.getInt("sp_id",-1));
 
             /**
              * fill etCompName from Preferences or set it to default value
              */
             etCompName = (EditText) rootView.findViewById(R.id.etCompName); //find object edittext
             spOrgs = (Spinner) rootView.findViewById(R.id.spOrgs); //find spinner orgs
-            sPref = getActivity().getSharedPreferences("mPref", MODE_PRIVATE); // get preferences
+
             name = sPref.getString("cn","-1");
             if (name.equals("-1")){
                 etCompName.setHint("Название");
@@ -683,7 +685,8 @@ public class Main extends AppCompatActivity {
                 public void onItemSelected(AdapterView<?> parent, View view,
                                            int position, long id) {
                     Log.d(LOG_TAG, " spinner select "+position);
-                    Integer c_id=-1;
+                    sPref = getActivity().getSharedPreferences("mPref", MODE_PRIVATE); // get preferences
+                    Integer c_id = sPref.getInt("c_id", -1);
                     String name = parent.getSelectedItem().toString();
                     etCompName.setText(name);
                     //dbHelper = new DBHelper(getActivity());
@@ -697,6 +700,10 @@ public class Main extends AppCompatActivity {
                       //  c = db.rawQuery(query, null);
                         if (c.getCount()>0) {
                             c.moveToFirst();
+                            if (c_id != c.getInt(c.getColumnIndex("_id"))) {
+                                ((Main) getActivity()).fragmentPers.persons.clear();//clear persons array if organisation was changed
+                            };
+
                             c_id=c.getInt(c.getColumnIndex("_id"));
                         }
                         //db.close();
@@ -757,13 +764,30 @@ public class Main extends AppCompatActivity {
                                     data.getStringExtra("position"),
                                     data.getStringExtra("salary"),
                                     data.getIntExtra("id", -1),
-                                    data.getIntExtra("comp_id", c_id)));//TODO set here comp_id from pref
-                //TODO check here id of person
+                                    data.getIntExtra("comp_id", c_id)));
+
                 myAdapter.notifyDataSetChanged();
                 lvMain.setAdapter(myAdapter);}
                 catch (Exception e){
                 Log.d(LOG_TAG, " addPers exception");
             }
+        }
+
+        public void saveEditedPers (Intent data){
+            Log.d(LOG_TAG, "Save edited person");
+            View rootView = this.getView();
+            if (data==null)return;
+            sPref = getActivity().getSharedPreferences("mPref", MODE_PRIVATE); // get preferences
+            Integer c_id = sPref.getInt("c_id", -1);
+            int i = lvMain.getCheckedItemPosition();
+            persons.set(i, new Person(data.getStringExtra("name"),
+                                     data.getStringExtra("position"),
+                                     data.getStringExtra("salary"),
+                                     data.getIntExtra("id", -1),
+                                     data.getIntExtra("comp_id", c_id)));
+            myAdapter.notifyDataSetChanged();
+            lvMain.setAdapter(myAdapter);
+
         }
 
         public void savePersonsListToDB(){
@@ -775,20 +799,22 @@ public class Main extends AppCompatActivity {
                 Log.d(LOG_TAG, "name = " +persons.get(i).name);
                 Log.d(LOG_TAG, "id = " +persons.get(i).id);
 
+                ContentValues cv = new ContentValues();
+                cv.put("comp_id", persons.get(i).comp_id);
+                cv.put("name", persons.get(i).name);
+                cv.put("pos", persons.get(i).position);
+                cv.put("sal", persons.get(i).salary);
+                WorkDB workDB = new WorkDB();
+
                 if (persons.get(i).id<0){
                     //sPref = getActivity().getSharedPreferences("mPref", MODE_PRIVATE); // get preferences
                     //Integer c_id = sPref.getInt("c_id", -1);
-
-                    ContentValues cv = new ContentValues();
-                    cv.put("comp_id", persons.get(i).comp_id);
-                    cv.put("name", persons.get(i).name);
-                    cv.put("pos", persons.get(i).position);
-                    cv.put("sal", persons.get(i).salary);
-                    WorkDB workDB = new WorkDB();
                     workDB.insertRecord(getActivity(), TABLE_NAME, cv); //new insert to db*/
                 }
                 else {
                     //TODO update record in DB
+                    workDB.updateRecord(getActivity(),TABLE_NAME,cv,persons.get(i).id.toString());
+
                 }
             }
         }
@@ -805,17 +831,17 @@ public class Main extends AppCompatActivity {
             if (c != null){
                 if (c.getCount()>0){
                     //Toast.makeText(getActivity(), "Here's persons in da base", Toast.LENGTH_SHORT).show();
-                    //TODO fill persons
+
                     c.moveToFirst();
                     for (int i=0; i<c.getCount();i++){
-                        //TODO errors here
+
                     Person person = new Person(c.getString(c.getColumnIndex("name")),
                                                c.getString(c.getColumnIndex("pos")),
                                                c.getString(c.getColumnIndex("sal")),
-                                               c.getInt(c.getColumnIndex("id")),
+                                               c.getInt(c.getColumnIndex("_id")),
                                                c.getInt(c.getColumnIndex("comp_id")));
                     persons.add(i,person);
-
+                    c.move(1);
                     }
                 }}
             c.close();
@@ -872,7 +898,7 @@ public class Main extends AppCompatActivity {
             myAdapter = new MySimpleArrayAdapter(rootView.getContext(), persons);
             lvMain.setAdapter(myAdapter);
 
-        //TODO load pers list from DB
+
             loadPersonsListFromDB();
        /*     sPref = getActivity().getSharedPreferences("mPref", MODE_PRIVATE); // get preferences
             Integer c_id = sPref.getInt("c_id", -1);
