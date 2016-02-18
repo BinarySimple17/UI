@@ -9,11 +9,11 @@
         <dex dex="C:\android5\projects\UI\app\build\intermediates\pre-dexed\debug\classes-aa114987d81a67aa2ed44d5b87ceb8c09075116c.jar" />
     </item>
     <item
-        jar="C:\android5\sdk\extras\android\m2repository\com\android\support\support-annotations\23.0.1\support-annotations-23.0.1.jar"
+        jar="C:\android5\projects\UI\app\build\intermediates\exploded-aar\com.android.support\design\23.0.1\jars\classes.jar"
         jumboMode="false"
         revision="23.0.1"
-        sha1="1fce89a6428c51467090d7f424e4c9c3dbd55f7e">
-        <dex dex="C:\android5\projects\UI\app\build\intermediates\pre-dexed\debug\support-annotations-23.0.1-d3d0e61367b11a6cddd9432a660431fe893a676a.jar" />
+        sha1="e5c61a3169221a89654ffcaaed47bba51cf071ad">
+        <dex dex="C:\android5\projects\UI\app\build\intermediates\pre-dexed\debug\classes-1c9895456cac8d390af829237dc601c7ebdfc1e5.jar" />
     </item>
     <item
         jar="C:\android5\projects\UI\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\jars\libs\internal_impl-23.0.1.jar"
@@ -23,18 +23,18 @@
         <dex dex="C:\android5\projects\UI\app\build\intermediates\pre-dexed\debug\internal_impl-23.0.1-07ea10b91444baf1df46e230c3c20c93a805ebef.jar" />
     </item>
     <item
-        jar="C:\android5\projects\UI\app\build\intermediates\exploded-aar\com.android.support\design\23.0.1\jars\classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="e5c61a3169221a89654ffcaaed47bba51cf071ad">
-        <dex dex="C:\android5\projects\UI\app\build\intermediates\pre-dexed\debug\classes-1c9895456cac8d390af829237dc601c7ebdfc1e5.jar" />
-    </item>
-    <item
         jar="C:\android5\projects\UI\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\jars\classes.jar"
         jumboMode="false"
         revision="23.0.1"
         sha1="c31e21b53ff2f74664e498248d01453a32e32d48">
         <dex dex="C:\android5\projects\UI\app\build\intermediates\pre-dexed\debug\classes-10b1f0159e5ce727dc46eed17f34481ccdbc0cc2.jar" />
+    </item>
+    <item
+        jar="C:\android5\sdk\extras\android\m2repository\com\android\support\support-annotations\23.0.1\support-annotations-23.0.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="1fce89a6428c51467090d7f424e4c9c3dbd55f7e">
+        <dex dex="C:\android5\projects\UI\app\build\intermediates\pre-dexed\debug\support-annotations-23.0.1-d3d0e61367b11a6cddd9432a660431fe893a676a.jar" />
     </item>
 
 </items>

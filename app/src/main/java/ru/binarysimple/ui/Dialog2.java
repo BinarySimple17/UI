@@ -65,7 +65,6 @@ public class Dialog2 extends DialogFragment implements OnClickListener {
     }
 
     public  void loadDef(){
-;
     }
 
     public void onClick(DialogInterface dialog, int which) {

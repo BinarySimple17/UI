@@ -56,7 +56,7 @@ public class MySimpleArrayAdapter extends ArrayAdapter<Person> {
 
 
     Person getProduct(int position) {
-        return ((Person) getItem(position));
+        return getItem(position);
     }
 
 }

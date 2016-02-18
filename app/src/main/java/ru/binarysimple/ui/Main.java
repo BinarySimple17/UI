@@ -702,7 +702,7 @@ public class Main extends AppCompatActivity {
                             c.moveToFirst();
                             if (c_id != c.getInt(c.getColumnIndex("_id"))) {
                                 ((Main) getActivity()).fragmentPers.persons.clear();//clear persons array if organisation was changed
-                            };
+                            }
 
                             c_id=c.getInt(c.getColumnIndex("_id"));
                         }

@@ -39,7 +39,7 @@ public class PersActivity extends AppCompatActivity {
             // Return a PlaceholderFragment (defined as a static inner class below).
 
             if (position == 0) {
-                fragmentPersInfo = fragmentPersInfo.newInstance(position + 1);
+                fragmentPersInfo = FragmentPersInfo.newInstance(position + 1);
                 return fragmentPersInfo;
             } else if (position == 1) {
                 return FragmentPersIllDays.newInstance(position + 1);
