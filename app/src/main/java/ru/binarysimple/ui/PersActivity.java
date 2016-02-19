@@ -59,8 +59,8 @@ public class PersActivity extends AppCompatActivity {
             switch (position) {
                 case 0:
                     return getResources().getString(R.string.sectionP1);
-                case 1:
-                    return getResources().getString(R.string.sectionP2);
+              //  case 1:
+                //    return getResources().getString(R.string.sectionP2);
             }
             return null;
         }
