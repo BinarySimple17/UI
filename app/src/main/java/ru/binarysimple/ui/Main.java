@@ -595,7 +595,8 @@ public class Main extends AppCompatActivity {
                         etYear.setText(year);
                         }
                         else {
-                           etYear.setText(Calendar.getInstance().get(Calendar.YEAR));
+                           //Calendar cal = Calendar.getInstance();
+                           etYear.setText("" + Calendar.getInstance().get(Calendar.YEAR));
                        }
             spinner.setSelection(sPref.getInt("month",Calendar.getInstance().get(Calendar.MONTH)));
             if (!sPref.getString("ndfl","-1").equals("-1")){
