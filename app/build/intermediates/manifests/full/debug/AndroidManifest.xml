@@ -27,7 +27,19 @@
         <activity
             android:name="ru.binarysimple.ui.PersActivity"
             android:label="@string/title_activity_pers"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="ru.binarysimple.ui.PersonListActivity"
+            android:label="@string/title_person_list"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="ru.binarysimple.ui.PersonDetailActivity"
+            android:label="@string/title_person_detail"
+            android:parentActivityName="ru.binarysimple.ui.PersonListActivity"
             android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ru.binarysimple.ui.PersonListActivity" />
         </activity>
     </application>
 

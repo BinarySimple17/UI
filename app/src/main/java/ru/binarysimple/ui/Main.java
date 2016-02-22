@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -32,6 +33,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class Main extends AppCompatActivity {
 
@@ -44,7 +47,6 @@ public class Main extends AppCompatActivity {
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
-    //private View mCurrentView;
     SharedPreferences sPref;
     DBHelper dbHelper;
     EditText etCompName;
@@ -54,8 +56,10 @@ public class Main extends AppCompatActivity {
     Boolean savedMenuOrgIsVisible;
     Boolean savedMenuMainIsVisible;
     Boolean savedMenuAddPersIsVisible;
+    String saved_fab_tag;
     FragmentPers fragmentPers;
     ArrayAdapter<String> spAdapter;
+//    FloatingActionButton fab;
     public static final String LOG_TAG = "fc_log";
     public static final String TABLE_NAME = "info";
     public static final String TABLE_NAME_C = "comp_req";
@@ -68,6 +72,8 @@ public class Main extends AppCompatActivity {
     final static Integer RESULTCODE_PERS_ADDED = 101;
     final static Integer RESULTCODE_PERS_EDITED = 102;
     final static Integer START_ACT_FOR_EDIT = 102;
+    final static String FAB_TAG_CALC = "fab_tag_edit";
+    final static String FAB_TAG_SAVE = "fab_tag_save";
 
 
     /**
@@ -123,14 +129,10 @@ public class Main extends AppCompatActivity {
         Integer sp_id = sPref.getInt("sp_id", -1);
         Integer c_id = sPref.getInt("c_id", -1);
         WorkDB workDB = new WorkDB();
-        workDB.updateRecord(this,TABLE_NAME_C,cv,c_id.toString());
+        workDB.updateRecord(this, TABLE_NAME_C, cv, c_id.toString());
         Spinner spinner = (Spinner) findViewById(R.id.spOrgs);
-        setSpinner(getOrgView(),sp_id);
+        setSpinner(getOrgView(), sp_id);
     }
-
-   /* public View getPersView(){
-        return fragmentPers;
-    }*/
 
     public String getName(){
         etCompName = (EditText) findViewById(R.id.etCompName); //find object edittext
@@ -169,6 +171,7 @@ public class Main extends AppCompatActivity {
                 c.close();
             if (pos>-1) {
                 spinner.setSelection(pos);
+                fragmentPers.loadPersonsListFromDB();
             }
                 else if (pos == -2){
                 spinner.setSelection(spinner.getCount()-1);
@@ -202,6 +205,8 @@ public class Main extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //fab = (FloatingActionButton) findViewById(R.id.fab);
+
         // Create the spAdapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -217,29 +222,29 @@ public class Main extends AppCompatActivity {
 
           @Override
           public void onTabSelected(TabLayout.Tab tab) {
-              Log.d(LOG_TAG, tab.getPosition()+" onTabSelected");
+              Log.d(LOG_TAG, tab.getPosition() + " onTabSelected");
               if (menu != null) {
                   switch (tab.getPosition()) {
                       case 0:
-                          menu.setGroupVisible(R.id.grMain,false);
-                          menu.setGroupVisible(R.id.grOrg,true);
-                          menu.setGroupVisible(R.id.grPersAdd,false);
+                          menu.setGroupVisible(R.id.grMain, false);
+                          menu.setGroupVisible(R.id.grOrg, true);
+                          menu.setGroupVisible(R.id.grPersAdd, false);
                           menu.setGroupVisible(R.id.grPers, false);
                           mViewPager.setCurrentItem(tab.getPosition(), true);
                           return;
                       case 1:
-                          menu.setGroupVisible(R.id.grMain,false);
-                          menu.setGroupVisible(R.id.grOrg,false);
-                          menu.setGroupVisible(R.id.grPersAdd,false);
-                          menu.setGroupVisible(R.id.grPers,false);
+                          menu.setGroupVisible(R.id.grMain, false);
+                          menu.setGroupVisible(R.id.grOrg, false);
+                          menu.setGroupVisible(R.id.grPersAdd, false);
+                          menu.setGroupVisible(R.id.grPers, false);
                           mViewPager.setCurrentItem(tab.getPosition(), true);
                           return;
                       case 2:
-                          menu.setGroupVisible(R.id.grMain,false);
-                          menu.setGroupVisible(R.id.grOrg,false);
-                          menu.setGroupVisible(R.id.grPersAdd,false);
-                          menu.setGroupVisible(R.id.grPers,true);
-                          mViewPager.setCurrentItem(tab.getPosition(),true);
+                          menu.setGroupVisible(R.id.grMain, false);
+                          menu.setGroupVisible(R.id.grOrg, false);
+                          menu.setGroupVisible(R.id.grPersAdd, false);
+                          menu.setGroupVisible(R.id.grPers, true);
+                          mViewPager.setCurrentItem(tab.getPosition(), true);
                           return;
                   }
                   /*if (tab.getPosition()==2){
@@ -284,7 +289,7 @@ public class Main extends AppCompatActivity {
                       e.printStackTrace();
                   }
               }*/
-              if (tab.getPosition()==1){
+              if (tab.getPosition() == 1) {
                   EditText etYear = (EditText) findViewById(R.id.etYear);
                   Spinner spMonth = (Spinner) findViewById(R.id.spMonth);
                   EditText etNdfl = (EditText) findViewById(R.id.etNdfl);
@@ -335,7 +340,7 @@ public class Main extends AppCompatActivity {
         Log.d(LOG_TAG, "onSaveInstanceState");
         if (menu != null) {
            // MenuItem item_pers = menu.findItem(R.id.action_addPers);
-            outState.putBoolean(KEY_MENU_PERS,  menu.findItem(R.id.action_savePersToDB).isVisible());
+          //  outState.putBoolean(KEY_MENU_PERS,  menu.findItem(R.id.action_savePersToDB).isVisible());
             outState.putBoolean(KEY_MENU_ADDPERS,  menu.findItem(R.id.action_savePers).isVisible());
             outState.putBoolean(KEY_MENU_MAIN,  menu.findItem(R.id.action_settings).isVisible());
             outState.putBoolean(KEY_MENU_ORG,  menu.findItem(R.id.action_newOrg).isVisible());
@@ -372,10 +377,11 @@ public class Main extends AppCompatActivity {
             menu.setGroupVisible(R.id.grPersAdd, false);
         }
 
-        if (item.getItemId()==R.id.action_savePersToDB) {
+/*        if (item.getItemId()==R.id.action_savePersToDB) {
             Log.d(LOG_TAG, "menu savePersToDB pressed");
+            //TODO move this to new FAB
             fragmentPers.savePersonsListToDB();
-        }
+        }*/
 
         if (item.getItemId()==R.id.action_editPers) {
 
@@ -411,21 +417,6 @@ public class Main extends AppCompatActivity {
             etCompName.setEnabled(false);
         }
         if (item.getItemId()==R.id.action_saveOrg) {
-
-            /**
-             * если полеввода заблокировано то выход+
-             * есди поле ввода пустое то выход+
-             * если значение спиннера пустое (новая организация)
-             * добавить в БД новую организацию
-             * ид и имя добавить в pref
-             * обновить список спиннера
-             * установить текст в поле ввода
-             * установить текст в спиннер
-             * если значение спиннера не пустое (редактирование организации)
-             * обновить запись в БД по ид из pref
-             * обновить список спиннера
-             * обновить значение спиннера
-             */
             Log.d(LOG_TAG, "menu saveOrg pressed");
             EditText etCompName = (EditText) findViewById(R.id.etCompName);
             if (!etCompName.isEnabled()) return super.onOptionsItemSelected(item);
@@ -441,17 +432,6 @@ public class Main extends AppCompatActivity {
             }
             else saveOrgToDB(etCompName.getText().toString());
 
-
-/*            if ((spinner.getCount()>0) && (!spinner.getSelectedItem().toString().equals("")))
-            { //если спиннер не пустой, то добавить редактировать
-                //saveOrgToDB(etCompName.getText().toString());
-                updateOrgInDB(etCompName.getText().toString());
-            }
-            else if (spinner.getSelectedItem().toString().equals(""))
-            { //если спиннер не пустой, то update записи в БД
-                //updateOrgInDB(etCompName.getText().toString());
-                saveOrgToDB(etCompName.getText().toString());
-            }*/
         }
         if (item.getItemId()==R.id.action_editOrg) {
             try{
@@ -474,8 +454,17 @@ public class Main extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (data == null) return;
         Log.d(LOG_TAG, "Activity result " + resultCode);
-        if (resultCode == RESULTCODE_PERS_ADDED) fragmentPers.addPers(data);
-        if (resultCode == RESULTCODE_PERS_EDITED) fragmentPers.saveEditedPers(data);
+        if (resultCode == RESULTCODE_PERS_ADDED) {
+            fragmentPers.addPers(data);
+            fragmentPers.fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_save));
+            fragmentPers.fab.setTag(Main.FAB_TAG_SAVE);
+            }
+
+        if (resultCode == RESULTCODE_PERS_EDITED) {
+            fragmentPers.saveEditedPers(data);
+            fragmentPers.fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_save));
+            fragmentPers.fab.setTag(Main.FAB_TAG_SAVE);
+        }
 
     }
 
@@ -593,6 +582,7 @@ public class Main extends AppCompatActivity {
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
                     android.R.layout.simple_spinner_item, data);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner.setAdapter(adapter);
             sPref = getActivity().getSharedPreferences("mPref", MODE_PRIVATE); // get preferences
             EditText etYear = (EditText) rootView.findViewById(R.id.etYear);
             EditText etNdfl = (EditText) rootView.findViewById(R.id.etNdfl);
@@ -603,8 +593,11 @@ public class Main extends AppCompatActivity {
                     //if  (year!="-1"){
                        if (!year.equals("-1")) {
                         etYear.setText(year);
-                    }
-            spinner.setSelection(sPref.getInt("month",0));
+                        }
+                        else {
+                           etYear.setText(Calendar.getInstance().get(Calendar.YEAR));
+                       }
+            spinner.setSelection(sPref.getInt("month",Calendar.getInstance().get(Calendar.MONTH)));
             if (!sPref.getString("ndfl","-1").equals("-1")){
                 etNdfl.setText(sPref.getString("ndfl","-1"));
             }
@@ -615,7 +608,7 @@ public class Main extends AppCompatActivity {
                 etFfoms.setText(sPref.getString("ffoms","-1"));
             }
             if (!sPref.getString("fss","-1").equals("-1")){
-                etFss.setText(sPref.getString("fss","-1"));
+                etFss.setText(sPref.getString("fss", "-1"));
             }
             return rootView;
         }
@@ -735,6 +728,7 @@ public class Main extends AppCompatActivity {
          * fragment.
          */
         SharedPreferences sPref;
+        FloatingActionButton fab;
         private static final String ARG_SECTION_NUMBER = "section_number";
         ArrayList<Person> persons = new ArrayList<Person>();
         MySimpleArrayAdapter myAdapter;
@@ -748,6 +742,7 @@ public class Main extends AppCompatActivity {
 
         public void onSaveState(){
             Log.d(LOG_TAG, "Fragment PERS custom SaveState");
+
          //   saveFragment.setData(persons);
 
         }
@@ -807,8 +802,6 @@ public class Main extends AppCompatActivity {
                 WorkDB workDB = new WorkDB();
 
                 if (persons.get(i).id<0){
-                    //sPref = getActivity().getSharedPreferences("mPref", MODE_PRIVATE); // get preferences
-                    //Integer c_id = sPref.getInt("c_id", -1);
                     workDB.insertRecord(getActivity(), TABLE_NAME, cv); //new insert to db*/
                 }
                 else {
@@ -830,8 +823,6 @@ public class Main extends AppCompatActivity {
                     "select * from "+TABLE_NAME+" where comp_id="+c_id, null);
             if (c != null){
                 if (c.getCount()>0){
-                    //Toast.makeText(getActivity(), "Here's persons in da base", Toast.LENGTH_SHORT).show();
-
                     c.moveToFirst();
                     for (int i=0; i<c.getCount();i++){
 
@@ -843,7 +834,10 @@ public class Main extends AppCompatActivity {
                     persons.add(i,person);
                     c.move(1);
                     }
-                }}
+                    fab.show();
+                }
+                else fab.hide();}
+            else fab.hide();
             c.close();
         }
 
@@ -858,7 +852,6 @@ public class Main extends AppCompatActivity {
                 intent.putExtra("ed_salary", persons.get(i).salary);
                 intent.putExtra("ed_id", persons.get(i).id);
                 intent.putExtra("ed_comp_id", persons.get(i).comp_id);
-                //Intent intentAct = new Intent(getActivity(), PersActivity.class);
                 startActivityForResult(intent, Main.START_ACT_FOR_EDIT);
             }
         }
@@ -875,23 +868,26 @@ public class Main extends AppCompatActivity {
             return fragment;
         }
 
-        /*public PlaceholderFragment() {
-        }*/
-
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_pers, container, false);
+            final View rootView = inflater.inflate(R.layout.fragment_pers, container, false);
             rootView.setTag("pers");
 
             saveFragment = (SaveFragment) getFragmentManager().findFragmentByTag("SAVE_FRAGMENT");
-            if (saveFragment != null) persons = saveFragment.getData();
+            fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
+            if (saveFragment != null) {
+                persons = saveFragment.getData();
+                fab.setTag(saveFragment.getFab_save_tag().toString());
+                if (fab.getTag().toString() == Main.FAB_TAG_SAVE) fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_save));
+            }
             else {
                 Log.d(LOG_TAG, "onCreate new fragment");
                 saveFragment = new SaveFragment();
                 getFragmentManager().beginTransaction()
                         .add(saveFragment, "SAVE_FRAGMENT")
                         .commit();
+                fab.setTag(Main.FAB_TAG_CALC);
             }
 
             lvMain = (ListView) rootView.findViewById(R.id.lvMain);
@@ -899,20 +895,28 @@ public class Main extends AppCompatActivity {
             lvMain.setAdapter(myAdapter);
 
 
-            loadPersonsListFromDB();
-       /*     sPref = getActivity().getSharedPreferences("mPref", MODE_PRIVATE); // get preferences
-            Integer c_id = sPref.getInt("c_id", -1);
-            //WorkDB workDB = new WorkDB();
-            //Cursor c = workDB.getData(getActivity(), "select * from "+TABLE_NAME+" WHERE c_id = ?", new String[] {c_id.toString()});
-            WorkDB workDB = new WorkDB();
-            Cursor c = workDB.getData(getActivity(),
-                    "select * from "+TABLE_NAME+" where comp_id="+c_id, null);
-            if (c != null){
-            if (c.getCount()>0){
-                Toast.makeText(getActivity(), "Here's persons in da base", Toast.LENGTH_SHORT).show();
+            fab.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v){
+                    //Toast.makeText(getActivity(),"button",Toast.LENGTH_SHORT).show();
+                    if (lvMain.getCount()>0){
+                        //TODO check what to do: save list to DB or calc current list
+                        //fab.setTa
+                        if (fab.getTag()==Main.FAB_TAG_SAVE){
+                            savePersonsListToDB();
+                            fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_calc));
+                            fab.setTag(Main.FAB_TAG_CALC);
+                        }
+                        else {
+                        Intent intent = new Intent(getActivity(), PersonListActivity.class);
+                        startActivityForResult(intent, Main.START_ACT_FOR_EDIT);
+                        }
+                    }
+                }
+            });
 
-            }}
-            c.close();*/
+            loadPersonsListFromDB();
+
             return rootView;
         }
         /**
@@ -931,6 +935,7 @@ public class Main extends AppCompatActivity {
             super.onPause();
             Log.d(LOG_TAG, "onPause saveFragment.setData(products);");
             saveFragment.setData(persons);
+            saveFragment.setFab_save_tag(fab.getTag().toString());
             super.onPause();
         }
     }

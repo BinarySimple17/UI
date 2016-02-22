@@ -1,5 +1,5 @@
 
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="fill_parent"
@@ -10,39 +10,32 @@
     android:id="@+id/scrollView1"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >-->
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        >
 <!--        android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
         android:paddingBottom="@dimen/activity_vertical_margin"
         tools:context=".Main$PlaceholderFragment"-->
 
-            <ListView
+        <ListView
                 android:layout_width="fill_parent"
-                android:layout_height="0dp"
+                android:layout_height="fill_parent"
                 android:id="@+id/lvMain"
                 android:layout_marginTop="30dp"
                 android:visibility="visible"
                 android:clickable="true"
                 android:longClickable="false"
-                android:layout_weight="1"
-                android:smoothScrollbar="true"
+            android:smoothScrollbar="true"
                 android:choiceMode="singleChoice"
                 android:listSelector="#f2eded" />
 
-    </LinearLayout>
-<!--    </ScrollView>-->
-    <android.support.design.widget.FloatingActionButton android:id="@+id/fab"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="end|bottom"
-    android:layout_margin="@dimen/fab_margin"
-    android:src="@drawable/ic_calc" />
+        <android.support.design.widget.FloatingActionButton android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_calc" />
 
-
-</LinearLayout><!-- From: file:/C:/android5/projects/UI/app/src/main/res/layout/fragment_pers.xml -->
+    <!--    </ScrollView>-->
+    <!--android:layout_gravity="end|bottom"-->
+    <!--android:layout_margin="@dimen/fab_margin"-->
+</FrameLayout><!-- From: file:/F:/android5/projects/UI/app/src/main/res/layout/fragment_pers.xml -->

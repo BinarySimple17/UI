@@ -44,5 +44,7 @@
     <string name="par_ffoms_hint">5,10</string>
     <string name="par_fss_hint">2,90</string>
     <string name="title_activity_pers">Сотрудник</string>
+    <string name="title_person_list">Persons</string>
+    <string name="title_person_detail">Person Detail</string>
 
 </resources>

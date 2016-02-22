@@ -2,39 +2,46 @@
 <items version="2" >
 
     <item
-        jar="C:\android5\projects\UI\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.0.1\jars\classes.jar"
+        jar="F:\android5\projects\UI\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\23.1.1\jars\classes.jar"
         jumboMode="false"
         revision="23.0.1"
-        sha1="d86429b0f0b3f3cafbeb78dda1b9d89119ccb05d">
-        <dex dex="C:\android5\projects\UI\app\build\intermediates\pre-dexed\debug\classes-aa114987d81a67aa2ed44d5b87ceb8c09075116c.jar" />
+        sha1="09c5e804bc67fc0580360043dff067df574a60d4">
+        <dex dex="F:\android5\projects\UI\app\build\intermediates\pre-dexed\debug\classes-5b3e0d9f0136173ff8dff745fef0ab1c622974fc.jar" />
     </item>
     <item
-        jar="C:\android5\projects\UI\app\build\intermediates\exploded-aar\com.android.support\design\23.0.1\jars\classes.jar"
+        jar="F:\android5\projects\UI\app\build\intermediates\exploded-aar\com.android.support\design\23.1.1\jars\classes.jar"
         jumboMode="false"
         revision="23.0.1"
-        sha1="e5c61a3169221a89654ffcaaed47bba51cf071ad">
-        <dex dex="C:\android5\projects\UI\app\build\intermediates\pre-dexed\debug\classes-1c9895456cac8d390af829237dc601c7ebdfc1e5.jar" />
+        sha1="379471b2bd17d9737c050345c08e8c7d16589784">
+        <dex dex="F:\android5\projects\UI\app\build\intermediates\pre-dexed\debug\classes-8679246b85693aadc52d0302e84233e5a929d0d5.jar" />
     </item>
     <item
-        jar="C:\android5\projects\UI\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\jars\libs\internal_impl-23.0.1.jar"
+        jar="F:\android5\projects\UI\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.1.1\jars\classes.jar"
         jumboMode="false"
         revision="23.0.1"
-        sha1="aa92916125166649d8ad4ba3940c3dd7515596d3">
-        <dex dex="C:\android5\projects\UI\app\build\intermediates\pre-dexed\debug\internal_impl-23.0.1-07ea10b91444baf1df46e230c3c20c93a805ebef.jar" />
+        sha1="5c5699834e9722f1c288fea2de82725d078ba127">
+        <dex dex="F:\android5\projects\UI\app\build\intermediates\pre-dexed\debug\classes-5a1eb428b7b2cba1e428c590cf6392e97a1870c5.jar" />
     </item>
     <item
-        jar="C:\android5\projects\UI\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\jars\classes.jar"
+        jar="F:\android5\projects\UI\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.1\jars\libs\internal_impl-23.1.1.jar"
         jumboMode="false"
         revision="23.0.1"
-        sha1="c31e21b53ff2f74664e498248d01453a32e32d48">
-        <dex dex="C:\android5\projects\UI\app\build\intermediates\pre-dexed\debug\classes-10b1f0159e5ce727dc46eed17f34481ccdbc0cc2.jar" />
+        sha1="a4de9c81ae239414e1ed0f86441b02abaf29bca9">
+        <dex dex="F:\android5\projects\UI\app\build\intermediates\pre-dexed\debug\internal_impl-23.1.1-f8c44494a16ceab83827c731d49515ba98069a0f.jar" />
     </item>
     <item
-        jar="C:\android5\sdk\extras\android\m2repository\com\android\support\support-annotations\23.0.1\support-annotations-23.0.1.jar"
+        jar="F:\android5\sdk\extras\android\m2repository\com\android\support\support-annotations\23.1.1\support-annotations-23.1.1.jar"
         jumboMode="false"
         revision="23.0.1"
-        sha1="1fce89a6428c51467090d7f424e4c9c3dbd55f7e">
-        <dex dex="C:\android5\projects\UI\app\build\intermediates\pre-dexed\debug\support-annotations-23.0.1-d3d0e61367b11a6cddd9432a660431fe893a676a.jar" />
+        sha1="8d680ba5a623724d1fb0e81c36a790f023a6cede">
+        <dex dex="F:\android5\projects\UI\app\build\intermediates\pre-dexed\debug\support-annotations-23.1.1-8f598db42f64b5c482aa25e71eb1367f6f61dadd.jar" />
+    </item>
+    <item
+        jar="F:\android5\projects\UI\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="6cbc7773921fcfedbe55657578f0cbfe614778dc">
+        <dex dex="F:\android5\projects\UI\app\build\intermediates\pre-dexed\debug\classes-eaa5cc28d35c7a9b7dcb6a02b369dbb7561da997.jar" />
     </item>
 
 </items>

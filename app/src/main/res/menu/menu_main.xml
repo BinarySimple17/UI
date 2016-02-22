@@ -34,19 +34,19 @@
         <item
             android:id="@+id/action_cancelOrg"
             android:title="@string/action_cancelOrg"
-            android:icon="@drawable/ic_cancelorg"
+            android:icon="@drawable/ic_cancel"
             android:orderInCategory="100"
             app:showAsAction="ifRoom" />
     </group>
 
     <group
         android:id="@+id/grPers">
-        <item
+        <!--<item
             android:id="@+id/action_savePersToDB"
             android:title="@string/action_savePersToDB"
             android:icon="@drawable/ic_save"
             android:orderInCategory="100"
-            app:showAsAction="ifRoom" />
+            app:showAsAction="ifRoom" />-->
 
         <item
             android:id="@+id/action_addPers"
