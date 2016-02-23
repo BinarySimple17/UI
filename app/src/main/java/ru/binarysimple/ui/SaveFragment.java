@@ -25,7 +25,6 @@ public class SaveFragment extends Fragment {
         super.onCreate(savedInstanceState);
         // retain this fragment
         setRetainInstance(true);
-        ///fab_save_tag = Main.FAB_TAG_CALC;
     }
 
     public void setData(ArrayList<Person> data) {

@@ -10,12 +10,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.Toast;
 import android.content.SharedPreferences;
-
-import static ru.binarysimple.ui.R.layout.fragment_org;
 
 public class Dialog2 extends DialogFragment implements OnClickListener {
 

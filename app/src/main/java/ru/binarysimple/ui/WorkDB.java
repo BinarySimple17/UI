@@ -35,12 +35,7 @@ public class WorkDB {
     public Cursor getData(Context context, String query, String[] args){
         dbHelper = new DBHelper(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-//        if (args.equals(null)){
-//        return db.rawQuery(query, null);
-//        }
-//        else {
             return db.rawQuery(query, args);
-//        }
     }
 
     public void delPersons(Context context, String c_id){
@@ -50,10 +45,7 @@ public class WorkDB {
         db.execSQL("DELETE FROM info WHERE comp_id="+c_id);
         dbHelper.close();
     }
-/*    public void insertPersonObj(Context context){
-        Log.d(LOG_TAG, "Insert person object");
 
-    }*/
 
 
 }

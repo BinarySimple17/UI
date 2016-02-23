@@ -2211,7 +2211,7 @@ containing a value of this type.
     }
     public static final class id {
         public static final int action0=0x7f0c009a;
-        public static final int action_addPers=0x7f0c00b3;
+        public static final int action_addPers=0x7f0c00b1;
         public static final int action_bar=0x7f0c005a;
         public static final int action_bar_activity_content=0x7f0c0000;
         public static final int action_bar_container=0x7f0c0059;
@@ -2219,20 +2219,19 @@ containing a value of this type.
         public static final int action_bar_spinner=0x7f0c0001;
         public static final int action_bar_subtitle=0x7f0c003b;
         public static final int action_bar_title=0x7f0c003a;
-        public static final int action_cancelOrg=0x7f0c00b1;
+        public static final int action_cancelOrg=0x7f0c00af;
         public static final int action_context_bar=0x7f0c005b;
         public static final int action_divider=0x7f0c009e;
-        public static final int action_editOrg=0x7f0c00af;
-        public static final int action_editPers=0x7f0c00b4;
+        public static final int action_editOrg=0x7f0c00ad;
+        public static final int action_editPers=0x7f0c00b2;
         public static final int action_menu_divider=0x7f0c0002;
         public static final int action_menu_presenter=0x7f0c0003;
         public static final int action_mode_bar=0x7f0c0057;
         public static final int action_mode_bar_stub=0x7f0c0056;
         public static final int action_mode_close_button=0x7f0c003c;
-        public static final int action_newOrg=0x7f0c00ae;
-        public static final int action_saveOrg=0x7f0c00b0;
-        public static final int action_savePers=0x7f0c00b6;
-        public static final int action_settings=0x7f0c00ac;
+        public static final int action_newOrg=0x7f0c00ac;
+        public static final int action_saveOrg=0x7f0c00ae;
+        public static final int action_savePers=0x7f0c00b4;
         public static final int activity_chooser_view_content=0x7f0c003d;
         public static final int alertTitle=0x7f0c0049;
         public static final int always=0x7f0c0032;
@@ -2287,10 +2286,9 @@ containing a value of this type.
         public static final int fill_vertical=0x7f0c0021;
         public static final int fixed=0x7f0c0037;
         public static final int frameLayout=0x7f0c0074;
-        public static final int grMain=0x7f0c00ab;
-        public static final int grOrg=0x7f0c00ad;
-        public static final int grPers=0x7f0c00b2;
-        public static final int grPersAdd=0x7f0c00b5;
+        public static final int grOrg=0x7f0c00ab;
+        public static final int grPers=0x7f0c00b0;
+        public static final int grPersAdd=0x7f0c00b3;
         public static final int home=0x7f0c0004;
         public static final int homeAsUp=0x7f0c000f;
         public static final int icon=0x7f0c0042;
