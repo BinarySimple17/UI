@@ -39,6 +39,7 @@ public class Main extends AppCompatActivity {
     public static final String TABLE_NAME_C = "comp_req";
     public static final String TABLE_ILL_DAY = "ill_day";
     public static final String TABLE_HOLY_DAY = "holy_day";
+    public static final String TABLE_RESULTS = "results";
     final static String KEY_MENU_MAIN = "KEY_MENU_MAIN";
     final static String KEY_MENU_ORG = "KEY_MENU_ORG";
     final static String KEY_MENU_PERS = "KEY_MENU_PERS";
@@ -386,6 +387,7 @@ public class Main extends AppCompatActivity {
             fragmentPers.addPers(data);
             fragmentPers.fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_save));
             fragmentPers.fab.setTag(Main.FAB_TAG_SAVE);
+            fragmentPers.fab.show();
             }
 
         if (resultCode == RESULTCODE_PERS_EDITED) {
@@ -769,6 +771,7 @@ public class Main extends AppCompatActivity {
             fab.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v){
+                    //TODO results here!!!
                     if (lvMain.getCount()>0){
                         if (fab.getTag()==Main.FAB_TAG_SAVE){
                             savePersonsListToDB();
@@ -776,6 +779,7 @@ public class Main extends AppCompatActivity {
                             fab.setTag(Main.FAB_TAG_CALC);
                         }
                         else {
+
                         Intent intent = new Intent(getActivity(), PersonListActivity.class);
                         startActivityForResult(intent, Main.START_ACT_FOR_EDIT);
                         }

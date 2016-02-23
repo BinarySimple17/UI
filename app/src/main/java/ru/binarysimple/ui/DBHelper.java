@@ -41,6 +41,18 @@ public class DBHelper extends SQLiteOpenHelper {
                 " start integer NOT NULL," +
                 " end integer NOT NULL" +
                 ");");
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + Main.TABLE_RESULTS +
+                " (_id integer PRIMARY KEY AUTOINCREMENT," +
+                " id_pers integer NOT NULL," +
+                " month integer NOT NULL," +
+                " year integer NOT NULL," +
+                " ndfl text NOT NULL," +
+                " ffoms text NOT NULL," +
+                " pfr text NOT NULL," +
+                " fss text NOT NULL" +
+                ");");
+
+
     }
 
     @Override

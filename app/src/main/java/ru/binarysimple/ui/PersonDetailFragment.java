@@ -27,7 +27,7 @@ public class PersonDetailFragment extends Fragment {
     /**
      * The dummy content this fragment is presenting.
      */
-    private PersonContent.DummyItem mItem;
+    private Result mItem;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -49,7 +49,7 @@ public class PersonDetailFragment extends Fragment {
             Activity activity = this.getActivity();
             CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
             if (appBarLayout != null) {
-                appBarLayout.setTitle(mItem.content);
+                appBarLayout.setTitle("put fio here about person_id="+mItem.getId_person().toString());
             }
         }
     }
@@ -61,7 +61,7 @@ public class PersonDetailFragment extends Fragment {
 
         // Show the dummy content as text in a TextView.
         if (mItem != null) {
-            ((TextView) rootView.findViewById(R.id.person_detail)).setText(mItem.details);
+            ((TextView) rootView.findViewById(R.id.person_detail)).setText("put content here about person_id="+mItem.getId_person().toString());
         }
 
         return rootView;

@@ -44,6 +44,20 @@ public class PersonListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
 
+        //TODO create results
+
+        /*final Result result = new Result.ResultBuilder()
+                .setContext(getActivity())
+                .set_id(-1)
+                .setId_person(-1)
+                .setMonth(-1)
+                .setYear(-1)
+                .setNdfl("")
+                .setFfoms("")
+                .setPfr("")
+                .setFss("")
+                .build();*/
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,9 +87,9 @@ public class PersonListActivity extends AppCompatActivity {
     public class SimpleItemRecyclerViewAdapter
             extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
 
-        private final List<PersonContent.DummyItem> mValues;
+        private final List<Result> mValues;
 
-        public SimpleItemRecyclerViewAdapter(List<PersonContent.DummyItem> items) {
+        public SimpleItemRecyclerViewAdapter(List<Result> items) {
             mValues = items;
         }
 
@@ -89,15 +103,15 @@ public class PersonListActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
             holder.mItem = mValues.get(position);
-            holder.mIdView.setText(mValues.get(position).id);
-            holder.mContentView.setText(mValues.get(position).content);
+            holder.mIdView.setText(mValues.get(position).get_id().toString());
+            holder.mContentView.setText(mValues.get(position).getNdfl()+" onBindViewHolder");
 
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (mTwoPane) {
                         Bundle arguments = new Bundle();
-                        arguments.putString(PersonDetailFragment.ARG_ITEM_ID, holder.mItem.id);
+                        arguments.putString(PersonDetailFragment.ARG_ITEM_ID, holder.mItem.get_id().toString());
                         PersonDetailFragment fragment = new PersonDetailFragment();
                         fragment.setArguments(arguments);
                         getSupportFragmentManager().beginTransaction()
@@ -106,7 +120,7 @@ public class PersonListActivity extends AppCompatActivity {
                     } else {
                         Context context = v.getContext();
                         Intent intent = new Intent(context, PersonDetailActivity.class);
-                        intent.putExtra(PersonDetailFragment.ARG_ITEM_ID, holder.mItem.id);
+                        intent.putExtra(PersonDetailFragment.ARG_ITEM_ID, holder.mItem.get_id().toString());
 
                         context.startActivity(intent);
                     }
@@ -123,7 +137,7 @@ public class PersonListActivity extends AppCompatActivity {
             public final View mView;
             public final TextView mIdView;
             public final TextView mContentView;
-            public PersonContent.DummyItem mItem;
+            public Result mItem;
 
             public ViewHolder(View view) {
                 super(view);

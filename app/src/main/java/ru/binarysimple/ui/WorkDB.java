@@ -28,7 +28,7 @@ public class WorkDB {
         dbHelper = new DBHelper(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         Log.d(LOG_TAG, "Update record in "+tableName);
-        db.update(tableName,cv,"_id = ?", new String[] { id });
+        db.update(tableName, cv, "_id = ?", new String[]{id});
         dbHelper.close();
     }
 
@@ -46,6 +46,13 @@ public class WorkDB {
         dbHelper.close();
     }
 
+    public void delData(Context context, String tableName, String id){
+        Log.d(LOG_TAG, "delete data from "+tableName);
+        dbHelper = new DBHelper(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.execSQL("DELETE FROM "+tableName+" WHERE _id="+id);
+        dbHelper.close();
 
+    }
 
 }
