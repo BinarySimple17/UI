@@ -49,7 +49,7 @@ public class PersonDetailFragment extends Fragment {
             Activity activity = this.getActivity();
             CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
             if (appBarLayout != null) {
-                appBarLayout.setTitle("put fio here about person_id="+mItem.getId_person().toString());
+                appBarLayout.setTitle(mItem.getName());
             }
         }
     }
@@ -61,7 +61,11 @@ public class PersonDetailFragment extends Fragment {
 
         // Show the dummy content as text in a TextView.
         if (mItem != null) {
-            ((TextView) rootView.findViewById(R.id.person_detail)).setText("put content here about person_id="+mItem.getId_person().toString());
+            ((TextView) rootView.findViewById(R.id.person_detail)).setText(
+                    "put here content about "+mItem.getName()+" длинный длинный текст" +
+                            " влезет он весь? или будет переноситься? а там еще куча налогов и " +
+                            "всякой фигни еще будет написано, чо как оно влезет?"
+            );
         }
 
         return rootView;

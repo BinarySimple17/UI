@@ -37,10 +37,16 @@ public class PersonContent {
             addItem(createResultItem(i));}*/
     }
 
+    private void clearITEMS (){
+        ITEMS.clear();
+        ITEM_MAP.clear();
+    }
+
     public PersonContent(ArrayList<Result> list) {
         // Add some sample items.
+        clearITEMS();
         for (int i = 0; i < list.size(); i++) {
-            addItem(createResultItem(list.get(i)));
+            addItem(createResultItem(list.get(i)),i);
         }
     }
 
@@ -48,9 +54,9 @@ public class PersonContent {
 
     }*/
 
-    private static void addItem(Result item) {
+    private static void addItem(Result item, Integer i) {
         ITEMS.add(item);
-        ITEM_MAP.put(item.get_id().toString(), item);
+        ITEM_MAP.put(i.toString(), item);
     }
 
     private static Result createResultItem(Result result) {
@@ -58,7 +64,7 @@ public class PersonContent {
         //return new DummyItem(String.valueOf(position), "Item " + position, makeDetails(position));
 
         return new Result.ResultBuilder()
-                .set_id(-1)
+                .set_id(result.get_id())
                 .setId_person(result.getId_person())
                 .setMonth(result.getMonth())
                 .setYear(result.getYear())
@@ -66,38 +72,10 @@ public class PersonContent {
                 .setFfoms(result.getFfoms())
                 .setPfr(result.getPfr())
                 .setFss(result.getFss())
+                .setName(result.getName())
+                .setPosition(result.getPosition())
+                .setSalary(result.getSalary())
+                .setComp_id(result.getComp_id())
                 .build();
     }
-
-
-
-
-/*    private static String makeDetails(int position) {
-        StringBuilder builder = new StringBuilder();
-        builder.append("Details about Item: ").append(position);
-        for (int i = 0; i < position; i++) {
-            builder.append("\nMore details information here.");
-        }
-        return builder.toString();
-    }*/
-
-    /**
-     * A dummy item representing a piece of content.
-     */
-    /*public static class DummyItem {
-        public final String id;
-        public final String content;
-        public final String details;
-
-        public DummyItem(String id, String content, String details) {
-            this.id = id;
-            this.content = content;
-            this.details = details;
-        }
-
-        @Override
-        public String toString() {
-            return content;
-        }
-    }*/
 }

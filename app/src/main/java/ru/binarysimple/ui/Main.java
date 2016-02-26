@@ -49,7 +49,9 @@ public class Main extends AppCompatActivity {
     final static Integer START_ACT_FOR_EDIT = 102;
     final static String FAB_TAG_CALC = "fab_tag_edit";
     final static String FAB_TAG_SAVE = "fab_tag_save";
-    final static Integer RESULTS_CALC = 103;
+    final static String RESULTS_REQUEST_CALC = "REQUEST";
+    final static String RESULTS_REQUEST_LOAD = "LOAD";
+    final static String RESULTS_CALC = "CALC";
     SharedPreferences sPref;
     DBHelper dbHelper;
     EditText etCompName;
@@ -782,8 +784,8 @@ public class Main extends AppCompatActivity {
                         else {
 
                         Intent intent = new Intent(getActivity(), PersonListActivity.class);
-                        intent.putExtra("request",Main.RESULTS_CALC);
-                        startActivityForResult(intent, Main.RESULTS_CALC);
+                        intent.putExtra(Main.RESULTS_REQUEST_CALC,Main.RESULTS_CALC);
+                        startActivity(intent);
                         }
                     }
                 }

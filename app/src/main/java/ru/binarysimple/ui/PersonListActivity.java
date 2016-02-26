@@ -2,6 +2,8 @@ package ru.binarysimple.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -9,10 +11,12 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import ru.binarysimple.ui.content.PersonContent;
@@ -35,6 +39,50 @@ public class PersonListActivity extends AppCompatActivity {
      * device.
      */
     private boolean mTwoPane;
+    SharedPreferences sPref;
+
+    private ArrayList<Result> calcResults() {
+        ArrayList<Result> results = new ArrayList<Result>();
+        //TODO calc new results
+            /*√взять comp_id
+            * √взять ставки налогов
+            * √по comp_id отобрать сотрудников
+            * √по каждому сотруднику создать экземпляр Results
+            * √объеднить их в ArrayList<Results>
+            * √передать в setupRecyclerView массив результатов
+            */
+        sPref = getSharedPreferences("mPref", MODE_PRIVATE); // get preferences
+        String comp_id = Integer.toString(sPref.getInt("c_id",-1));
+        String year = sPref.getString("year", "-1");//TODO add calendar current year into Reslts
+        String month = Integer.toString(sPref.getInt("month", -1));//int
+        String ndfl = sPref.getString("ndfl", "-1");//
+        String ffoms = sPref.getString("ffoms","-1");
+        String pfr = sPref.getString("pfr","-1");
+        String fss = sPref.getString("fss","-1");
+        WorkDB workDB = new WorkDB();
+        Cursor c = workDB.getData(this, "select * from "+Main.TABLE_NAME+" WHERE comp_id = ?", new String[] {comp_id.toString()});
+        if (c == null) return null;
+        c.moveToFirst();
+        for (int i=0;i < c.getCount();i++) {
+            Result result = new Result.ResultBuilder()
+                    .set_id(i)
+                    .setId_person(c.getInt(c.getColumnIndex("_id")))
+                    .setMonth(Integer.parseInt(month))
+                    .setYear(Integer.parseInt(year))
+                    .setNdfl(ndfl + " x salary")
+                    .setFfoms(ffoms +" x salary")
+                    .setPfr(pfr+" x salary")
+                    .setFss(fss+" x salary")
+                    .setName(c.getString(c.getColumnIndex("name")))
+                    .setPosition(c.getString(c.getColumnIndex("pos")))
+                    .setSalary(c.getString(c.getColumnIndex("sal")))
+                    .setComp_id(comp_id.toString())
+                    .build();
+            results.add(i,result);
+            c.moveToNext();
+        }
+        return results;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +106,18 @@ public class PersonListActivity extends AppCompatActivity {
         View recyclerView = findViewById(R.id.person_list);
         assert recyclerView != null;
         //TODO choose start for calc or start for saved
-        setupRecyclerView((RecyclerView) recyclerView);
+    //    Intent intent = getIntent();
+        ArrayList<Result> results = new ArrayList<Result>();
+       // if (intent.getStringExtra(Main.RESULTS_REQUEST_CALC).equals(Main.RESULTS_CALC)){
+            results = calcResults();
+       //     if (results == null) return;
+            setupRecyclerViewArray((RecyclerView) recyclerView, results);
+       // }
+       // else {
+            //TODO load from db
+        //    setupRecyclerView((RecyclerView) recyclerView);
+       // }
+
 
         if (findViewById(R.id.person_detail_container) != null) {
             // The detail container view will be present only in the
@@ -72,9 +131,17 @@ public class PersonListActivity extends AppCompatActivity {
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
         /*ArrayList pers = new ArrayList();
         pers.add("pers araylist");*/
-        PersonContent personContent = new PersonContent();
-        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(personContent.ITEMS));
+        //PersonContent personContent = new PersonContent();
+        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(PersonContent.ITEMS));
      //   recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(PersonContent.ITEMS));
+    }
+
+    private void setupRecyclerViewArray(@NonNull RecyclerView recyclerView, ArrayList<Result> results) {
+        /*ArrayList pers = new ArrayList();
+        pers.add("pers araylist");*/
+        PersonContent personContent = new PersonContent(results);
+        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(personContent.ITEMS));
+        //   recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(PersonContent.ITEMS));
     }
 
     public class SimpleItemRecyclerViewAdapter
@@ -96,8 +163,9 @@ public class PersonListActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
             holder.mItem = mValues.get(position);
-            holder.mIdView.setText(mValues.get(position).get_id().toString());
-            holder.mContentView.setText(mValues.get(position).getNdfl()+" onBindViewHolder");
+            Integer mId = mValues.get(position).get_id()+1;
+            holder.mIdView.setText(mId.toString());
+            holder.mContentView.setText(mValues.get(position).getName());
 
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override

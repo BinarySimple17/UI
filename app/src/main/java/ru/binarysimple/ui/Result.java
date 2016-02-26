@@ -17,6 +17,10 @@ public class Result {
     private final String ffoms;
     private final String pfr;
     private final String fss;
+    private final String name;
+    private final String position;
+    private final String salary;
+    private final String comp_id;
 
     Result(final ResultBuilder resultBuilder) {
 //        this.context = resultBuilder.getContext();
@@ -28,11 +32,31 @@ public class Result {
         this.ffoms = resultBuilder.getFfoms();
         this.pfr = resultBuilder.getPfr();
         this.fss = resultBuilder.getFss();
+        this.name = resultBuilder.getName();
+        this.position = resultBuilder.getPosition();
+        this.salary = resultBuilder.getSalary();
+        this.comp_id = resultBuilder.getComp_id();
     }
 
 /*    public Context getContext() {
         return context;
     }*/
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public String getSalary() {
+        return salary;
+    }
+
+    public String getComp_id() {
+        return comp_id;
+    }
 
     public Integer get_id(){
         return _id;
@@ -76,6 +100,10 @@ public class Result {
         private  String ffoms;
         private  String pfr;
         private  String fss;
+        private  String name;
+        private  String position;
+        private  String salary;
+        private  String comp_id;
 
 /*        public ResultBuilder setContext(Context context) {
             this.context = context;
@@ -122,6 +150,25 @@ public class Result {
             return this;
         }
 
+        public ResultBuilder setName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public ResultBuilder setPosition(String position) {
+            this.position = position;
+            return this;
+        }
+
+        public ResultBuilder setSalary(String salary) {
+            this.salary = salary;
+            return this;
+        }
+
+        public ResultBuilder setComp_id(String comp_id) {
+            this.comp_id = comp_id;
+            return this;
+        }
 /*        public Context getContext() {
             return context;
         }*/
@@ -156,6 +203,22 @@ public class Result {
 
         public String getFss() {
             return fss;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String getPosition() {
+            return position;
+        }
+
+        public String getSalary() {
+            return salary;
+        }
+
+        public String getComp_id() {
+            return comp_id;
         }
 
         public Result build(){
