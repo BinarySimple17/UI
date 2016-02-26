@@ -2,12 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     signingConfigs {
-        BinarySimple {
-            keyAlias 'BinarySimple'
-            keyPassword 'Pipec2326'
-            storeFile file('F:/android5/projects/binarysimple.jks')
-            storePassword 'Pipec2326'
-        }
+
     }
     compileSdkVersion 23
     buildToolsVersion "23.0.1"

@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import ru.binarysimple.ui.content.PersonContent;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -44,19 +45,6 @@ public class PersonListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
 
-        //TODO create results
-
-        /*final Result result = new Result.ResultBuilder()
-                .setContext(getActivity())
-                .set_id(-1)
-                .setId_person(-1)
-                .setMonth(-1)
-                .setYear(-1)
-                .setNdfl("")
-                .setFfoms("")
-                .setPfr("")
-                .setFss("")
-                .build();*/
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -69,6 +57,7 @@ public class PersonListActivity extends AppCompatActivity {
 
         View recyclerView = findViewById(R.id.person_list);
         assert recyclerView != null;
+        //TODO choose start for calc or start for saved
         setupRecyclerView((RecyclerView) recyclerView);
 
         if (findViewById(R.id.person_detail_container) != null) {
@@ -81,7 +70,11 @@ public class PersonListActivity extends AppCompatActivity {
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(PersonContent.ITEMS));
+        /*ArrayList pers = new ArrayList();
+        pers.add("pers araylist");*/
+        PersonContent personContent = new PersonContent();
+        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(personContent.ITEMS));
+     //   recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(PersonContent.ITEMS));
     }
 
     public class SimpleItemRecyclerViewAdapter
