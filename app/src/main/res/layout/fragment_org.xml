@@ -1,4 +1,4 @@
-<ScrollView
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/scrollView1"
@@ -22,7 +22,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:text="@string/org_txt1"
                 android:id="@+id/textView7" />
         </TableRow>
@@ -31,15 +31,18 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <EditText
+            <TextView
+                android:editable="false"
+                android:inputType="none"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/etCompName"
                 android:hint="@string/org_edit1"
                 android:maxLength="64"
                 android:singleLine="true"
-                android:enabled="false"
-                android:imeOptions="actionNext"/>
+                android:enabled="true"
+                android:imeOptions="actionNext"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
         </TableRow>
 
@@ -50,7 +53,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:text="@string/org_txt2"
                 android:id="@+id/textView8" />
         </TableRow>
@@ -64,5 +67,19 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/spOrgs" />
         </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </TableRow>
     </TableLayout>
-</ScrollView>
+
+    <android.support.design.widget.FloatingActionButton android:id="@+id/fab_org"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_calc" />
+
+</FrameLayout>

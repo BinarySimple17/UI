@@ -334,11 +334,15 @@
     <string name="dialog_1">Dialog 1</string>
     <string name="dialog_2">Организация</string>
     <string name="dialog_2_text">Сохранить изменения?</string>
+    <string name="dlg_org_OK">OK</string>
+    <string name="dlg_org_cancel">Отмена</string>
+    <string name="dlg_org_caption">Организация</string>
     <string name="maybe">Maybe</string>
     <string name="no">Нет</string>
     <string name="org_edit1">Название</string>
+    <string name="org_name_error">Неверное имя организации</string>
     <string name="org_spOrg">Список</string>
-    <string name="org_txt1">Выбранная организация</string>
+    <string name="org_txt1">Текущая организация</string>
     <string name="org_txt2">Список организаций</string>
     <string name="par_ffoms_hint">5,10</string>
     <string name="par_fss_hint">2,90</string>

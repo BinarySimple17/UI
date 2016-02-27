@@ -23,10 +23,12 @@
     <string name="section2">Параметры</string>
     <string name="section3">Сотрудники</string>
 
+    <string name="org_name_error">Неверное имя организации</string>
+
     <string name="sectionP1">Инфо</string>
     <string name="sectionP2">Отпуск</string>
 
-    <string name="org_txt1">Выбранная организация</string>
+    <string name="org_txt1">Текущая организация</string>
     <string name="org_edit1">Название</string>
     <string name="org_txt2">Список организаций</string>
     <string name="org_spOrg">Список</string>
@@ -46,5 +48,10 @@
     <string name="title_activity_pers">Сотрудник</string>
     <string name="title_person_list">Persons</string>
     <string name="title_person_detail">Person Detail</string>
+
+
+    <string name="dlg_org_caption">Организация</string>
+    <string name="dlg_org_cancel">Отмена</string>
+    <string name="dlg_org_OK">OK</string>
 
 </resources>
