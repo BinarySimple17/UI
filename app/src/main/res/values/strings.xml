@@ -50,7 +50,7 @@
     <string name="title_person_detail">Person Detail</string>
 
 
-    <string name="dlg_org_caption">Организация</string>
+    <string name="dlg_org_caption">Название</string>
     <string name="dlg_org_cancel">Отмена</string>
     <string name="dlg_org_OK">OK</string>
 

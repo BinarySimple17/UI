@@ -25,11 +25,14 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:text="@string/org_txt1"
                 android:id="@+id/textView7" />
+
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:id="@+id/trCompName">
 
             <TextView
                 android:editable="false"
@@ -43,12 +46,12 @@
                 android:enabled="true"
                 android:imeOptions="actionNext"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
-
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/text_margin">
 
             <TextView
                 android:layout_width="wrap_content"

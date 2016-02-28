@@ -55,6 +55,8 @@ public class Main extends AppCompatActivity {
     final static Integer START_ACT_FOR_EDIT = 102;
     final static String FAB_TAG_CALC = "fab_tag_edit";
     final static String FAB_TAG_SAVE = "fab_tag_save";
+    final static String FAB_PARAM_TAG_EDIT = "fab_tag_edit";
+    final static String FAB_PARAM_TAG_SAVE = "fab_tag_save";
     final static String RESULTS_REQUEST_CALC = "REQUEST";
     final static String RESULTS_REQUEST_LOAD = "LOAD";
     final static String RESULTS_CALC = "CALC";
@@ -108,6 +110,12 @@ public class Main extends AppCompatActivity {
 
         cv.put("name", name);
         cv.put("test", 1);
+        cv.put("ndfl", getResources().getString(R.string.par_ndfl_hint));
+        cv.put("pfr", getResources().getString(R.string.par_pfr_hint));
+        cv.put("fss", getResources().getString(R.string.par_fss_hint));
+        cv.put("ffoms", getResources().getString(R.string.par_ffoms_hint));
+        cv.put("year", "" + Calendar.getInstance().get(Calendar.YEAR));
+        cv.put("month", Calendar.getInstance().get(Calendar.MONTH));
         WorkDB workDB = new WorkDB();
         workDB.insertRecord(this, TABLE_NAME_C, cv); //new insert to db
         Cursor c = db.rawQuery("select * from " + Main.TABLE_NAME_C + "", null);
@@ -243,6 +251,7 @@ public class Main extends AppCompatActivity {
                             menu.setGroupVisible(R.id.grPersAdd, false);
                             menu.setGroupVisible(R.id.grPers, false);
                             mViewPager.setCurrentItem(tab.getPosition(), true);
+                            loadParams();
                             break;
                         case 2:
                             // menu.setGroupVisible(R.id.grMain, false);
@@ -258,25 +267,41 @@ public class Main extends AppCompatActivity {
                 }
             }
 
+            public void loadParams(){
+                EditText etYear = (EditText) findViewById(R.id.etYear);
+                Spinner spMonth = (Spinner) findViewById(R.id.spMonth);
+                EditText etNdfl = (EditText) findViewById(R.id.etNdfl);
+                EditText etPfr = (EditText) findViewById(R.id.edPfr);
+                EditText etFfoms = (EditText) findViewById(R.id.edFfoms);
+                EditText etFss = (EditText) findViewById(R.id.edFss);
+                sPref = getSharedPreferences("mPref", MODE_PRIVATE); // get preferences
+                String year = sPref.getString("year", "-1");
+                if (!year.equals("-1")) {
+                    etYear.setText(year);
+                } else {
+                    etYear.setText("" + Calendar.getInstance().get(Calendar.YEAR));
+                }
+                Spinner spinner = (Spinner) findViewById(R.id.spMonth);
+                spinner.setSelection(sPref.getInt("month", Calendar.getInstance().get(Calendar.MONTH)));
+                if (!sPref.getString("ndfl", "-1").equals("-1")) {
+                    etNdfl.setText(sPref.getString("ndfl", "-1"));
+                }
+                if (!sPref.getString("pfr", "-1").equals("-1")) {
+                    etPfr.setText(sPref.getString("pfr", "-1"));
+                }
+                if (!sPref.getString("ffoms", "-1").equals("-1")) {
+                    etFfoms.setText(sPref.getString("ffoms", "-1"));
+                }
+                if (!sPref.getString("fss", "-1").equals("-1")) {
+                    etFss.setText(sPref.getString("fss", "-1"));
+                }
+            }
+
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
                 Log.d(LOG_TAG, tab.getPosition() + " onTabUnselected");
                 if (tab.getPosition() == 1) {
-                    EditText etYear = (EditText) findViewById(R.id.etYear);
-                    Spinner spMonth = (Spinner) findViewById(R.id.spMonth);
-                    EditText etNdfl = (EditText) findViewById(R.id.etNdfl);
-                    EditText etPfr = (EditText) findViewById(R.id.edPfr);
-                    EditText etFfoms = (EditText) findViewById(R.id.edFfoms);
-                    EditText etFss = (EditText) findViewById(R.id.edFss);
-                    sPref = getSharedPreferences("mPref", MODE_PRIVATE); // get preferences
-                    SharedPreferences.Editor ed = sPref.edit();
-                    ed.putString("year", etYear.getText().toString());
-                    ed.putInt("month", spMonth.getSelectedItemPosition());
-                    ed.putString("ndfl", etNdfl.getText().toString());
-                    ed.putString("pfr", etPfr.getText().toString());
-                    ed.putString("ffoms", etFfoms.getText().toString());
-                    ed.putString("fss", etFss.getText().toString());
-                    ed.apply();
+
                 }
             }
 
@@ -286,7 +311,6 @@ public class Main extends AppCompatActivity {
             }
         });
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -439,6 +463,7 @@ public class Main extends AppCompatActivity {
         private static final String ARG_SECTION_NUMBER = "section_number";
         String[] data = {"январь", "февраль", "март", "апрель", "май", "июнь", "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь"};
         SharedPreferences sPref;
+        FloatingActionButton fab_param;
 
         /**
          * Returns a new instance of this fragment for the given section
@@ -455,13 +480,15 @@ public class Main extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_params, container, false);
+            final View rootView = inflater.inflate(R.layout.fragment_params, container, false);
             rootView.setTag("param");
             Spinner spinner = (Spinner) rootView.findViewById(R.id.spMonth);
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
                     android.R.layout.simple_spinner_item, data);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner.setAdapter(adapter);
+            spinner.setEnabled(false);
+
             sPref = getActivity().getSharedPreferences("mPref", MODE_PRIVATE); // get preferences
             EditText etYear = (EditText) rootView.findViewById(R.id.etYear);
             EditText etNdfl = (EditText) rootView.findViewById(R.id.etNdfl);
@@ -487,8 +514,73 @@ public class Main extends AppCompatActivity {
             if (!sPref.getString("fss", "-1").equals("-1")) {
                 etFss.setText(sPref.getString("fss", "-1"));
             }
+
+            fab_param = (FloatingActionButton) rootView.findViewById(R.id.fab_params);
+            fab_param.setTag(Main.FAB_PARAM_TAG_EDIT);
+            fab_param.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    saveParamStates(rootView);
+                }
+            });
+
             return rootView;
         }
+
+        private void saveParams(View rootView) {   //save params to sPref and DB
+            EditText etYear = (EditText) rootView.findViewById(R.id.etYear);
+            Spinner spMonth = (Spinner) rootView.findViewById(R.id.spMonth);
+            EditText etNdfl = (EditText) rootView.findViewById(R.id.etNdfl);
+            EditText etPfr = (EditText) rootView.findViewById(R.id.edPfr);
+            EditText etFfoms = (EditText) rootView.findViewById(R.id.edFfoms);
+            EditText etFss = (EditText) rootView.findViewById(R.id.edFss);
+            sPref = getActivity().getSharedPreferences("mPref", MODE_PRIVATE); // get preferences
+            Integer comp_id = sPref.getInt("c_id", -1);
+            if (comp_id < 0) return;
+
+            SharedPreferences.Editor ed = sPref.edit();
+            ed.putString("year", etYear.getText().toString());
+            ed.putInt("month", spMonth.getSelectedItemPosition());
+            ed.putString("ndfl", etNdfl.getText().toString());
+            ed.putString("pfr", etPfr.getText().toString());
+            ed.putString("ffoms", etFfoms.getText().toString());
+            ed.putString("fss", etFss.getText().toString());
+            ed.apply();
+
+            WorkDB workDB = new WorkDB();
+            ContentValues cv = new ContentValues();
+            cv.put("test", 1);
+            cv.put("ndfl", etNdfl.getText().toString());
+            cv.put("pfr", etPfr.getText().toString());
+            cv.put("fss", etFss.getText().toString());
+            cv.put("ffoms", etFfoms.getText().toString());
+            cv.put("year", etYear.getText().toString());
+            cv.put("month", spMonth.getSelectedItemPosition());
+            workDB.updateRecord(getActivity(), TABLE_NAME_C, cv, comp_id.toString());
+
+        }
+
+        private void saveParamStates(View rootView) {
+            fab_param = (FloatingActionButton) rootView.findViewById(R.id.fab_params);
+            if (fab_param.getTag().equals(Main.FAB_PARAM_TAG_SAVE)) {
+                fab_param.setTag(Main.FAB_PARAM_TAG_EDIT);
+                fab_param.setImageDrawable(getResources().getDrawable(R.drawable.ic_editorg));
+                //TODO save params here
+                saveParams(rootView);
+            } else {
+                fab_param.setTag(Main.FAB_PARAM_TAG_SAVE);
+                fab_param.setImageDrawable(getResources().getDrawable(R.drawable.ic_save));
+
+            }
+            rootView.findViewById(R.id.etYear).setEnabled(!rootView.findViewById(R.id.etYear).isEnabled());
+            rootView.findViewById(R.id.spMonth).setEnabled(!rootView.findViewById(R.id.spMonth).isEnabled());
+            rootView.findViewById(R.id.etNdfl).setEnabled(!rootView.findViewById(R.id.etNdfl).isEnabled());
+            rootView.findViewById(R.id.edPfr).setEnabled(!rootView.findViewById(R.id.edPfr).isEnabled());
+            rootView.findViewById(R.id.edFfoms).setEnabled(!rootView.findViewById(R.id.edFfoms).isEnabled());
+            rootView.findViewById(R.id.edFss).setEnabled(!rootView.findViewById(R.id.edFss).isEnabled());
+        }
+
+
     }
 
     public static class FragmentOrg extends Fragment {
@@ -569,6 +661,12 @@ public class Main extends AppCompatActivity {
                     Log.d(LOG_TAG, " spinner select " + position);
                     sPref = getActivity().getSharedPreferences("mPref", MODE_PRIVATE); // get preferences
                     Integer c_id = sPref.getInt("c_id", -1);
+                    String year = ""+ Calendar.getInstance().get(Calendar.YEAR);
+                    Integer month = Calendar.getInstance().get(Calendar.MONTH);
+                    String ndfl = getResources().getString(R.string.par_ndfl_hint);
+                    String pfr = getResources().getString(R.string.par_pfr_hint);
+                    String ffoms = getResources().getString(R.string.par_ffoms_hint);
+                    String fss = getResources().getString(R.string.par_fss_hint);
                     String name = parent.getSelectedItem().toString();
                     etCompName.setText(name);
                     try {
@@ -582,16 +680,29 @@ public class Main extends AppCompatActivity {
                             }
 
                             c_id = c.getInt(c.getColumnIndex("_id"));
+                            year = c.getString(c.getColumnIndex("year"));
+                            month = c.getInt(c.getColumnIndex("month"));
+                            ndfl = c.getString(c.getColumnIndex("ndfl"));
+                            pfr = c.getString(c.getColumnIndex("pfr"));
+                            ffoms = c.getString(c.getColumnIndex("ffoms"));
+                            fss = c.getString(c.getColumnIndex("fss"));
                         }
                         c.close();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
 
+                    //TODO save all params from DB to sPref
                     SharedPreferences.Editor ed = sPref.edit();
                     ed.putString("cn", name); //put company name
                     ed.putInt("c_id", c_id); // put company id
                     ed.putInt("sp_id", position);
+                    ed.putString("year", year);
+                    ed.putInt("month", month);
+                    ed.putString("ndfl", ndfl);
+                    ed.putString("pfr", pfr);
+                    ed.putString("ffoms", ffoms);
+                    ed.putString("fss", fss);
                     ed.apply(); // save pref
                     //   dbHelper.close();
                 }

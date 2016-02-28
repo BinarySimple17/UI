@@ -27,7 +27,13 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE IF NOT EXISTS " + Main.TABLE_NAME_C +
                 " (_id integer PRIMARY KEY AUTOINCREMENT," +
                  " name text NOT NULL," +
-                " test int NOT NULL" +
+                " test int NOT NULL," +
+                " ndfl text," +
+                " pfr text," +
+                " fss text," +
+                " ffoms text," +
+                " year text," +
+                " month int" +
                 ");");
         db.execSQL("CREATE TABLE IF NOT EXISTS " + Main.TABLE_ILL_DAY +
                 " (_id integer PRIMARY KEY AUTOINCREMENT," +

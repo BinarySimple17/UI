@@ -336,7 +336,7 @@
     <string name="dialog_2_text">Сохранить изменения?</string>
     <string name="dlg_org_OK">OK</string>
     <string name="dlg_org_cancel">Отмена</string>
-    <string name="dlg_org_caption">Организация</string>
+    <string name="dlg_org_caption">Название</string>
     <string name="maybe">Maybe</string>
     <string name="no">Нет</string>
     <string name="org_edit1">Название</string>
