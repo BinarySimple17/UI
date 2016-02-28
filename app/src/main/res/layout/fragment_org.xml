@@ -45,7 +45,23 @@
                 android:singleLine="true"
                 android:enabled="true"
                 android:imeOptions="actionNext"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnCompNameEdit"
+                android:src="@mipmap/ic_editorg_button"
+                android:layout_gravity="center_vertical"
+                android:cropToPadding="false"
+                android:contextClickable="false"
+                android:baselineAlignBottom="false"
+                android:adjustViewBounds="false"
+                style="@style/Widget.AppCompat.ActionButton"
+                android:visibility="gone" />
+
         </TableRow>
 
         <TableRow

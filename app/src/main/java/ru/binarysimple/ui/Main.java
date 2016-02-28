@@ -714,6 +714,8 @@ public class Main extends AppCompatActivity {
 
             etCompName.setOnClickListener(onOnClickEvent);
 
+
+
             fab_org.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

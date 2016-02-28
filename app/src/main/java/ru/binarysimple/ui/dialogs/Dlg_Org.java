@@ -16,6 +16,9 @@ import ru.binarysimple.ui.R;
 
 public class Dlg_Org extends DialogFragment {
     SharedPreferences sPref;
+    EditText etComp;
+    Main main;
+    TextView etCompName;
 
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -25,9 +28,9 @@ public class Dlg_Org extends DialogFragment {
                 .setPositiveButton(R.string.dlg_org_OK, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        EditText etComp = (EditText) getDialog().findViewById(R.id.etDlgCompName);
-                        Main main = (Main) getActivity();
-                        TextView etCompName = (TextView) main.getOrgView().findViewById(R.id.etCompName);
+                        etComp = (EditText) getDialog().findViewById(R.id.etDlgCompName);
+                        main = (Main) getActivity();
+                        etCompName = (TextView) main.getOrgView().findViewById(R.id.etCompName);
                         etCompName.setText(etComp.getText());
                         FloatingActionButton fab = (FloatingActionButton) main.getOrgView().findViewById(R.id.fab_org);
                         fab.setTag(Main.FAB_ORG_TAG_SAVE);
@@ -38,8 +41,8 @@ public class Dlg_Org extends DialogFragment {
                 .setNegativeButton(R.string.dlg_org_cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Main main = (Main) getActivity();
-                        TextView etCompName = (TextView) main.getOrgView().findViewById(R.id.etCompName);
+                        main = (Main) getActivity();
+                        etCompName = (TextView) main.getOrgView().findViewById(R.id.etCompName);
                         sPref = main.getMainContext().getSharedPreferences("mPref", main.getMainContext().MODE_PRIVATE);
                         etCompName.setText(sPref.getString("cn", ""));
                         main.setSpinner(main.getOrgView(), sPref.getInt("c_id", 0) - 1);
@@ -47,5 +50,16 @@ public class Dlg_Org extends DialogFragment {
                     }
                 });
         return adb.create();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        main = (Main) getActivity();
+        etComp = (EditText) getDialog().findViewById(R.id.etDlgCompName);
+        etCompName = (TextView) main.getOrgView().findViewById(R.id.etCompName);
+        etComp.setText("");
+        etComp.append(etCompName.getText());
+
     }
 }
