@@ -43,14 +43,6 @@ public class PersonListActivity extends AppCompatActivity {
 
     private ArrayList<Result> calcResults() {
         ArrayList<Result> results = new ArrayList<Result>();
-        //TODO calc new results
-            /*√взять comp_id
-            * √взять ставки налогов
-            * √по comp_id отобрать сотрудников
-            * √по каждому сотруднику создать экземпляр Results
-            * √объеднить их в ArrayList<Results>
-            * √передать в setupRecyclerView массив результатов
-            */
         sPref = getSharedPreferences("mPref", MODE_PRIVATE); // get preferences
         String comp_id = Integer.toString(sPref.getInt("c_id",-1));
         String year = sPref.getString("year", "-1");//TODO add calendar current year into Reslts
