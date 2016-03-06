@@ -31,7 +31,7 @@ public class PersActivity extends AppCompatActivity {
         String name="";
         String position="";
         String salary="";
-        Integer id=-1;
+        Long id=Long.parseLong("-1");
         Integer comp_id=-1;
         Person person = new Person(name,position,salary,id,comp_id);
         try{
@@ -39,8 +39,8 @@ public class PersActivity extends AppCompatActivity {
             person.name=intent.getStringExtra("ed_name");
             person.position=intent.getStringExtra("ed_position");
             person.salary=intent.getStringExtra("ed_salary");
-            person.id =intent.getIntExtra("ed_id",-1);
-            person.id =intent.getIntExtra("ed_comp_id",-1);
+            person.id =intent.getLongExtra("ed_id",-1);
+            person.comp_id =intent.getIntExtra("ed_comp_id",-1);
         }
         catch (Exception e){
 

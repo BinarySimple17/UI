@@ -785,7 +785,7 @@ public class Main extends AppCompatActivity {
                 persons.add(new Person(data.getStringExtra("name"),
                         data.getStringExtra("position"),
                         data.getStringExtra("salary"),
-                        data.getIntExtra("id", -1),
+                        data.getLongExtra("id", -1),
                         data.getIntExtra("comp_id", c_id)));
 
                 myAdapter.notifyDataSetChanged();
@@ -805,7 +805,7 @@ public class Main extends AppCompatActivity {
             persons.set(i, new Person(data.getStringExtra("name"),
                     data.getStringExtra("position"),
                     data.getStringExtra("salary"),
-                    data.getIntExtra("id", -1),
+                    data.getLongExtra("id", -1),
                     data.getIntExtra("comp_id", c_id)));
             myAdapter.notifyDataSetChanged();
             lvMain.setAdapter(myAdapter);
@@ -813,6 +813,8 @@ public class Main extends AppCompatActivity {
         }
 
         public void savePersonsListToDB() {
+
+            //TODO check this! double savings!!!
             Log.d(LOG_TAG, "myAdapter records count = " + myAdapter.getCount());
             Log.d(LOG_TAG, "persons records count = " + persons.size());
 
@@ -829,7 +831,8 @@ public class Main extends AppCompatActivity {
                 WorkDB workDB = new WorkDB();
 
                 if (persons.get(i).id < 0) {
-                    workDB.insertRecord(getActivity(), TABLE_NAME, cv); //new insert to db*/
+                    Long _id = workDB.insertRecord(getActivity(), TABLE_NAME, cv); //new insert to db and get new _id*/
+                    persons.get(i).id=_id;
                 } else {
                     workDB.updateRecord(getActivity(), TABLE_NAME, cv, persons.get(i).id.toString());
 
@@ -854,7 +857,7 @@ public class Main extends AppCompatActivity {
                         Person person = new Person(c.getString(c.getColumnIndex("name")),
                                 c.getString(c.getColumnIndex("pos")),
                                 c.getString(c.getColumnIndex("sal")),
-                                c.getInt(c.getColumnIndex("_id")),
+                                c.getLong(c.getColumnIndex("_id")),
                                 c.getInt(c.getColumnIndex("comp_id")));
                         persons.add(i, person);
                         c.move(1);

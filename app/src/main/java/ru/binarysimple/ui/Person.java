@@ -8,11 +8,11 @@ public class Person {
     String name;
     String position;
     String salary;
-    Integer id;
+    Long id;
     Integer comp_id;
 
 
-    Person (String _name, String _position, String _salary, Integer _id, Integer _comp_id) {
+    Person (String _name, String _position, String _salary, Long _id, Integer _comp_id) {
         name = _name;
         position = _position;
         salary = _salary;
