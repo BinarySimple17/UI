@@ -6,11 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-
-
-/**
- * Created by voffka on 11.10.2015.
- */
 public class WorkDB {
     final String LOG_TAG = "fc_log";
     DBHelper dbHelper;
@@ -24,11 +19,22 @@ public class WorkDB {
         return rowID;
     }
 
+    public long insertRecordOnConflict (Context context, String tableName, ContentValues cv){
+        dbHelper = new DBHelper(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        Log.d(LOG_TAG, "Insert record into " + tableName);
+        //long rowID = db.insert(tableName, null, cv); // insert new record to db and return its rowId
+        long rowID = db.insertWithOnConflict(tableName, null, cv, SQLiteDatabase.CONFLICT_REPLACE);
+        dbHelper.close();
+        return rowID;
+    }
+
     public void updateRecord (Context context, String tableName, ContentValues cv, String id){
         dbHelper = new DBHelper(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         Log.d(LOG_TAG, "Update record in "+tableName);
         db.update(tableName, cv, "_id = ?", new String[]{id});
+        //db.insertWithOnConflict()
         dbHelper.close();
     }
 
@@ -52,7 +58,15 @@ public class WorkDB {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         db.execSQL("DELETE FROM "+tableName+" WHERE _id="+id);
         dbHelper.close();
+    }
 
+    public void delResults(Context context, String comp_id, String month, String year){
+        //delete from results where comp_id=1 and month=2 and year=2016
+        Log.d(LOG_TAG, "delete data from Results");
+        dbHelper = new DBHelper(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.execSQL("DELETE FROM RESULTS WHERE comp_id="+comp_id+" and month="+month+" and year="+year);
+        dbHelper.close();
     }
 
 }

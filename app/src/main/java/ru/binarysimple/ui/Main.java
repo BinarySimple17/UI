@@ -195,7 +195,7 @@ public class Main extends AppCompatActivity {
                 c.close();
                 if (pos > -1) {
                     spinner.setSelection(pos);
-                    fragmentPers.loadPersonsListFromDB();
+                    if (fragmentPers!=null) fragmentPers.loadPersonsListFromDB();
                 } else if (pos == -2) {
                     spinner.setSelection(spinner.getCount() - 1);
                 }
@@ -556,8 +556,8 @@ public class Main extends AppCompatActivity {
             cv.put("ffoms", etFfoms.getText().toString());
             cv.put("year", etYear.getText().toString());
             cv.put("month", spMonth.getSelectedItemPosition());
+            spMonth.getSelectedItemPosition();
             workDB.updateRecord(getActivity(), TABLE_NAME_C, cv, comp_id.toString());
-
         }
 
         private void saveParamStates(View rootView) {
@@ -570,7 +570,6 @@ public class Main extends AppCompatActivity {
             } else {
                 fab_param.setTag(Main.FAB_PARAM_TAG_SAVE);
                 fab_param.setImageDrawable(getResources().getDrawable(R.drawable.ic_save));
-
             }
             rootView.findViewById(R.id.etYear).setEnabled(!rootView.findViewById(R.id.etYear).isEnabled());
             rootView.findViewById(R.id.spMonth).setEnabled(!rootView.findViewById(R.id.spMonth).isEnabled());
@@ -579,8 +578,6 @@ public class Main extends AppCompatActivity {
             rootView.findViewById(R.id.edFfoms).setEnabled(!rootView.findViewById(R.id.edFfoms).isEnabled());
             rootView.findViewById(R.id.edFss).setEnabled(!rootView.findViewById(R.id.edFss).isEnabled());
         }
-
-
     }
 
     public static class FragmentOrg extends Fragment {
@@ -610,7 +607,6 @@ public class Main extends AppCompatActivity {
 
             }
         };
-        /*****************************************/
 
         /**
          * Returns a new instance of this fragment for the given section
@@ -653,7 +649,6 @@ public class Main extends AppCompatActivity {
             /**
              * set spinner select item listener
              */
-            //Spinner spinner = (Spinner) rootView.findViewById(R.id.spOrgs);
             spOrgs.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view,
@@ -713,9 +708,6 @@ public class Main extends AppCompatActivity {
             });
 
             etCompName.setOnClickListener(onOnClickEvent);
-
-
-
             fab_org.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -766,11 +758,8 @@ public class Main extends AppCompatActivity {
          */
 
         public void onSaveState() {
-            Log.d(LOG_TAG, "Fragment PERS custom SaveState");
-
-            //   saveFragment.setData(persons);
-
-        }
+            //Log.d(LOG_TAG, "Fragment PERS custom SaveState");
+            }
 
         public void addPers(Intent data) {
             Log.d(LOG_TAG, "Add person");

@@ -26,7 +26,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 ");");
         db.execSQL("CREATE TABLE IF NOT EXISTS " + Main.TABLE_NAME_C +
                 " (_id integer PRIMARY KEY AUTOINCREMENT," +
-                 " name text NOT NULL," +
+                " name text NOT NULL," +
                 " test int NOT NULL," +
                 " ndfl text," +
                 " pfr text," +
@@ -49,13 +49,17 @@ public class DBHelper extends SQLiteOpenHelper {
                 ");");
         db.execSQL("CREATE TABLE IF NOT EXISTS " + Main.TABLE_RESULTS +
                 " (_id integer PRIMARY KEY AUTOINCREMENT," +
-                " id_pers integer NOT NULL," +
+                " id_person integer NOT NULL," +
                 " month integer NOT NULL," +
                 " year integer NOT NULL," +
                 " ndfl text NOT NULL," +
                 " ffoms text NOT NULL," +
                 " pfr text NOT NULL," +
-                " fss text NOT NULL" +
+                " fss text NOT NULL," +
+                " name text NOT NULL," +
+                " position text NOT NULL," +
+                " salary text NOT NULL," +
+                " comp_id text NOT NULL" +
                 ");");
 
 

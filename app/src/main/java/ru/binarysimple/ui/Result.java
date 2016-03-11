@@ -10,7 +10,7 @@ import android.os.Build;
 public class Result {
  //   private final Context context;
     private final Integer _id;
-    private final Integer id_person;
+    private final Long id_person;
     private final Integer month;
     private final Integer year;
     private final String ndfl;
@@ -62,7 +62,7 @@ public class Result {
         return _id;
     }
 
-    public Integer getId_person(){
+    public Long getId_person(){
         return id_person;
     }
 
@@ -93,7 +93,7 @@ public class Result {
     public static class ResultBuilder{
   //      private  Context context;
         private  Integer _id;
-        private  Integer id_person;
+        private  Long id_person;
         private  Integer month;
         private  Integer year;
         private  String ndfl;
@@ -115,7 +115,7 @@ public class Result {
             return this;
         }
 
-        public ResultBuilder setId_person(Integer id_person) {
+        public ResultBuilder setId_person(Long id_person) {
             this.id_person = id_person;
             return this;
         }
@@ -177,7 +177,7 @@ public class Result {
             return _id;
         }
 
-        public Integer getId_person() {
+        public Long getId_person() {
             return id_person;
         }
 

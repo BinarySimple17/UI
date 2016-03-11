@@ -1,5 +1,6 @@
 package ru.binarysimple.ui;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -22,7 +23,9 @@ import android.widget.Toast;
 import ru.binarysimple.ui.content.PersonContent;
 
 import java.util.ArrayList;
+import java.util.Currency;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * An activity representing a list of Persons. This activity
@@ -40,17 +43,20 @@ public class PersonListActivity extends AppCompatActivity {
      */
     private boolean mTwoPane;
     SharedPreferences sPref;
+    ArrayList<Result> results = new ArrayList<Result>();
 
     private ArrayList<Result> calcResults() {
         ArrayList<Result> results = new ArrayList<Result>();
         sPref = getSharedPreferences("mPref", MODE_PRIVATE); // get preferences
-        String comp_id = Integer.toString(sPref.getInt("c_id",-1));
-        String year = sPref.getString("year", "-1");//TODO add calendar current year into Reslts
+        String comp_id = Integer.toString(sPref.getInt("c_id", -1));
+        String year = sPref.getString("year", "-1");
         String month = Integer.toString(sPref.getInt("month", -1));//int
-        String ndfl = sPref.getString("ndfl", "-1");//
-        String ffoms = sPref.getString("ffoms","-1");
-        String pfr = sPref.getString("pfr","-1");
-        String fss = sPref.getString("fss","-1");
+        String ndfl = sPref.getString("ndfl", getResources().getString(R.string.par_ndfl_hint));//
+        String ffoms = sPref.getString("ffoms",getResources().getString(R.string.par_ffoms_hint));
+        String pfr = sPref.getString("pfr", getResources().getString(R.string.par_pfr_hint));
+        String fss = sPref.getString("fss",getResources().getString(R.string.par_fss_hint));
+
+        Currency curr = Currency.getInstance(Locale.getDefault());
         WorkDB workDB = new WorkDB();
         Cursor c = workDB.getData(this, "select * from "+Main.TABLE_NAME+" WHERE comp_id = ?", new String[] {comp_id.toString()});
         if (c == null) return null;
@@ -58,13 +64,13 @@ public class PersonListActivity extends AppCompatActivity {
         for (int i=0;i < c.getCount();i++) {
             Result result = new Result.ResultBuilder()
                     .set_id(i)
-                    .setId_person(c.getInt(c.getColumnIndex("_id")))
+                    .setId_person(c.getLong(c.getColumnIndex("_id")))
                     .setMonth(Integer.parseInt(month))
                     .setYear(Integer.parseInt(year))
-                    .setNdfl(ndfl + " x salary")
-                    .setFfoms(ffoms +" x salary")
-                    .setPfr(pfr+" x salary")
-                    .setFss(fss+" x salary")
+                    .setNdfl(CurrOps.mult(curr, ndfl, c.getString(c.getColumnIndex("sal"))))
+                    .setFfoms(CurrOps.mult(curr,ffoms,c.getString(c.getColumnIndex("sal"))))
+                    .setPfr(CurrOps.mult(curr,pfr,c.getString(c.getColumnIndex("sal"))))
+                    .setFss(CurrOps.mult(curr,fss,c.getString(c.getColumnIndex("sal"))))
                     .setName(c.getString(c.getColumnIndex("name")))
                     .setPosition(c.getString(c.getColumnIndex("pos")))
                     .setSalary(c.getString(c.getColumnIndex("sal")))
@@ -85,31 +91,13 @@ public class PersonListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
 
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Here must be save all results action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         View recyclerView = findViewById(R.id.person_list);
         assert recyclerView != null;
         //TODO choose start for calc or start for saved
-    //    Intent intent = getIntent();
-        ArrayList<Result> results = new ArrayList<Result>();
-       // if (intent.getStringExtra(Main.RESULTS_REQUEST_CALC).equals(Main.RESULTS_CALC)){
+      //   ArrayList<Result> results = new ArrayList<Result>();
             results = calcResults();
-       //     if (results == null) return;
             setupRecyclerViewArray((RecyclerView) recyclerView, results);
-       // }
-       // else {
             //TODO load from db
-        //    setupRecyclerView((RecyclerView) recyclerView);
-       // }
-
 
         if (findViewById(R.id.person_detail_container) != null) {
             // The detail container view will be present only in the
@@ -118,6 +106,38 @@ public class PersonListActivity extends AppCompatActivity {
             // activity should be in two-pane mode.
             mTwoPane = true;
         }
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO save all results to DB. check for duplicates, update duplicates.
+                if (results.size()<1) return;
+                WorkDB workDB_res = new WorkDB();
+                workDB_res.delResults(view.getContext(),results.get(0).getComp_id(),results.get(0).getMonth().toString(),results.get(0).getYear().toString());
+
+                ContentValues cv = new ContentValues();
+                for (int i=0;i < results.size() ;i++) {
+                    cv.put("id_person", results.get(i).getId_person());
+                    cv.put("month", results.get(i).getMonth());
+                    cv.put("year", results.get(i).getYear());
+                    cv.put("ndfl", results.get(i).getNdfl());
+                    cv.put("ffoms", results.get(i).getFfoms());
+                    cv.put("pfr", results.get(i).getPfr());
+                    cv.put("fss", results.get(i).getFss());
+                    cv.put("name", results.get(i).getName());
+                    cv.put("position", results.get(i).getPosition());
+                    cv.put("salary", results.get(i).getSalary());
+                    cv.put("comp_id", results.get(i).getComp_id());
+                    WorkDB workDB = new WorkDB();
+                    workDB.insertRecordOnConflict(view.getContext(),Main.TABLE_RESULTS,cv);
+                    //updateWithOnConflict
+                    cv.clear();
+                }
+                Snackbar.make(view, "Результаты сохранены", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
