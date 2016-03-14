@@ -58,7 +58,7 @@ public class Main extends AppCompatActivity {
     final static String FAB_PARAM_TAG_EDIT = "fab_tag_edit";
     final static String FAB_PARAM_TAG_SAVE = "fab_tag_save";
     final static String RESULTS_REQUEST_CALC = "REQUEST";
-    final static String RESULTS_REQUEST_LOAD = "LOAD";
+    final static String RESULTS_LOAD = "LOAD";
     final static String RESULTS_CALC = "CALC";
     final static Integer DLG_ORG_EDIT = 200;
     final static Integer DLG_ORG_NEW = 201;
@@ -718,6 +718,10 @@ public class Main extends AppCompatActivity {
                             //TODO load results here
                             Snackbar.make(rootView, "Here must be load all results action", Snackbar.LENGTH_LONG)
                                     .setAction("Action", null).show();
+                            Intent intent = new Intent(getActivity(), PersonListActivity.class);
+                            intent.putExtra(Main.RESULTS_REQUEST_CALC, Main.RESULTS_LOAD);
+                            startActivity(intent);
+
                         }
                     }
                 }

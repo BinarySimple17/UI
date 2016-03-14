@@ -18,6 +18,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 
 
 import ru.binarysimple.ui.content.PersonContent;
@@ -43,9 +45,11 @@ public class PersonListActivity extends AppCompatActivity {
      */
     private boolean mTwoPane;
     SharedPreferences sPref;
+    Boolean  startedForCalc;
     ArrayList<Result> results = new ArrayList<Result>();
+    SaveFragmentPersonList saveFragmentPersonList;
 
-    private ArrayList<Result> calcResults() {
+    private ArrayList<Result> calcResults() { //load c_id, year and month from sPref
         ArrayList<Result> results = new ArrayList<Result>();
         sPref = getSharedPreferences("mPref", MODE_PRIVATE); // get preferences
         String comp_id = Integer.toString(sPref.getInt("c_id", -1));
@@ -68,9 +72,9 @@ public class PersonListActivity extends AppCompatActivity {
                     .setMonth(Integer.parseInt(month))
                     .setYear(Integer.parseInt(year))
                     .setNdfl(CurrOps.mult(curr, ndfl, c.getString(c.getColumnIndex("sal"))))
-                    .setFfoms(CurrOps.mult(curr,ffoms,c.getString(c.getColumnIndex("sal"))))
-                    .setPfr(CurrOps.mult(curr,pfr,c.getString(c.getColumnIndex("sal"))))
-                    .setFss(CurrOps.mult(curr,fss,c.getString(c.getColumnIndex("sal"))))
+                    .setFfoms(CurrOps.mult(curr, ffoms, c.getString(c.getColumnIndex("sal"))))
+                    .setPfr(CurrOps.mult(curr, pfr, c.getString(c.getColumnIndex("sal"))))
+                    .setFss(CurrOps.mult(curr, fss, c.getString(c.getColumnIndex("sal"))))
                     .setName(c.getString(c.getColumnIndex("name")))
                     .setPosition(c.getString(c.getColumnIndex("pos")))
                     .setSalary(c.getString(c.getColumnIndex("sal")))
@@ -80,6 +84,42 @@ public class PersonListActivity extends AppCompatActivity {
             c.moveToNext();
         }
         return results;
+    }
+
+    private ArrayList<Result> loadResults(String comp_id, String year, String month) { // get c_id, year, month from params
+        ArrayList<Result> results = new ArrayList<Result>();
+        sPref = getSharedPreferences("mPref", MODE_PRIVATE); // get preferences
+
+        WorkDB workDB = new WorkDB();
+        Cursor c = workDB.getData(this, "select * from "+Main.TABLE_RESULTS+" WHERE comp_id = ?", new String[] {comp_id});
+        if (c == null) return null;
+        c.moveToFirst();
+        for (int i=0;i < c.getCount();i++) {
+            Result result = new Result.ResultBuilder()
+                    .set_id(i)
+                    .setId_person(c.getLong(c.getColumnIndex("id_person")))
+                    .setMonth(Integer.parseInt(month))
+                    .setYear(Integer.parseInt(year))
+                    .setNdfl(c.getString(c.getColumnIndex("ndfl")))
+                    .setFfoms(c.getString(c.getColumnIndex("ffoms")))
+                    .setPfr(c.getString(c.getColumnIndex("pfr")))
+                    .setFss(c.getString(c.getColumnIndex("fss")))
+                    .setName(c.getString(c.getColumnIndex("name")))
+                    .setPosition(c.getString(c.getColumnIndex("position")))
+                    .setSalary(c.getString(c.getColumnIndex("salary")))
+                    .setComp_id(comp_id)
+                    .build();
+            results.add(i,result);
+            c.moveToNext();
+        }
+        return results;
+    }
+
+
+    private boolean startedForCalc(){
+        Intent intent = getIntent();
+        String s = intent.getStringExtra(Main.RESULTS_REQUEST_CALC);
+        return s.equals(Main.RESULTS_CALC);
     }
 
     @Override
@@ -93,51 +133,90 @@ public class PersonListActivity extends AppCompatActivity {
 
         View recyclerView = findViewById(R.id.person_list);
         assert recyclerView != null;
+
+
+        saveFragmentPersonList = (SaveFragmentPersonList) getSupportFragmentManager().findFragmentByTag("SAVE_FRAGMENT_PERSONLIST");
+        if (saveFragmentPersonList != null) {
+     //TODO load state of startedForCalc
+            startedForCalc = saveFragmentPersonList.getStartedForCalc();
+        } else {
+          //TODO startedForCalc = startedForCalc();
+            saveFragmentPersonList = new SaveFragmentPersonList();
+            getSupportFragmentManager().beginTransaction()
+                    .add(saveFragmentPersonList, "SAVE_FRAGMENT_PERSONLIST")
+                    .commit();
+            startedForCalc = startedForCalc(); // check started for calc?
+        }
+
+          //startedForCalc = startedForCalc(); // check started for calc?
         //TODO choose start for calc or start for saved
-      //   ArrayList<Result> results = new ArrayList<Result>();
-            results = calcResults();
+        if (startedForCalc){
+            results = calcResults();}
+        else {
+            //started for load results from DB
+            //TODO load from db. remove loading from sPref in future
+            sPref = getSharedPreferences("mPref", MODE_PRIVATE); // get preferences
+            String comp_id = Integer.toString(sPref.getInt("c_id", -1));
+            String year = sPref.getString("year", "-1");
+            String month = Integer.toString(sPref.getInt("month", -1));//int
+
+            results = loadResults(comp_id, year,month);
+
+        }
             setupRecyclerViewArray((RecyclerView) recyclerView, results);
-            //TODO load from db
 
         if (findViewById(R.id.person_detail_container) != null) {
-            // The detail container view will be present only in the
-            // large-screen layouts (res/values-w900dp).
-            // If this view is present, then the
-            // activity should be in two-pane mode.
             mTwoPane = true;
         }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //TODO save all results to DB. check for duplicates, update duplicates.
-                if (results.size()<1) return;
-                WorkDB workDB_res = new WorkDB();
-                workDB_res.delResults(view.getContext(),results.get(0).getComp_id(),results.get(0).getMonth().toString(),results.get(0).getYear().toString());
+        if (startedForCalc) { //started for calc new results. Button onClick - save results to DB
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //TODO save all results to DB. remove old results
+                    if (results.size() < 1) return;
+                    WorkDB workDB_res = new WorkDB();
+                    workDB_res.delResults(view.getContext(), results.get(0).getComp_id(), results.get(0).getMonth().toString(), results.get(0).getYear().toString());
 
-                ContentValues cv = new ContentValues();
-                for (int i=0;i < results.size() ;i++) {
-                    cv.put("id_person", results.get(i).getId_person());
-                    cv.put("month", results.get(i).getMonth());
-                    cv.put("year", results.get(i).getYear());
-                    cv.put("ndfl", results.get(i).getNdfl());
-                    cv.put("ffoms", results.get(i).getFfoms());
-                    cv.put("pfr", results.get(i).getPfr());
-                    cv.put("fss", results.get(i).getFss());
-                    cv.put("name", results.get(i).getName());
-                    cv.put("position", results.get(i).getPosition());
-                    cv.put("salary", results.get(i).getSalary());
-                    cv.put("comp_id", results.get(i).getComp_id());
-                    WorkDB workDB = new WorkDB();
-                    workDB.insertRecordOnConflict(view.getContext(),Main.TABLE_RESULTS,cv);
-                    //updateWithOnConflict
-                    cv.clear();
+                    ContentValues cv = new ContentValues();
+                    for (int i = 0; i < results.size(); i++) {
+                        cv.put("id_person", results.get(i).getId_person());
+                        cv.put("month", results.get(i).getMonth());
+                        cv.put("year", results.get(i).getYear());
+                        cv.put("ndfl", results.get(i).getNdfl());
+                        cv.put("ffoms", results.get(i).getFfoms());
+                        cv.put("pfr", results.get(i).getPfr());
+                        cv.put("fss", results.get(i).getFss());
+                        cv.put("name", results.get(i).getName());
+                        cv.put("position", results.get(i).getPosition());
+                        cv.put("salary", results.get(i).getSalary());
+                        cv.put("comp_id", results.get(i).getComp_id());
+                        WorkDB workDB = new WorkDB();
+                        workDB.insertRecordOnConflict(view.getContext(), Main.TABLE_RESULTS, cv);
+                        cv.clear();
+                    }
+                    Snackbar.make(view, "Результаты сохранены", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
                 }
-                Snackbar.make(view, "Результаты сохранены", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+            });
+        }
+        else {
+            // if pressed for load results. Button - clear results from DB
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Snackbar.make(view, "Результаты очищены", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+                }
+            });
+        }
+    }
+
+    public void onPause() {
+        super.onPause();
+        saveFragmentPersonList.setStartedForCalc(startedForCalc);
+        super.onPause();
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
