@@ -66,13 +66,11 @@ public class Main extends AppCompatActivity {
     SharedPreferences sPref;
     DBHelper dbHelper;
     TextView etCompName;
-    //DialogFragment dlg2;
     Menu menu;
     Boolean savedMenuPersIsVisible;
     Boolean savedMenuOrgIsVisible;
     Boolean savedMenuMainIsVisible;
     Boolean savedMenuAddPersIsVisible;
-    //String saved_fab_tag;
     FragmentPers fragmentPers;
     ArrayAdapter<String> spAdapter;
     /**
@@ -195,7 +193,7 @@ public class Main extends AppCompatActivity {
                 c.close();
                 if (pos > -1) {
                     spinner.setSelection(pos);
-                    if (fragmentPers!=null) fragmentPers.loadPersonsListFromDB();
+                    if (fragmentPers != null) fragmentPers.loadPersonsListFromDB();
                 } else if (pos == -2) {
                     spinner.setSelection(spinner.getCount() - 1);
                 }
@@ -267,7 +265,7 @@ public class Main extends AppCompatActivity {
                 }
             }
 
-            public void loadParams(){
+            public void loadParams() {
                 EditText etYear = (EditText) findViewById(R.id.etYear);
                 Spinner spMonth = (Spinner) findViewById(R.id.spMonth);
                 EditText etNdfl = (EditText) findViewById(R.id.etNdfl);
@@ -656,7 +654,7 @@ public class Main extends AppCompatActivity {
                     Log.d(LOG_TAG, " spinner select " + position);
                     sPref = getActivity().getSharedPreferences("mPref", MODE_PRIVATE); // get preferences
                     Integer c_id = sPref.getInt("c_id", -1);
-                    String year = ""+ Calendar.getInstance().get(Calendar.YEAR);
+                    String year = "" + Calendar.getInstance().get(Calendar.YEAR);
                     Integer month = Calendar.getInstance().get(Calendar.MONTH);
                     String ndfl = getResources().getString(R.string.par_ndfl_hint);
                     String pfr = getResources().getString(R.string.par_pfr_hint);
@@ -718,8 +716,16 @@ public class Main extends AppCompatActivity {
                             //TODO load results here
                             Snackbar.make(rootView, "Here must be load all results action", Snackbar.LENGTH_LONG)
                                     .setAction("Action", null).show();
+                            //         Intent intent = new Intent(getActivity(), PersonListActivity.class);
+                            //         intent.putExtra(Main.RESULTS_REQUEST_CALC, Main.RESULTS_LOAD);
+                            //         startActivity(intent);
+                            sPref = getActivity().getSharedPreferences("mPref", MODE_PRIVATE); //get preferences object
+                            SharedPreferences.Editor ed = sPref.edit();
+                            ed.putString(Main.RESULTS_REQUEST_CALC, Main.RESULTS_LOAD); //results request
+                            ed.apply(); // save pref
+
                             Intent intent = new Intent(getActivity(), PersonListActivity.class);
-                            intent.putExtra(Main.RESULTS_REQUEST_CALC, Main.RESULTS_LOAD);
+//                            intent.putExtra(Main.RESULTS_REQUEST_CALC, Main.RESULTS_CALC);
                             startActivity(intent);
 
                         }
@@ -763,7 +769,7 @@ public class Main extends AppCompatActivity {
 
         public void onSaveState() {
             //Log.d(LOG_TAG, "Fragment PERS custom SaveState");
-            }
+        }
 
         public void addPers(Intent data) {
             Log.d(LOG_TAG, "Add person");
@@ -825,7 +831,7 @@ public class Main extends AppCompatActivity {
 
                 if (persons.get(i).id < 0) {
                     Long _id = workDB.insertRecord(getActivity(), TABLE_NAME, cv); //new insert to db and get new _id*/
-                    persons.get(i).id=_id;
+                    persons.get(i).id = _id;
                 } else {
                     workDB.updateRecord(getActivity(), TABLE_NAME, cv, persons.get(i).id.toString());
 
@@ -914,9 +920,13 @@ public class Main extends AppCompatActivity {
                             fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_calc));
                             fab.setTag(Main.FAB_TAG_CALC);
                         } else {
+                            sPref = getActivity().getSharedPreferences("mPref", MODE_PRIVATE); //get preferences object
+                            SharedPreferences.Editor ed = sPref.edit();
+                            ed.putString(Main.RESULTS_REQUEST_CALC, Main.RESULTS_CALC); //results request
+                            ed.apply(); // save pref
 
                             Intent intent = new Intent(getActivity(), PersonListActivity.class);
-                            intent.putExtra(Main.RESULTS_REQUEST_CALC, Main.RESULTS_CALC);
+//                            intent.putExtra(Main.RESULTS_REQUEST_CALC, Main.RESULTS_CALC);
                             startActivity(intent);
                         }
                     }

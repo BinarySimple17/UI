@@ -45,7 +45,7 @@ public class PersonListActivity extends AppCompatActivity {
      */
     private boolean mTwoPane;
     SharedPreferences sPref;
-    Boolean  startedForCalc;
+    private boolean  startedForCalc;
     ArrayList<Result> results = new ArrayList<Result>();
     SaveFragmentPersonList saveFragmentPersonList;
 
@@ -117,9 +117,12 @@ public class PersonListActivity extends AppCompatActivity {
 
 
     private boolean startedForCalc(){
-        Intent intent = getIntent();
+/*        Intent intent = getIntent();
         String s = intent.getStringExtra(Main.RESULTS_REQUEST_CALC);
-        return s.equals(Main.RESULTS_CALC);
+        return s.equals(Main.RESULTS_CALC);*/
+        sPref = getSharedPreferences("mPref", MODE_PRIVATE); // get preferences
+        String request = sPref.getString(Main.RESULTS_REQUEST_CALC, Main.RESULTS_CALC);
+        return request.equals(Main.RESULTS_CALC);
     }
 
     @Override
@@ -133,23 +136,20 @@ public class PersonListActivity extends AppCompatActivity {
 
         View recyclerView = findViewById(R.id.person_list);
         assert recyclerView != null;
+//TODO change to sPref
+//        saveFragmentPersonList = (SaveFragmentPersonList) getFragmentManager().findFragmentByTag("SAVE_FRAGMENT_PERSONLIST");
+//        if (saveFragmentPersonList != null) {
+//            startedForCalc = saveFragmentPersonList.getStartedForCalc();
+//        } else {
+//            saveFragmentPersonList = new SaveFragmentPersonList();
+//            getFragmentManager().beginTransaction()
+//                    .add(saveFragmentPersonList, "SAVE_FRAGMENT_PERSONLIST")
+//                    .commit();
+//        startedForCalc = startedForCalc(); // check started for calc?
+//       }
 
+        startedForCalc = startedForCalc(); // check started for calc?
 
-        saveFragmentPersonList = (SaveFragmentPersonList) getSupportFragmentManager().findFragmentByTag("SAVE_FRAGMENT_PERSONLIST");
-        if (saveFragmentPersonList != null) {
-     //TODO load state of startedForCalc
-            startedForCalc = saveFragmentPersonList.getStartedForCalc();
-        } else {
-          //TODO startedForCalc = startedForCalc();
-            saveFragmentPersonList = new SaveFragmentPersonList();
-            getSupportFragmentManager().beginTransaction()
-                    .add(saveFragmentPersonList, "SAVE_FRAGMENT_PERSONLIST")
-                    .commit();
-            startedForCalc = startedForCalc(); // check started for calc?
-        }
-
-          //startedForCalc = startedForCalc(); // check started for calc?
-        //TODO choose start for calc or start for saved
         if (startedForCalc){
             results = calcResults();}
         else {
@@ -159,9 +159,7 @@ public class PersonListActivity extends AppCompatActivity {
             String comp_id = Integer.toString(sPref.getInt("c_id", -1));
             String year = sPref.getString("year", "-1");
             String month = Integer.toString(sPref.getInt("month", -1));//int
-
             results = loadResults(comp_id, year,month);
-
         }
             setupRecyclerViewArray((RecyclerView) recyclerView, results);
 
@@ -213,11 +211,11 @@ public class PersonListActivity extends AppCompatActivity {
         }
     }
 
-    public void onPause() {
+ /*   public void onPause() {
         super.onPause();
         saveFragmentPersonList.setStartedForCalc(startedForCalc);
         super.onPause();
-    }
+    }*/
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
         /*ArrayList pers = new ArrayList();
@@ -273,7 +271,6 @@ public class PersonListActivity extends AppCompatActivity {
                         Context context = v.getContext();
                         Intent intent = new Intent(context, PersonDetailActivity.class);
                         intent.putExtra(PersonDetailFragment.ARG_ITEM_ID, holder.mItem.get_id().toString());
-
                         context.startActivity(intent);
                     }
                 }
