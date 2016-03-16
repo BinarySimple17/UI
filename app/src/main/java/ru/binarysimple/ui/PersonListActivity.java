@@ -45,7 +45,7 @@ public class PersonListActivity extends AppCompatActivity {
      */
     private boolean mTwoPane;
     SharedPreferences sPref;
-    private boolean  startedForCalc;
+    private boolean startedForCalc;
     ArrayList<Result> results = new ArrayList<Result>();
     SaveFragmentPersonList saveFragmentPersonList;
 
@@ -56,16 +56,17 @@ public class PersonListActivity extends AppCompatActivity {
         String year = sPref.getString("year", "-1");
         String month = Integer.toString(sPref.getInt("month", -1));//int
         String ndfl = sPref.getString("ndfl", getResources().getString(R.string.par_ndfl_hint));//
-        String ffoms = sPref.getString("ffoms",getResources().getString(R.string.par_ffoms_hint));
+        String ffoms = sPref.getString("ffoms", getResources().getString(R.string.par_ffoms_hint));
         String pfr = sPref.getString("pfr", getResources().getString(R.string.par_pfr_hint));
-        String fss = sPref.getString("fss",getResources().getString(R.string.par_fss_hint));
+        String fss = sPref.getString("fss", getResources().getString(R.string.par_fss_hint));
 
         Currency curr = Currency.getInstance(Locale.getDefault());
         WorkDB workDB = new WorkDB();
-        Cursor c = workDB.getData(this, "select * from "+Main.TABLE_NAME+" WHERE comp_id = ?", new String[] {comp_id.toString()});
+        Cursor c = workDB.getData(this, "select * from " + Main.TABLE_NAME + " WHERE comp_id = ?",
+                                    new String[]{comp_id.toString()});
         if (c == null) return null;
         c.moveToFirst();
-        for (int i=0;i < c.getCount();i++) {
+        for (int i = 0; i < c.getCount(); i++) {
             Result result = new Result.ResultBuilder()
                     .set_id(i)
                     .setId_person(c.getLong(c.getColumnIndex("_id")))
@@ -80,7 +81,7 @@ public class PersonListActivity extends AppCompatActivity {
                     .setSalary(c.getString(c.getColumnIndex("sal")))
                     .setComp_id(comp_id.toString())
                     .build();
-            results.add(i,result);
+            results.add(i, result);
             c.moveToNext();
         }
         return results;
@@ -91,10 +92,11 @@ public class PersonListActivity extends AppCompatActivity {
         sPref = getSharedPreferences("mPref", MODE_PRIVATE); // get preferences
 
         WorkDB workDB = new WorkDB();
-        Cursor c = workDB.getData(this, "select * from "+Main.TABLE_RESULTS+" WHERE comp_id = ?", new String[] {comp_id});
+        Cursor c = workDB.getData(this, "select * from " + Main.TABLE_RESULTS + " WHERE comp_id = ? and " +
+                "month = ? and year = ?", new String[]{comp_id, month, year});
         if (c == null) return null;
         c.moveToFirst();
-        for (int i=0;i < c.getCount();i++) {
+        for (int i = 0; i < c.getCount(); i++) {
             Result result = new Result.ResultBuilder()
                     .set_id(i)
                     .setId_person(c.getLong(c.getColumnIndex("id_person")))
@@ -109,17 +111,14 @@ public class PersonListActivity extends AppCompatActivity {
                     .setSalary(c.getString(c.getColumnIndex("salary")))
                     .setComp_id(comp_id)
                     .build();
-            results.add(i,result);
+            results.add(i, result);
             c.moveToNext();
         }
         return results;
     }
 
 
-    private boolean startedForCalc(){
-/*        Intent intent = getIntent();
-        String s = intent.getStringExtra(Main.RESULTS_REQUEST_CALC);
-        return s.equals(Main.RESULTS_CALC);*/
+    private boolean startedForCalc() {
         sPref = getSharedPreferences("mPref", MODE_PRIVATE); // get preferences
         String request = sPref.getString(Main.RESULTS_REQUEST_CALC, Main.RESULTS_CALC);
         return request.equals(Main.RESULTS_CALC);
@@ -136,38 +135,32 @@ public class PersonListActivity extends AppCompatActivity {
 
         View recyclerView = findViewById(R.id.person_list);
         assert recyclerView != null;
-//TODO change to sPref
-//        saveFragmentPersonList = (SaveFragmentPersonList) getFragmentManager().findFragmentByTag("SAVE_FRAGMENT_PERSONLIST");
-//        if (saveFragmentPersonList != null) {
-//            startedForCalc = saveFragmentPersonList.getStartedForCalc();
-//        } else {
-//            saveFragmentPersonList = new SaveFragmentPersonList();
-//            getFragmentManager().beginTransaction()
-//                    .add(saveFragmentPersonList, "SAVE_FRAGMENT_PERSONLIST")
-//                    .commit();
-//        startedForCalc = startedForCalc(); // check started for calc?
-//       }
 
         startedForCalc = startedForCalc(); // check started for calc?
 
-        if (startedForCalc){
-            results = calcResults();}
-        else {
+        if (startedForCalc) {
+            results = calcResults();
+        } else {
             //started for load results from DB
             //TODO load from db. remove loading from sPref in future
             sPref = getSharedPreferences("mPref", MODE_PRIVATE); // get preferences
             String comp_id = Integer.toString(sPref.getInt("c_id", -1));
             String year = sPref.getString("year", "-1");
             String month = Integer.toString(sPref.getInt("month", -1));//int
-            results = loadResults(comp_id, year,month);
+            results = loadResults(comp_id, year, month);
         }
-            setupRecyclerViewArray((RecyclerView) recyclerView, results);
+        setupRecyclerViewArray((RecyclerView) recyclerView, results);
 
         if (findViewById(R.id.person_detail_container) != null) {
             mTwoPane = true;
         }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        if (results.size() < 1) {
+            fab.hide();
+            Snackbar.make(recyclerView, "Нет данных", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+        }
         if (startedForCalc) { //started for calc new results. Button onClick - save results to DB
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -175,7 +168,8 @@ public class PersonListActivity extends AppCompatActivity {
                     //TODO save all results to DB. remove old results
                     if (results.size() < 1) return;
                     WorkDB workDB_res = new WorkDB();
-                    workDB_res.delResults(view.getContext(), results.get(0).getComp_id(), results.get(0).getMonth().toString(), results.get(0).getYear().toString());
+                    workDB_res.delResults(view.getContext(), results.get(0).getComp_id(),
+                            results.get(0).getMonth().toString(), results.get(0).getYear().toString());
 
                     ContentValues cv = new ContentValues();
                     for (int i = 0; i < results.size(); i++) {
@@ -198,39 +192,25 @@ public class PersonListActivity extends AppCompatActivity {
                             .setAction("Action", null).show();
                 }
             });
-        }
-        else {
+        } else {
             // if pressed for load results. Button - clear results from DB
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Snackbar.make(view, "Результаты очищены", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
+                    Snackbar.make(view, "Результаты должны быть очищены?", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
                 }
             });
         }
     }
 
- /*   public void onPause() {
-        super.onPause();
-        saveFragmentPersonList.setStartedForCalc(startedForCalc);
-        super.onPause();
-    }*/
-
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        /*ArrayList pers = new ArrayList();
-        pers.add("pers araylist");*/
-        //PersonContent personContent = new PersonContent();
         recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(PersonContent.ITEMS));
-     //   recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(PersonContent.ITEMS));
     }
 
     private void setupRecyclerViewArray(@NonNull RecyclerView recyclerView, ArrayList<Result> results) {
-        /*ArrayList pers = new ArrayList();
-        pers.add("pers araylist");*/
         PersonContent personContent = new PersonContent(results);
         recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(personContent.ITEMS));
-        //   recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(PersonContent.ITEMS));
     }
 
     public class SimpleItemRecyclerViewAdapter
@@ -252,7 +232,7 @@ public class PersonListActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
             holder.mItem = mValues.get(position);
-            Integer mId = mValues.get(position).get_id()+1;
+            Integer mId = mValues.get(position).get_id() + 1;
             holder.mIdView.setText(mId.toString());
             holder.mContentView.setText(mValues.get(position).getName());
 

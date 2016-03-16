@@ -886,8 +886,9 @@ int string status_bar_notification_info_overflow 0x7f060013
 int string title_activity_pers 0x7f06003f
 int string title_person_detail 0x7f060040
 int string title_person_list 0x7f060041
-int string toastAddPers 0x7f060042
-int string yes 0x7f060043
+int string title_saved_results 0x7f060042
+int string toastAddPers 0x7f060043
+int string yes 0x7f060044
 int style AlertDialog_AppCompat 0x7f09007f
 int style AlertDialog_AppCompat_Light 0x7f090080
 int style Animation_AppCompat_Dialog 0x7f090081

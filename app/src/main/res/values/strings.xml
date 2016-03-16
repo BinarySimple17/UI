@@ -48,6 +48,7 @@
     <string name="title_activity_pers">Сотрудник</string>
     <string name="title_person_list">Сотрудники</string>
     <string name="title_person_detail">Расчет</string>
+    <string name="title_saved_results">Сохраненные расчеты</string>
 
     <string name="dlg_org_caption">Название</string>
     <string name="dlg_org_cancel">Отмена</string>

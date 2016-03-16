@@ -2542,8 +2542,9 @@ containing a value of this type.
         public static final int title_activity_pers=0x7f06003f;
         public static final int title_person_detail=0x7f060040;
         public static final int title_person_list=0x7f060041;
-        public static final int toastAddPers=0x7f060042;
-        public static final int yes=0x7f060043;
+        public static final int title_saved_results=0x7f060042;
+        public static final int toastAddPers=0x7f060043;
+        public static final int yes=0x7f060044;
     }
     public static final class style {
         public static final int AlertDialog_AppCompat=0x7f09007f;
