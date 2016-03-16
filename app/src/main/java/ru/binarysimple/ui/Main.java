@@ -124,6 +124,7 @@ public class Main extends AppCompatActivity {
         Integer c_id = c.getInt(c.getColumnIndex("_id"));
         sPref = getSharedPreferences("mPref", MODE_PRIVATE); //get preferences object
         SharedPreferences.Editor ed = sPref.edit();
+        //TODO fill sPrefs
         ed.putString("cn", cn); //put company name
         ed.putInt("c_id", c_id); // put company id
         ed.putInt("sp_id", spinner.getSelectedItemPosition());
@@ -360,6 +361,13 @@ public class Main extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_addPers) {
             Log.d(LOG_TAG, "menu add_pers pressed");
+             sPref = getSharedPreferences("mPref", MODE_PRIVATE); // get preferences
+             Integer c_id = sPref.getInt("c_id",-1);
+            if (c_id<0) {
+                    //Snackbar.make(findViewById(R.id.), "Результаты должны быть очищены?", Snackbar.LENGTH_LONG)
+                    //        .setAction("Action", null).show();
+                return super.onOptionsItemSelected(item);
+          }
             Intent intent = new Intent(this, PersActivity.class);
             startActivityForResult(intent, 1);
             menu.setGroupVisible(R.id.grOrg, false);
@@ -610,6 +618,7 @@ public class Main extends AppCompatActivity {
          * Returns a new instance of this fragment for the given section
          * number.
          */
+        //TODO FRAGMENT ORG
         public static FragmentOrg newInstance(int sectionNumber) {
             FragmentOrg fragment = new FragmentOrg();
             Bundle args = new Bundle();
@@ -647,6 +656,7 @@ public class Main extends AppCompatActivity {
             /**
              * set spinner select item listener
              */
+            //TODO spinner select routine
             spOrgs.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view,
@@ -684,8 +694,6 @@ public class Main extends AppCompatActivity {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-
-                    //TODO save all params from DB to sPref
                     SharedPreferences.Editor ed = sPref.edit();
                     ed.putString("cn", name); //put company name
                     ed.putInt("c_id", c_id); // put company id

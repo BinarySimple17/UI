@@ -369,7 +369,7 @@
     <eat-comment/>
     <string name="title_activity_pers">Сотрудник</string>
     <string name="title_person_detail">Расчет</string>
-    <string name="title_person_list">Сотрудники</string>
+    <string name="title_person_list">Расчеты</string>
     <string name="title_saved_results">Сохраненные расчеты</string>
     <string name="toastAddPers">Все поля должны быть заполнены</string>
     <string name="yes">Да</string>
