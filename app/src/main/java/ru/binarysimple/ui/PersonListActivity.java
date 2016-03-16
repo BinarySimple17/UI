@@ -165,7 +165,6 @@ public class PersonListActivity extends AppCompatActivity {
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //TODO save all results to DB. remove old results
                     if (results.size() < 1) return;
                     WorkDB workDB_res = new WorkDB();
                     workDB_res.delResults(view.getContext(), results.get(0).getComp_id(),

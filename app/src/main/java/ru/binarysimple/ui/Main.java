@@ -124,10 +124,15 @@ public class Main extends AppCompatActivity {
         Integer c_id = c.getInt(c.getColumnIndex("_id"));
         sPref = getSharedPreferences("mPref", MODE_PRIVATE); //get preferences object
         SharedPreferences.Editor ed = sPref.edit();
-        //TODO fill sPrefs
         ed.putString("cn", cn); //put company name
         ed.putInt("c_id", c_id); // put company id
         ed.putInt("sp_id", spinner.getSelectedItemPosition());
+        ed.putInt("month", Calendar.getInstance().get(Calendar.MONTH));
+        ed.putString("year", "" + Calendar.getInstance().get(Calendar.YEAR));
+        ed.putString("ndfl", getResources().getString(R.string.par_ndfl_hint));
+        ed.putString("pfr", getResources().getString(R.string.par_pfr_hint));
+        ed.putString("fss", getResources().getString(R.string.par_fss_hint));
+        ed.putString("ffoms", getResources().getString(R.string.par_ffoms_hint));
         ed.apply(); // save pref
         c.close();
         dbHelper.close();
@@ -407,6 +412,8 @@ public class Main extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+//TODO ACTIVITY RESULT
+    //TODO при создании новой организации остается список людей от старой. надо очищать Persons. и сохранение списка доработать в автомат, исправитьотображение иконки.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (data == null) return;
@@ -416,12 +423,16 @@ public class Main extends AppCompatActivity {
             fragmentPers.fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_save));
             fragmentPers.fab.setTag(Main.FAB_TAG_SAVE);
             fragmentPers.fab.show();
+            fragmentPers.savePersonsListToDB();
+            fragmentPers.fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_calc));
         }
 
         if (resultCode == RESULTCODE_PERS_EDITED) {
             fragmentPers.saveEditedPers(data);
             fragmentPers.fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_save));
             fragmentPers.fab.setTag(Main.FAB_TAG_SAVE);
+            fragmentPers.savePersonsListToDB();
+            fragmentPers.fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_calc));
         }
 
     }
@@ -460,7 +471,7 @@ public class Main extends AppCompatActivity {
             return rootView;
         }
     }
-
+//TODO FRAGMENT PARAMS
     public static class FragmentParam extends Fragment {
         /**
          * The fragment argument representing the section number for this
@@ -571,7 +582,6 @@ public class Main extends AppCompatActivity {
             if (fab_param.getTag().equals(Main.FAB_PARAM_TAG_SAVE)) {
                 fab_param.setTag(Main.FAB_PARAM_TAG_EDIT);
                 fab_param.setImageDrawable(getResources().getDrawable(R.drawable.ic_editorg));
-                //TODO save params here
                 saveParams(rootView);
             } else {
                 fab_param.setTag(Main.FAB_PARAM_TAG_SAVE);
@@ -721,7 +731,6 @@ public class Main extends AppCompatActivity {
                         if (fab_org.getTag() == Main.FAB_ORG_TAG_SAVE) {
                             main.saveORG(rootView);
                         } else {
-                            //TODO load results here
                             Snackbar.make(rootView, "Here must be load all results action", Snackbar.LENGTH_LONG)
                                     .setAction("Action", null).show();
                             //         Intent intent = new Intent(getActivity(), PersonListActivity.class);
@@ -745,7 +754,7 @@ public class Main extends AppCompatActivity {
         }
 
     }
-
+//TODO FRAGMNET PERS
     public static class FragmentPers extends Fragment {
         private static final String ARG_SECTION_NUMBER = "section_number";
         /**
@@ -820,8 +829,6 @@ public class Main extends AppCompatActivity {
         }
 
         public void savePersonsListToDB() {
-
-            //TODO check this! double savings!!!
             Log.d(LOG_TAG, "myAdapter records count = " + myAdapter.getCount());
             Log.d(LOG_TAG, "persons records count = " + persons.size());
 
@@ -921,7 +928,6 @@ public class Main extends AppCompatActivity {
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //TODO results here!!!
                     if (lvMain.getCount() > 0) {
                         if (fab.getTag() == Main.FAB_TAG_SAVE) {
                             savePersonsListToDB();
