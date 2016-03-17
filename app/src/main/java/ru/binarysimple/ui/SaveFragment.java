@@ -12,8 +12,8 @@ public class SaveFragment extends Fragment {
 
     // data object we want to retain
     //private MyDataObject data;
-    ArrayList<Person> savePerson = new ArrayList<Person>();
-    String fab_save_tag = Main.FAB_TAG_CALC;
+    private ArrayList<Person> savePerson = new ArrayList<Person>();
+    private String fab_save_tag = Main.FAB_TAG_CALC;
 
     // this method is only called once for this fragment
     @Override
@@ -27,7 +27,7 @@ public class SaveFragment extends Fragment {
         savePerson = data;
     }
 
-    public void setFab_save_tag (String tag){
+    public void setFab_save_tag(String tag) {
         fab_save_tag = tag;
     }
 
@@ -35,7 +35,7 @@ public class SaveFragment extends Fragment {
         return savePerson;
     }
 
-    public String getFab_save_tag(){
+    public String getFab_save_tag() {
         return fab_save_tag;
     }
 

@@ -15,10 +15,10 @@ import ru.binarysimple.ui.Main;
 import ru.binarysimple.ui.R;
 
 public class Dlg_Org extends DialogFragment {
-    SharedPreferences sPref;
-    EditText etComp;
-    Main main;
-    TextView etCompName;
+    private SharedPreferences sPref;
+    private EditText etComp;
+    private Main main;
+    private TextView etCompName;
 
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         LayoutInflater inflater = getActivity().getLayoutInflater();

@@ -15,7 +15,7 @@ public class SaveFragmentPersonList extends Fragment {
     // data object we want to retain
     //private MyDataObject data;
     //ArrayList<Person> savePerson = new ArrayList<Person>();
-    Boolean startedForCalc = true;
+    private Boolean startedForCalc = true;
 
     // this method is only called once for this fragment
     @Override
@@ -29,7 +29,7 @@ public class SaveFragmentPersonList extends Fragment {
         savePerson = data;
     }*/
 
-    public void setStartedForCalc (Boolean tag){
+    public void setStartedForCalc(Boolean tag) {
         startedForCalc = tag;
     }
 
@@ -37,7 +37,7 @@ public class SaveFragmentPersonList extends Fragment {
         return savePerson;
     }*/
 
-    public Boolean getStartedForCalc(){
+    public Boolean getStartedForCalc() {
         return startedForCalc;
     }
 
@@ -97,6 +97,7 @@ public class SaveFragmentPersonList extends Fragment {
                 Toast.LENGTH_LONG).show();
         Log.d("Fragment 1", "onDestroyView");
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();

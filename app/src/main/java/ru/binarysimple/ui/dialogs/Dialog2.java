@@ -19,9 +19,9 @@ import ru.binarysimple.ui.WorkDB;
 
 public class Dialog2 extends DialogFragment implements OnClickListener {
 
-    final String LOG_TAG = "fc_log";
-    DBHelper dbHelper;
-    SharedPreferences sPref;
+    private final String LOG_TAG = "fc_log";
+    private DBHelper dbHelper;
+    private SharedPreferences sPref;
     View rootView;
 
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -65,9 +65,6 @@ public class Dialog2 extends DialogFragment implements OnClickListener {
         dbHelper.close();
     }
 
-    public  void loadDef(){
-    }
-
     public void onClick(DialogInterface dialog, int which) {
         int i = 0;
         switch (which) {
@@ -78,7 +75,7 @@ public class Dialog2 extends DialogFragment implements OnClickListener {
                 break;
             case Dialog.BUTTON_NEGATIVE:
                 // load prev. data from preferences
-            //    loadDef();
+
                 i = R.string.no;
                 break;
 /*            case Dialog.BUTTON_NEUTRAL:

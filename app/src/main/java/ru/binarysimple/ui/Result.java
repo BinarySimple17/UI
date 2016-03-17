@@ -8,7 +8,7 @@ import android.os.Build;
  * Created by voffka on 23.02.2016. used Builder pattern
  */
 public class Result {
- //   private final Context context;
+    //   private final Context context;
     private final Integer _id;
     private final Long id_person;
     private final Integer month;
@@ -22,7 +22,7 @@ public class Result {
     private final String salary;
     private final String comp_id;
 
-    Result(final ResultBuilder resultBuilder) {
+    private Result(final ResultBuilder resultBuilder) {
 //        this.context = resultBuilder.getContext();
         this._id = resultBuilder.get_id();
         this.id_person = resultBuilder.getId_person();
@@ -58,11 +58,11 @@ public class Result {
         return comp_id;
     }
 
-    public Integer get_id(){
+    public Integer get_id() {
         return _id;
     }
 
-    public Long getId_person(){
+    public Long getId_person() {
         return id_person;
     }
 
@@ -90,20 +90,20 @@ public class Result {
         return fss;
     }
 
-    public static class ResultBuilder{
-  //      private  Context context;
-        private  Integer _id;
-        private  Long id_person;
-        private  Integer month;
-        private  Integer year;
-        private  String ndfl;
-        private  String ffoms;
-        private  String pfr;
-        private  String fss;
-        private  String name;
-        private  String position;
-        private  String salary;
-        private  String comp_id;
+    public static class ResultBuilder {
+        //      private  Context context;
+        private Integer _id;
+        private Long id_person;
+        private Integer month;
+        private Integer year;
+        private String ndfl;
+        private String ffoms;
+        private String pfr;
+        private String fss;
+        private String name;
+        private String position;
+        private String salary;
+        private String comp_id;
 
 /*        public ResultBuilder setContext(Context context) {
             this.context = context;
@@ -221,7 +221,7 @@ public class Result {
             return comp_id;
         }
 
-        public Result build(){
+        public Result build() {
             return new Result(this);
         }
     }

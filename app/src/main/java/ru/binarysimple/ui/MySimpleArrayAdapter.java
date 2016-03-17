@@ -1,6 +1,7 @@
 package ru.binarysimple.ui;
 
 import java.util.ArrayList;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,13 +9,13 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-public class MySimpleArrayAdapter extends ArrayAdapter<Person> {
-    Context ctx;
-    LayoutInflater lInflater;
-    ArrayList<Person> objects;
+class MySimpleArrayAdapter extends ArrayAdapter<Person> {
+    private final Context ctx;
+    private final LayoutInflater lInflater;
+    private final ArrayList<Person> objects;
 
     MySimpleArrayAdapter(Context context, ArrayList<Person> products) {
-        super (context,R.layout.item,products);
+        super(context, R.layout.item, products);
         ctx = context;
         objects = products;
         lInflater = (LayoutInflater) ctx
@@ -55,7 +56,7 @@ public class MySimpleArrayAdapter extends ArrayAdapter<Person> {
     }
 
 
-    Person getProduct(int position) {
+    private Person getProduct(int position) {
         return getItem(position);
     }
 

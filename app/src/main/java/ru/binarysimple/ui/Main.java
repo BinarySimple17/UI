@@ -60,28 +60,17 @@ public class Main extends AppCompatActivity {
     final static String RESULTS_REQUEST_CALC = "REQUEST";
     final static String RESULTS_LOAD = "LOAD";
     final static String RESULTS_CALC = "CALC";
-    final static Integer DLG_ORG_EDIT = 200;
-    final static Integer DLG_ORG_NEW = 201;
 
-    SharedPreferences sPref;
-  //  DBHelper dbHelper;
-    TextView etCompName;
-    Menu menu;
-    Boolean savedMenuPersIsVisible;
-    Boolean savedMenuOrgIsVisible;
+    private SharedPreferences sPref;
+    //  DBHelper dbHelper;
+    private TextView etCompName;
+    private Menu menu;
+    private Boolean savedMenuPersIsVisible;
+    private Boolean savedMenuOrgIsVisible;
     Boolean savedMenuMainIsVisible;
-    Boolean savedMenuAddPersIsVisible;
-    FragmentPers fragmentPers;
-    ArrayAdapter<String> spAdapter;
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
-    private SectionsPagerAdapter mSectionsPagerAdapter;
+    private Boolean savedMenuAddPersIsVisible;
+    private FragmentPers fragmentPers;
+    private ArrayAdapter<String> spAdapter;
     /**
      * The {@link ViewPager} that will host the section contents.
      */
@@ -92,7 +81,7 @@ public class Main extends AppCompatActivity {
         return Main.this;
     }
 
-    public void setFragmentPers(FragmentPers fragmentPers) {
+    private void setFragmentPers(FragmentPers fragmentPers) {
         this.fragmentPers = fragmentPers;
     }
 
@@ -100,7 +89,7 @@ public class Main extends AppCompatActivity {
         return this.mViewPager.findViewWithTag("org");
     }
 
-    public void saveOrgToDB(String name) {
+    private void saveOrgToDB(String name) {
         //Cursor c = null;
         ContentValues cv = new ContentValues();
         //dbHelper = new DBHelper(this);
@@ -117,7 +106,7 @@ public class Main extends AppCompatActivity {
         WorkDB workDB = new WorkDB();
         workDB.insertRecord(this, TABLE_NAME_C, cv); //new insert to db
         //Cursor c = db.rawQuery("select * from " + Main.TABLE_NAME_C + "", null);
-        Cursor c = workDB.getData(this,"select * from "+ Main.TABLE_NAME_C+"",null);
+        Cursor c = workDB.getData(this, "select * from " + Main.TABLE_NAME_C + "", null);
         c.moveToLast();
         setSpinner(getOrgView(), -2);
         Spinner spinner = (Spinner) findViewById(R.id.spOrgs);
@@ -136,17 +125,16 @@ public class Main extends AppCompatActivity {
         ed.putString("ffoms", getResources().getString(R.string.par_ffoms_hint));
         ed.apply(); // save pref
         c.close();
-      //  dbHelper.close();
+        //  dbHelper.close();
     }
-//TODO clear personslist
-    public void clearPersonsList() {
-    if (fragmentPers == null) return;
+
+    private void clearPersonsList() {
+        if (fragmentPers == null) return;
         fragmentPers.persons.clear();
         fragmentPers.myAdapter.notifyDataSetChanged();
     }
 
-
-    public void updateOrgInDB(String name) {
+    private void updateOrgInDB(String name) {
         //Cursor c = null;
         ContentValues cv = new ContentValues();
         cv.put("name", name);
@@ -237,7 +225,15 @@ public class Main extends AppCompatActivity {
         setSupportActionBar(toolbar);
         // Create the spAdapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        /*
+      The {@link android.support.v4.view.PagerAdapter} that will provide
+      fragments for each of the sections. We use a
+      {@link FragmentPagerAdapter} derivative, which will keep every
+      loaded fragment in memory. If this becomes too memory intensive, it
+      may be best to switch to a
+      {@link android.support.v4.app.FragmentStatePagerAdapter}.
+     */
+        SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager) findViewById(R.id.container); //container - viewPager from activity_main
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
@@ -264,7 +260,7 @@ public class Main extends AppCompatActivity {
                             menu.setGroupVisible(R.id.grPersAdd, false);
                             menu.setGroupVisible(R.id.grPers, false);
                             mViewPager.setCurrentItem(tab.getPosition(), true);
-                            loadParams();
+                            //loadParams();
                             break;
                         case 2:
                             // menu.setGroupVisible(R.id.grMain, false);
@@ -280,49 +276,49 @@ public class Main extends AppCompatActivity {
                 }
             }
 
-            public void loadParams() {
-                EditText etYear = (EditText) findViewById(R.id.etYear);
-                Spinner spMonth = (Spinner) findViewById(R.id.spMonth);
-                EditText etNdfl = (EditText) findViewById(R.id.etNdfl);
-                EditText etPfr = (EditText) findViewById(R.id.edPfr);
-                EditText etFfoms = (EditText) findViewById(R.id.edFfoms);
-                EditText etFss = (EditText) findViewById(R.id.edFss);
-                sPref = getSharedPreferences("mPref", MODE_PRIVATE); // get preferences
-                String year = sPref.getString("year", "-1");
-                if (!year.equals("-1")) {
-                    etYear.setText(year);
-                } else {
-                    etYear.setText("" + Calendar.getInstance().get(Calendar.YEAR));
-                }
-                Spinner spinner = (Spinner) findViewById(R.id.spMonth);
-                spinner.setSelection(sPref.getInt("month", Calendar.getInstance().get(Calendar.MONTH)));
-                if (!sPref.getString("ndfl", "-1").equals("-1")) {
-                    etNdfl.setText(sPref.getString("ndfl", "-1"));
-                }
-                if (!sPref.getString("pfr", "-1").equals("-1")) {
-                    etPfr.setText(sPref.getString("pfr", "-1"));
-                }
-                if (!sPref.getString("ffoms", "-1").equals("-1")) {
-                    etFfoms.setText(sPref.getString("ffoms", "-1"));
-                }
-                if (!sPref.getString("fss", "-1").equals("-1")) {
-                    etFss.setText(sPref.getString("fss", "-1"));
-                }
-            }
-
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-                Log.d(LOG_TAG, tab.getPosition() + " onTabUnselected");
+/*                Log.d(LOG_TAG, tab.getPosition() + " onTabUnselected");
                 if (tab.getPosition() == 1) {
-
-                }
+                }*/
             }
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-                Log.d(LOG_TAG, tab.getPosition() + " onTabReselected");
+                //              Log.d(LOG_TAG, tab.getPosition() + " onTabReselected");
             }
         });
+        //loadParams();
+    }
+
+    void loadParams() {
+        EditText etYear = (EditText) findViewById(R.id.etYear);
+        Spinner spMonth = (Spinner) findViewById(R.id.spMonth);
+        EditText etNdfl = (EditText) findViewById(R.id.etNdfl);
+        EditText etPfr = (EditText) findViewById(R.id.edPfr);
+        EditText etFfoms = (EditText) findViewById(R.id.edFfoms);
+        EditText etFss = (EditText) findViewById(R.id.edFss);
+        sPref = getSharedPreferences("mPref", MODE_PRIVATE); // get preferences
+        String year = sPref.getString("year", "-1");
+        if (!year.equals("-1")) {
+            etYear.setText(year);
+        } else {
+            etYear.setText("" + Calendar.getInstance().get(Calendar.YEAR));
+        }
+        //  Spinner spinner = (Spinner) findViewById(R.id.spMonth);
+        spMonth.setSelection(sPref.getInt("month", Calendar.getInstance().get(Calendar.MONTH)));
+        if (!sPref.getString("ndfl", "-1").equals("-1")) {
+            etNdfl.setText(sPref.getString("ndfl", "-1"));
+        }
+        if (!sPref.getString("pfr", "-1").equals("-1")) {
+            etPfr.setText(sPref.getString("pfr", "-1"));
+        }
+        if (!sPref.getString("ffoms", "-1").equals("-1")) {
+            etFfoms.setText(sPref.getString("ffoms", "-1"));
+        }
+        if (!sPref.getString("fss", "-1").equals("-1")) {
+            etFss.setText(sPref.getString("fss", "-1"));
+        }
     }
 
     @Override
@@ -375,13 +371,13 @@ public class Main extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_addPers) {
             Log.d(LOG_TAG, "menu add_pers pressed");
-             sPref = getSharedPreferences("mPref", MODE_PRIVATE); // get preferences
-             Integer c_id = sPref.getInt("c_id",-1);
-            if (c_id<0) {
-                    //Snackbar.make(findViewById(R.id.), "Результаты должны быть очищены?", Snackbar.LENGTH_LONG)
-                    //        .setAction("Action", null).show();
+            sPref = getSharedPreferences("mPref", MODE_PRIVATE); // get preferences
+            Integer c_id = sPref.getInt("c_id", -1);
+            if (c_id < 0) {
+                //Snackbar.make(findViewById(R.id.), "Результаты должны быть очищены?", Snackbar.LENGTH_LONG)
+                //        .setAction("Action", null).show();
                 return super.onOptionsItemSelected(item);
-          }
+            }
             Intent intent = new Intent(this, PersActivity.class);
             startActivityForResult(intent, 1);
             menu.setGroupVisible(R.id.grOrg, false);
@@ -421,8 +417,7 @@ public class Main extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-//TODO ACTIVITY RESULT
-    //TODO при создании новой организации остается список людей от старой. надо очищать Persons. и сохранение списка доработать в автомат, исправитьотображение иконки.
+    //TODO ACTIVITY RESULT
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (data == null) return;
@@ -480,14 +475,15 @@ public class Main extends AppCompatActivity {
             return rootView;
         }
     }
-//TODO FRAGMENT PARAMS
+
+    //TODO FRAGMENT PARAMS
     public static class FragmentParam extends Fragment {
         /**
          * The fragment argument representing the section number for this
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
-        String[] data = {"январь", "февраль", "март", "апрель", "май", "июнь", "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь"};
+        final String[] data = {"январь", "февраль", "март", "апрель", "май", "июнь", "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь"};
         SharedPreferences sPref;
         FloatingActionButton fab_param;
 
@@ -624,7 +620,7 @@ public class Main extends AppCompatActivity {
         /****
          * etCompName onClick listeners here
          */
-        private View.OnClickListener onOnClickEvent = new View.OnClickListener() {
+        private final View.OnClickListener onOnClickEvent = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 DialogFragment dlg1 = new Dlg_Org();
@@ -658,6 +654,7 @@ public class Main extends AppCompatActivity {
             sPref = getActivity().getSharedPreferences("mPref", MODE_PRIVATE); // get preferences
             final Main main = ((Main) getActivity());
             main.setSpinner(rootView, sPref.getInt("sp_id", -1));
+            //main.loadParams();
 
             /**
              * fill etCompName from Preferences or set it to default value
@@ -698,8 +695,8 @@ public class Main extends AppCompatActivity {
                         if (c.getCount() > 0) {
                             c.moveToFirst();
                             if (c_id != c.getInt(c.getColumnIndex("_id"))) {
-                                if (((Main) getActivity()).fragmentPers != null )
-                                ((Main) getActivity()).fragmentPers.persons.clear();//clear persons array if organisation was changed
+                                if (((Main) getActivity()).fragmentPers != null)
+                                    ((Main) getActivity()).fragmentPers.persons.clear();//clear persons array if organisation was changed
                             }
 
                             c_id = c.getInt(c.getColumnIndex("_id"));
@@ -726,6 +723,7 @@ public class Main extends AppCompatActivity {
                     ed.putString("fss", fss);
                     ed.apply(); // save pref
                     //   dbHelper.close();
+                    main.loadParams();
                 }
 
                 @Override
@@ -764,13 +762,10 @@ public class Main extends AppCompatActivity {
         }
 
     }
-//TODO FRAGMNET PERS
+
+    //TODO FRAGMNET PERS
     public static class FragmentPers extends Fragment {
         private static final String ARG_SECTION_NUMBER = "section_number";
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
         SharedPreferences sPref;
         FloatingActionButton fab;
         ArrayList<Person> persons = new ArrayList<Person>();
@@ -789,10 +784,6 @@ public class Main extends AppCompatActivity {
             fragment.setArguments(args);
             return fragment;
         }
-
-        /**
-         * public methods
-         */
 
         public void onSaveState() {
             //Log.d(LOG_TAG, "Fragment PERS custom SaveState");
@@ -958,7 +949,6 @@ public class Main extends AppCompatActivity {
             });
 
             loadPersonsListFromDB();
-
             return rootView;
         }
 

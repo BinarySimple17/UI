@@ -21,13 +21,11 @@ import android.widget.Toast;
 
 public class PersActivity extends AppCompatActivity {
 
-    FragmentPersInfo fragmentPersInfo;
+    private FragmentPersInfo fragmentPersInfo;
     Menu menu;
-    Person person;
-    private SectionsPagerAdapter mSectionsPagerAdapter;
-    private ViewPager mViewPager;
+    private Person person;
 
-    public Person getPersonData(){
+    private Person getPersonData(){
         String name="";
         String position="";
         String salary="";
@@ -42,7 +40,7 @@ public class PersActivity extends AppCompatActivity {
             person.id =intent.getLongExtra("ed_id",-1);
             person.comp_id =intent.getIntExtra("ed_comp_id",-1);
         }
-        catch (Exception e){
+        catch (Exception ignored){
 
         }
         return person;
@@ -57,10 +55,10 @@ public class PersActivity extends AppCompatActivity {
 
 // Create the spAdapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections spAdapter.
-        mViewPager = (ViewPager) findViewById(R.id.containerPers); //container - viewPager from activity_main
+        ViewPager mViewPager = (ViewPager) findViewById(R.id.containerPers);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         final TabLayout tabLayout = (TabLayout) findViewById(R.id.tabsPers);

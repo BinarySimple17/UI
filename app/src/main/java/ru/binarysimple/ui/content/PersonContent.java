@@ -28,14 +28,16 @@ public class PersonContent {
 
     public static final Map<String, Result> ITEM_MAP = new HashMap<String, Result>();
 
-    private static final int COUNT = 25;
+    // --Commented out by Inspection (17.03.2016 15:51):private static final int COUNT = 25;
 
-    /*static*/
-    public PersonContent() {
-        // Add some sample items.
-/*        for (int i = 1; i <= COUNT; i++) {
-            addItem(createResultItem(i));}*/
-    }
+// --Commented out by Inspection START (17.03.2016 15:51):
+//    /*static*/
+//    public PersonContent() {
+//        // Add some sample items.
+///*        for (int i = 1; i <= COUNT; i++) {
+//            addItem(createResultItem(i));}*/
+//    }
+// --Commented out by Inspection STOP (17.03.2016 15:51)
 
     private void clearITEMS (){
         ITEMS.clear();

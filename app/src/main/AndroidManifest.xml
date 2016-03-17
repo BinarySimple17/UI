@@ -21,7 +21,7 @@
         <activity
             android:name=".PersActivity"
             android:label="@string/title_activity_pers"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".PersonListActivity"
             android:label="@string/title_person_list"

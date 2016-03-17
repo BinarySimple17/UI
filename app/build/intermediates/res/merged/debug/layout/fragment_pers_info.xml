@@ -64,7 +64,8 @@
                 android:id="@+id/etPosition"
                 android:maxLength="64"
                 android:singleLine="true"
-                android:imeOptions="actionNext"/>
+                android:imeOptions="actionNext"
+                android:inputType="text" />
         </TableRow>
 
         <TableRow

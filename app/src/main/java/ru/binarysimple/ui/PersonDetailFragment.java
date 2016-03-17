@@ -62,11 +62,11 @@ public class PersonDetailFragment extends Fragment {
         // Show the dummy content as text in a TextView.
         if (mItem != null) {
             ((TextView) rootView.findViewById(R.id.person_detail)).setText(
-                    "Оклад, руб. = " +mItem.getSalary()+"\n"+
-                    "НДФЛ, руб. = " +mItem.getNdfl()+"\n"+
-                    "ПФР, руб. = " + mItem.getPfr()+"\n"+
-                    "ФФОМС, руб. = "+mItem.getFfoms()+"\n"+
-                    "ФСС, руб. = " + mItem.getFss()+"\n"
+                    "Оклад, руб. = " + mItem.getSalary() + "\n" +
+                            "НДФЛ, руб. = " + mItem.getNdfl() + "\n" +
+                            "ПФР, руб. = " + mItem.getPfr() + "\n" +
+                            "ФФОМС, руб. = " + mItem.getFfoms() + "\n" +
+                            "ФСС, руб. = " + mItem.getFss() + "\n"
             );
         }
 

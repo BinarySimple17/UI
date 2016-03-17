@@ -44,10 +44,9 @@ public class PersonListActivity extends AppCompatActivity {
      * device.
      */
     private boolean mTwoPane;
-    SharedPreferences sPref;
-    private boolean startedForCalc;
-    ArrayList<Result> results = new ArrayList<Result>();
-    SaveFragmentPersonList saveFragmentPersonList;
+    private SharedPreferences sPref;
+    private ArrayList<Result> results = new ArrayList<Result>();
+    // --Commented out by Inspection (17.03.2016 15:51):SaveFragmentPersonList saveFragmentPersonList;
 
     private ArrayList<Result> calcResults() { //load c_id, year and month from sPref
         ArrayList<Result> results = new ArrayList<Result>();
@@ -63,7 +62,7 @@ public class PersonListActivity extends AppCompatActivity {
         Currency curr = Currency.getInstance(Locale.getDefault());
         WorkDB workDB = new WorkDB();
         Cursor c = workDB.getData(this, "select * from " + Main.TABLE_NAME + " WHERE comp_id = ?",
-                                    new String[]{comp_id.toString()});
+                new String[]{comp_id.toString()});
         if (c == null) return null;
         c.moveToFirst();
         for (int i = 0; i < c.getCount(); i++) {
@@ -136,7 +135,7 @@ public class PersonListActivity extends AppCompatActivity {
         View recyclerView = findViewById(R.id.person_list);
         assert recyclerView != null;
 
-        startedForCalc = startedForCalc(); // check started for calc?
+        boolean startedForCalc = startedForCalc();
 
         if (startedForCalc) {
             results = calcResults();
@@ -203,9 +202,11 @@ public class PersonListActivity extends AppCompatActivity {
         }
     }
 
-    private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(PersonContent.ITEMS));
-    }
+// --Commented out by Inspection START (17.03.2016 15:51):
+//    private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
+//        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(PersonContent.ITEMS));
+//    }
+// --Commented out by Inspection STOP (17.03.2016 15:51)
 
     private void setupRecyclerViewArray(@NonNull RecyclerView recyclerView, ArrayList<Result> results) {
         PersonContent personContent = new PersonContent(results);

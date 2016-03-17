@@ -8,10 +8,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 public class WorkDB {
-    final String LOG_TAG = "fc_log";
-    DBHelper dbHelper;
+    private final String LOG_TAG = "fc_log";
+    private DBHelper dbHelper;
 
-    public long insertRecord (Context context, String tableName, ContentValues cv){
+    public long insertRecord(Context context, String tableName, ContentValues cv) {
         dbHelper = DBHelper.getInstance(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         Log.d(LOG_TAG, "Insert record into " + tableName);
@@ -20,8 +20,8 @@ public class WorkDB {
         return rowID;
     }
 
-    public long insertRecordOnConflict (Context context, String tableName, ContentValues cv){
-      //  dbHelper = new DBHelper(context);
+    public long insertRecordOnConflict(Context context, String tableName, ContentValues cv) {
+        //  dbHelper = new DBHelper(context);
         dbHelper = DBHelper.getInstance(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         Log.d(LOG_TAG, "Insert record into " + tableName);
@@ -31,43 +31,43 @@ public class WorkDB {
         return rowID;
     }
 
-    public void updateRecord (Context context, String tableName, ContentValues cv, String id){
+    public void updateRecord(Context context, String tableName, ContentValues cv, String id) {
         dbHelper = DBHelper.getInstance(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        Log.d(LOG_TAG, "Update record in "+tableName);
+        Log.d(LOG_TAG, "Update record in " + tableName);
         db.update(tableName, cv, "_id = ?", new String[]{id});
         //db.insertWithOnConflict()
         dbHelper.close();
     }
 
-    public Cursor getData(Context context, String query, String[] args){
+    public Cursor getData(Context context, String query, String[] args) {
         dbHelper = DBHelper.getInstance(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-            return db.rawQuery(query, args);
+        return db.rawQuery(query, args);
     }
 
-    public void delPersons(Context context, String c_id){
+    public void delPersons(Context context, String c_id) {
         Log.d(LOG_TAG, "delete persons");
         dbHelper = DBHelper.getInstance(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        db.execSQL("DELETE FROM info WHERE comp_id="+c_id);
+        db.execSQL("DELETE FROM info WHERE comp_id=" + c_id);
         dbHelper.close();
     }
 
-    public void delData(Context context, String tableName, String id){
-        Log.d(LOG_TAG, "delete data from "+tableName);
+    public void delData(Context context, String tableName, String id) {
+        Log.d(LOG_TAG, "delete data from " + tableName);
         dbHelper = DBHelper.getInstance(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        db.execSQL("DELETE FROM "+tableName+" WHERE _id="+id);
+        db.execSQL("DELETE FROM " + tableName + " WHERE _id=" + id);
         dbHelper.close();
     }
 
-    public void delResults(Context context, String comp_id, String month, String year){
+    public void delResults(Context context, String comp_id, String month, String year) {
         //delete from results where comp_id=1 and month=2 and year=2016
         Log.d(LOG_TAG, "delete data from Results");
         dbHelper = DBHelper.getInstance(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        db.execSQL("DELETE FROM RESULTS WHERE comp_id="+comp_id+" and month="+month+" and year="+year);
+        db.execSQL("DELETE FROM RESULTS WHERE comp_id=" + comp_id + " and month=" + month + " and year=" + year);
         dbHelper.close();
     }
 
