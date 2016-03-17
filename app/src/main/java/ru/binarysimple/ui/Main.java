@@ -64,7 +64,7 @@ public class Main extends AppCompatActivity {
     final static Integer DLG_ORG_NEW = 201;
 
     SharedPreferences sPref;
-    DBHelper dbHelper;
+  //  DBHelper dbHelper;
     TextView etCompName;
     Menu menu;
     Boolean savedMenuPersIsVisible;
@@ -103,8 +103,8 @@ public class Main extends AppCompatActivity {
     public void saveOrgToDB(String name) {
         //Cursor c = null;
         ContentValues cv = new ContentValues();
-        dbHelper = new DBHelper(this);
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        //dbHelper = new DBHelper(this);
+        //SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         cv.put("name", name);
         cv.put("test", 1);
@@ -116,7 +116,8 @@ public class Main extends AppCompatActivity {
         cv.put("month", Calendar.getInstance().get(Calendar.MONTH));
         WorkDB workDB = new WorkDB();
         workDB.insertRecord(this, TABLE_NAME_C, cv); //new insert to db
-        Cursor c = db.rawQuery("select * from " + Main.TABLE_NAME_C + "", null);
+        //Cursor c = db.rawQuery("select * from " + Main.TABLE_NAME_C + "", null);
+        Cursor c = workDB.getData(this,"select * from "+ Main.TABLE_NAME_C+"",null);
         c.moveToLast();
         setSpinner(getOrgView(), -2);
         Spinner spinner = (Spinner) findViewById(R.id.spOrgs);
@@ -135,8 +136,15 @@ public class Main extends AppCompatActivity {
         ed.putString("ffoms", getResources().getString(R.string.par_ffoms_hint));
         ed.apply(); // save pref
         c.close();
-        dbHelper.close();
+      //  dbHelper.close();
     }
+//TODO clear personslist
+    public void clearPersonsList() {
+    if (fragmentPers == null) return;
+        fragmentPers.persons.clear();
+        fragmentPers.myAdapter.notifyDataSetChanged();
+    }
+
 
     public void updateOrgInDB(String name) {
         //Cursor c = null;
@@ -163,6 +171,7 @@ public class Main extends AppCompatActivity {
         if (spinner.getCount() > 0) {
             if (spinner.getSelectedItem().toString().equals("")) {
                 saveOrgToDB(etCompName.getText().toString());
+                clearPersonsList();
             } else updateOrgInDB(etCompName.getText().toString());
         } else saveOrgToDB(etCompName.getText().toString());
         FloatingActionButton fab_org = (FloatingActionButton) rootView.findViewById(R.id.fab_org);
@@ -403,7 +412,7 @@ public class Main extends AppCompatActivity {
                 spAdapter.add("");
                 spinner.setSelection(spinner.getCount() - 1);
                 DialogFragment dlg1 = new Dlg_Org();
-                dlg1.show(getFragmentManager(), "dlg1");
+                dlg1.show(getFragmentManager(), "new_org");
             } catch (Exception e) {
                 return super.onOptionsItemSelected(item);
             }
@@ -420,8 +429,8 @@ public class Main extends AppCompatActivity {
         Log.d(LOG_TAG, "Activity result " + resultCode);
         if (resultCode == RESULTCODE_PERS_ADDED) {
             fragmentPers.addPers(data);
-            fragmentPers.fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_save));
-            fragmentPers.fab.setTag(Main.FAB_TAG_SAVE);
+            //fragmentPers.fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_save));
+            //fragmentPers.fab.setTag(Main.FAB_TAG_SAVE);
             fragmentPers.fab.show();
             fragmentPers.savePersonsListToDB();
             fragmentPers.fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_calc));
@@ -429,8 +438,8 @@ public class Main extends AppCompatActivity {
 
         if (resultCode == RESULTCODE_PERS_EDITED) {
             fragmentPers.saveEditedPers(data);
-            fragmentPers.fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_save));
-            fragmentPers.fab.setTag(Main.FAB_TAG_SAVE);
+            //fragmentPers.fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_save));
+            //fragmentPers.fab.setTag(Main.FAB_TAG_SAVE);
             fragmentPers.savePersonsListToDB();
             fragmentPers.fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_calc));
         }
@@ -689,6 +698,7 @@ public class Main extends AppCompatActivity {
                         if (c.getCount() > 0) {
                             c.moveToFirst();
                             if (c_id != c.getInt(c.getColumnIndex("_id"))) {
+                                if (((Main) getActivity()).fragmentPers != null )
                                 ((Main) getActivity()).fragmentPers.persons.clear();//clear persons array if organisation was changed
                             }
 

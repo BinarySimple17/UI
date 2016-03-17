@@ -39,7 +39,7 @@ public class Dialog2 extends DialogFragment implements OnClickListener {
         ///////////////save company name to db and pref
         //work with DB
         Main main= ((Main) getActivity());
-            dbHelper = new DBHelper(getActivity());
+            dbHelper = DBHelper.getInstance(getActivity());
             SQLiteDatabase db = dbHelper.getWritableDatabase();
             Cursor c = null;
             ContentValues cv = new ContentValues();

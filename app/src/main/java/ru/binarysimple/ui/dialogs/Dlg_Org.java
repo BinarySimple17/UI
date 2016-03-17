@@ -36,6 +36,7 @@ public class Dlg_Org extends DialogFragment {
                         fab.setTag(Main.FAB_ORG_TAG_SAVE);
                         fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_save));
                         main.saveORG(main.getOrgView());
+                        //main.clearPersonsList();
                     }
                 })
                 .setNegativeButton(R.string.dlg_org_cancel, new DialogInterface.OnClickListener() {

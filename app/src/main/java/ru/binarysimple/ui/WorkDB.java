@@ -1,5 +1,6 @@
 package ru.binarysimple.ui;
 
+import android.app.Application;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -11,7 +12,7 @@ public class WorkDB {
     DBHelper dbHelper;
 
     public long insertRecord (Context context, String tableName, ContentValues cv){
-        dbHelper = new DBHelper(context);
+        dbHelper = DBHelper.getInstance(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         Log.d(LOG_TAG, "Insert record into " + tableName);
         long rowID = db.insert(tableName, null, cv); // insert new record to db and return its rowId
@@ -20,7 +21,8 @@ public class WorkDB {
     }
 
     public long insertRecordOnConflict (Context context, String tableName, ContentValues cv){
-        dbHelper = new DBHelper(context);
+      //  dbHelper = new DBHelper(context);
+        dbHelper = DBHelper.getInstance(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         Log.d(LOG_TAG, "Insert record into " + tableName);
         //long rowID = db.insert(tableName, null, cv); // insert new record to db and return its rowId
@@ -30,7 +32,7 @@ public class WorkDB {
     }
 
     public void updateRecord (Context context, String tableName, ContentValues cv, String id){
-        dbHelper = new DBHelper(context);
+        dbHelper = DBHelper.getInstance(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         Log.d(LOG_TAG, "Update record in "+tableName);
         db.update(tableName, cv, "_id = ?", new String[]{id});
@@ -39,14 +41,14 @@ public class WorkDB {
     }
 
     public Cursor getData(Context context, String query, String[] args){
-        dbHelper = new DBHelper(context);
+        dbHelper = DBHelper.getInstance(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
             return db.rawQuery(query, args);
     }
 
     public void delPersons(Context context, String c_id){
         Log.d(LOG_TAG, "delete persons");
-        dbHelper = new DBHelper(context);
+        dbHelper = DBHelper.getInstance(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         db.execSQL("DELETE FROM info WHERE comp_id="+c_id);
         dbHelper.close();
@@ -54,7 +56,7 @@ public class WorkDB {
 
     public void delData(Context context, String tableName, String id){
         Log.d(LOG_TAG, "delete data from "+tableName);
-        dbHelper = new DBHelper(context);
+        dbHelper = DBHelper.getInstance(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         db.execSQL("DELETE FROM "+tableName+" WHERE _id="+id);
         dbHelper.close();
@@ -63,7 +65,7 @@ public class WorkDB {
     public void delResults(Context context, String comp_id, String month, String year){
         //delete from results where comp_id=1 and month=2 and year=2016
         Log.d(LOG_TAG, "delete data from Results");
-        dbHelper = new DBHelper(context);
+        dbHelper = DBHelper.getInstance(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         db.execSQL("DELETE FROM RESULTS WHERE comp_id="+comp_id+" and month="+month+" and year="+year);
         dbHelper.close();
