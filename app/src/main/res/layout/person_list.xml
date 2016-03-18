@@ -10,4 +10,5 @@
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
     tools:context="ru.binarysimple.ui.PersonListActivity"
-    tools:listitem="@layout/person_list_content" />
+    tools:listitem="@layout/item_res"/>
+    <!--tools:listitem="@layout/person_list_content"-->

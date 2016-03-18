@@ -116,7 +116,6 @@ public class PersonListActivity extends AppCompatActivity {
         return results;
     }
 
-
     private boolean startedForCalc() {
         sPref = getSharedPreferences("mPref", MODE_PRIVATE); // get preferences
         String request = sPref.getString(Main.RESULTS_REQUEST_CALC, Main.RESULTS_CALC);
@@ -224,17 +223,26 @@ public class PersonListActivity extends AppCompatActivity {
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            /*View view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.person_list_content, parent, false);*/
             View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.person_list_content, parent, false);
+                    .inflate(R.layout.item_res, parent, false);
             return new ViewHolder(view);
         }
 
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
             holder.mItem = mValues.get(position);
-            Integer mId = mValues.get(position).get_id() + 1;
-            holder.mIdView.setText(mId.toString());
-            holder.mContentView.setText(mValues.get(position).getName());
+          //  Integer mId = mValues.get(position).get_id() + 1;
+          //  holder.mIdView.setText(mId.toString());
+          //  holder.mContentView.setText(mValues.get(position).getName());
+            Currency curr = Currency.getInstance(Locale.getDefault());
+
+            holder.resFIO.setText(mValues.get(position).getName());
+            holder.resPosition.setText(mValues.get(position).getPosition());
+//            CurrOps.sub(curr, mValues.get(position).getSalary(), mValues.get(position).getNdfl());
+            holder.resSalaryNET.setText(CurrOps.sub(curr, mValues.get(position).getSalary(),
+                                                    mValues.get(position).getNdfl()));
 
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -262,22 +270,43 @@ public class PersonListActivity extends AppCompatActivity {
             return mValues.size();
         }
 
-        public class ViewHolder extends RecyclerView.ViewHolder {
+        /*        public class ViewHolder extends RecyclerView.ViewHolder {
+                    public final View mView;
+                    public final TextView mIdView;
+                    public final TextView mContentView;
+                    public Result mItem;
+
+                    public ViewHolder(View view) {
+                        super(view);
+                        mView = view;
+                        mIdView = (TextView) view.findViewById(R.id.id);
+                        mContentView = (TextView) view.findViewById(R.id.content);
+                    }
+
+                    @Override
+                    public String toString() {
+                        return super.toString() + " '" + mContentView.getText() + "'";
+                    }
+                }*/
+
+            public class ViewHolder extends RecyclerView.ViewHolder {
             public final View mView;
-            public final TextView mIdView;
-            public final TextView mContentView;
+            public final TextView resFIO;
+            public final TextView resPosition;
+            public final TextView resSalaryNET;
             public Result mItem;
 
             public ViewHolder(View view) {
                 super(view);
                 mView = view;
-                mIdView = (TextView) view.findViewById(R.id.id);
-                mContentView = (TextView) view.findViewById(R.id.content);
+                resFIO = (TextView) view.findViewById(R.id.resFIO);
+                resPosition = (TextView) view.findViewById(R.id.resPosition);
+                resSalaryNET = (TextView) view.findViewById(R.id.resSalaryNET);
             }
 
             @Override
             public String toString() {
-                return super.toString() + " '" + mContentView.getText() + "'";
+                return super.toString() + " '" + resFIO.getText() + "'";
             }
         }
     }

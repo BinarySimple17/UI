@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:layout_marginTop="10dp">
+    <TextView
+        android:id="@+id/resFIO"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="resFIO"
+        android:layout_gravity="left|center_horizontal"
+        android:layout_marginLeft="5dp"
+        android:textSize="24sp">
+    </TextView>
+    <TextView
+        android:id="@+id/resPosition"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="resPosition"
+        android:layout_gravity="bottom|left"
+        android:layout_marginLeft="5dp">
+    </TextView>
+    <TextView
+        android:id="@+id/resSalaryNET"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="resSalaryNET"
+        android:layout_gravity="bottom|right"
+        android:layout_marginRight="5dp">
+    </TextView>
+</FrameLayout><!-- From: file:/C:/android5/projects/UI/app/src/main/res/layout/item_res.xml -->

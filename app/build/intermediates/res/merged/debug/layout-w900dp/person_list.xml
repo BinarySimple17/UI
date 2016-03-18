@@ -27,7 +27,7 @@
         android:layout_marginRight="16dp"
         app:layoutManager="LinearLayoutManager"
         tools:context="ru.binarysimple.ui.PersonListActivity"
-        tools:listitem="@layout/person_list_content" />
+        tools:listitem="@layout/item_res" />
 
     <FrameLayout
         android:id="@+id/person_detail_container"
@@ -36,4 +36,4 @@
         android:layout_weight="3" />
 
 </LinearLayout>
-<!-- From: file:/F:/android5/projects/UI/app/src/main/res/layout-w900dp/person_list.xml -->
+    <!--tools:listitem="@layout/person_list_content"--><!-- From: file:/C:/android5/projects/UI/app/src/main/res/layout-w900dp/person_list.xml -->

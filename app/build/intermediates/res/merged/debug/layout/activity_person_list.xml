@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    >
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
@@ -25,9 +26,12 @@
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:paddingBottom="@dimen/design_navigation_icon_size">
 
         <include layout="@layout/person_list" />
+        <!--<include layout="@layout/item_res" -->/>
+
     </FrameLayout>
 
     <android.support.design.widget.FloatingActionButton
@@ -40,4 +44,4 @@
 
 
 </android.support.design.widget.CoordinatorLayout>
-<!-- From: file:/F:/android5/projects/UI/app/src/main/res/layout/activity_person_list.xml -->
+<!-- From: file:/C:/android5/projects/UI/app/src/main/res/layout/activity_person_list.xml -->
