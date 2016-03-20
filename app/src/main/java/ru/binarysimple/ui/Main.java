@@ -60,6 +60,8 @@ public class Main extends AppCompatActivity {
     final static String RESULTS_REQUEST_CALC = "REQUEST";
     final static String RESULTS_LOAD = "LOAD";
     final static String RESULTS_CALC = "CALC";
+    final static String RESULTS_REQUEST_MONTH = "request_month";
+    final static String RESULTS_REQUEST_YEAR = "request_year";
 
     private SharedPreferences sPref;
     //  DBHelper dbHelper;
@@ -260,7 +262,7 @@ public class Main extends AppCompatActivity {
                             menu.setGroupVisible(R.id.grPersAdd, false);
                             menu.setGroupVisible(R.id.grPers, false);
                             mViewPager.setCurrentItem(tab.getPosition(), true);
-                            //loadParams();
+                            loadParams();
                             break;
                         case 2:
                             // menu.setGroupVisible(R.id.grMain, false);
@@ -483,7 +485,7 @@ public class Main extends AppCompatActivity {
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
-        final String[] data = {"январь", "февраль", "март", "апрель", "май", "июнь", "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь"};
+        String[] data = {"январь", "февраль", "март", "апрель", "май", "июнь", "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь"};
         SharedPreferences sPref;
         FloatingActionButton fab_param;
 
@@ -620,7 +622,7 @@ public class Main extends AppCompatActivity {
         /****
          * etCompName onClick listeners here
          */
-        private final View.OnClickListener onOnClickEvent = new View.OnClickListener() {
+        private View.OnClickListener onOnClickEvent = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 DialogFragment dlg1 = new Dlg_Org();
@@ -723,7 +725,7 @@ public class Main extends AppCompatActivity {
                     ed.putString("fss", fss);
                     ed.apply(); // save pref
                     //   dbHelper.close();
-                    main.loadParams();
+                    //main.loadParams();
                 }
 
                 @Override
@@ -739,18 +741,17 @@ public class Main extends AppCompatActivity {
                         if (fab_org.getTag() == Main.FAB_ORG_TAG_SAVE) {
                             main.saveORG(rootView);
                         } else {
-                            Snackbar.make(rootView, "Here must be load all results action", Snackbar.LENGTH_LONG)
-                                    .setAction("Action", null).show();
+                            //Snackbar.make(rootView, "Here must be load all results action", Snackbar.LENGTH_LONG)
+                            //        .setAction("Action", null).show();
                             //         Intent intent = new Intent(getActivity(), PersonListActivity.class);
                             //         intent.putExtra(Main.RESULTS_REQUEST_CALC, Main.RESULTS_LOAD);
                             //         startActivity(intent);
-                            sPref = getActivity().getSharedPreferences("mPref", MODE_PRIVATE); //get preferences object
-                            SharedPreferences.Editor ed = sPref.edit();
-                            ed.putString(Main.RESULTS_REQUEST_CALC, Main.RESULTS_LOAD); //results request
-                            ed.apply(); // save pref
-
-                            Intent intent = new Intent(getActivity(), PersonListActivity.class);
-//                            intent.putExtra(Main.RESULTS_REQUEST_CALC, Main.RESULTS_CALC);
+                            //sPref = getActivity().getSharedPreferences("mPref", MODE_PRIVATE); //get preferences object
+                            //SharedPreferences.Editor ed = sPref.edit();
+                            //ed.putString(Main.RESULTS_REQUEST_CALC, Main.RESULTS_LOAD); //results request
+                            //ed.apply(); // save pref
+                            //Intent intent = new Intent(getActivity(), PersonListActivity.class);
+                            Intent intent = new Intent(getActivity(), SavedResultsList.class);
                             startActivity(intent);
 
                         }

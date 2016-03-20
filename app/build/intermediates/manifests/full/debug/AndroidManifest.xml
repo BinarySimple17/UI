@@ -41,6 +41,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ru.binarysimple.ui.PersonListActivity" />
         </activity>
+        <activity android:name="ru.binarysimple.ui.SavedResultsList" />
     </application>
 
 </manifest>

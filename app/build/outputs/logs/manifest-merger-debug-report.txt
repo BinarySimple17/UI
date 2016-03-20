@@ -1,6 +1,6 @@
 -- Merging decision tree log ---
 manifest
-ADDED from F:\android5\projects\UI\app\src\main\AndroidManifest.xml:2:1-40:12
+ADDED from F:\android5\projects\UI\app\src\main\AndroidManifest.xml:2:1-41:12
 	package
 		ADDED from F:\android5\projects\UI\app\src\main\AndroidManifest.xml:3:5-33
 		INJECTED from F:\android5\projects\UI\app\src\main\AndroidManifest.xml
@@ -14,7 +14,7 @@ ADDED from F:\android5\projects\UI\app\src\main\AndroidManifest.xml:2:1-40:12
 		INJECTED from F:\android5\projects\UI\app\src\main\AndroidManifest.xml
 		INJECTED from F:\android5\projects\UI\app\src\main\AndroidManifest.xml
 application
-ADDED from F:\android5\projects\UI\app\src\main\AndroidManifest.xml:5:5-38:19
+ADDED from F:\android5\projects\UI\app\src\main\AndroidManifest.xml:5:5-39:19
 MERGED from [com.android.support:appcompat-v7:23.1.1] F:\android5\projects\UI\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.1.1\AndroidManifest.xml:22:5-20
 MERGED from [com.android.support:support-v4:23.1.1] F:\android5\projects\UI\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.1\AndroidManifest.xml:22:5-20
 MERGED from [com.android.support:design:23.1.1] F:\android5\projects\UI\app\build\intermediates\exploded-aar\com.android.support\design\23.1.1\AndroidManifest.xml:22:5-20
@@ -53,7 +53,7 @@ ADDED from F:\android5\projects\UI\app\src\main\AndroidManifest.xml:18:17-77
 	android:name
 		ADDED from F:\android5\projects\UI\app\src\main\AndroidManifest.xml:18:27-74
 activity#ru.binarysimple.ui.PersActivity
-ADDED from F:\android5\projects\UI\app\src\main\AndroidManifest.xml:21:9-24:58
+ADDED from F:\android5\projects\UI\app\src\main\AndroidManifest.xml:21:9-24:59
 	android:label
 		ADDED from F:\android5\projects\UI\app\src\main\AndroidManifest.xml:23:13-56
 	android:theme
@@ -61,7 +61,7 @@ ADDED from F:\android5\projects\UI\app\src\main\AndroidManifest.xml:21:9-24:58
 	android:name
 		ADDED from F:\android5\projects\UI\app\src\main\AndroidManifest.xml:22:13-41
 activity#ru.binarysimple.ui.PersonListActivity
-ADDED from F:\android5\projects\UI\app\src\main\AndroidManifest.xml:25:9-28:68
+ADDED from F:\android5\projects\UI\app\src\main\AndroidManifest.xml:25:9-28:59
 	android:label
 		ADDED from F:\android5\projects\UI\app\src\main\AndroidManifest.xml:27:13-54
 	android:theme
@@ -84,6 +84,10 @@ ADDED from F:\android5\projects\UI\app\src\main\AndroidManifest.xml:34:13-36:73
 		ADDED from F:\android5\projects\UI\app\src\main\AndroidManifest.xml:36:17-70
 	android:name
 		ADDED from F:\android5\projects\UI\app\src\main\AndroidManifest.xml:35:17-63
+activity#ru.binarysimple.ui.SavedResultsList
+ADDED from F:\android5\projects\UI\app\src\main\AndroidManifest.xml:38:9-63
+	android:name
+		ADDED from F:\android5\projects\UI\app\src\main\AndroidManifest.xml:38:19-51
 uses-sdk
 INJECTED from F:\android5\projects\UI\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 MERGED from [com.android.support:appcompat-v7:23.1.1] F:\android5\projects\UI\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.1.1\AndroidManifest.xml:20:5-43

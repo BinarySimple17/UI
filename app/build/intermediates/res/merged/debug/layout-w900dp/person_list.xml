@@ -36,4 +36,4 @@
         android:layout_weight="3" />
 
 </LinearLayout>
-    <!--tools:listitem="@layout/person_list_content"--><!-- From: file:/C:/android5/projects/UI/app/src/main/res/layout-w900dp/person_list.xml -->
+    <!--tools:listitem="@layout/person_list_content"--><!-- From: file:/F:/android5/projects/UI/app/src/main/res/layout-w900dp/person_list.xml -->

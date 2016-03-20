@@ -11,4 +11,4 @@
     app:layoutManager="LinearLayoutManager"
     tools:context="ru.binarysimple.ui.PersonListActivity"
     tools:listitem="@layout/item_res"/>
-    <!--tools:listitem="@layout/person_list_content"--><!-- From: file:/C:/android5/projects/UI/app/src/main/res/layout/person_list.xml -->
+    <!--tools:listitem="@layout/person_list_content"--><!-- From: file:/F:/android5/projects/UI/app/src/main/res/layout/person_list.xml -->

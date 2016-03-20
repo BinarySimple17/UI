@@ -11,7 +11,8 @@
         android:text="resFIO"
         android:layout_gravity="left|center_horizontal"
         android:layout_marginLeft="5dp"
-        android:textSize="24sp">
+        android:textSize="24sp"
+        android:singleLine="true">
     </TextView>
     <TextView
         android:id="@+id/resPosition"

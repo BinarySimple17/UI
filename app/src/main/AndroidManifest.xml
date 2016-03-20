@@ -21,11 +21,11 @@
         <activity
             android:name=".PersActivity"
             android:label="@string/title_activity_pers"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".PersonListActivity"
             android:label="@string/title_person_list"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".PersonDetailActivity"
             android:label="@string/title_person_detail"
@@ -35,6 +35,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ru.binarysimple.ui.PersonListActivity" />
         </activity>
+        <activity android:name=".SavedResultsList"></activity>
     </application>
 
 </manifest>

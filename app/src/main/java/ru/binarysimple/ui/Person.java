@@ -1,8 +1,5 @@
 package ru.binarysimple.ui;
 
-/**
- * Created by voffka on 09.10.2015.
- */
 public class Person {
 
     String name;

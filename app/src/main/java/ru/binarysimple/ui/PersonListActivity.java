@@ -141,10 +141,11 @@ public class PersonListActivity extends AppCompatActivity {
         } else {
             //started for load results from DB
             //TODO load from db. remove loading from sPref in future
+            //TODO change getting month and year to RESULTS_REQUEST_YEAR and RESULTS_REQUEST_MONTH
             sPref = getSharedPreferences("mPref", MODE_PRIVATE); // get preferences
             String comp_id = Integer.toString(sPref.getInt("c_id", -1));
-            String year = sPref.getString("year", "-1");
-            String month = Integer.toString(sPref.getInt("month", -1));//int
+            String year = sPref.getString(Main.RESULTS_REQUEST_YEAR, "-1");
+            String month = sPref.getString(Main.RESULTS_REQUEST_MONTH, "-1");//int
             results = loadResults(comp_id, year, month);
         }
         setupRecyclerViewArray((RecyclerView) recyclerView, results);
@@ -191,13 +192,14 @@ public class PersonListActivity extends AppCompatActivity {
             });
         } else {
             // if pressed for load results. Button - clear results from DB
-            fab.setOnClickListener(new View.OnClickListener() {
+            /*fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Snackbar.make(view, "Результаты должны быть очищены?", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 }
-            });
+            });*/
+            fab.hide();
         }
     }
 

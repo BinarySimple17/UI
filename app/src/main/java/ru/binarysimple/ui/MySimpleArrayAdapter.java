@@ -14,10 +14,10 @@ class MySimpleArrayAdapter extends ArrayAdapter<Person> {
     private final LayoutInflater lInflater;
     private final ArrayList<Person> objects;
 
-    MySimpleArrayAdapter(Context context, ArrayList<Person> products) {
-        super(context, R.layout.item, products);
+    MySimpleArrayAdapter(Context context, ArrayList<Person> persons) {
+        super(context, R.layout.item, persons);
         ctx = context;
-        objects = products;
+        objects = persons;
         lInflater = (LayoutInflater) ctx
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
