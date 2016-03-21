@@ -54,11 +54,19 @@ public class WorkDB {
         dbHelper.close();
     }
 
-    public void delData(Context context, String tableName, String id) {
-        Log.d(LOG_TAG, "delete data from " + tableName);
+    public void delOnePersonByID(Context context, String id) {
+        Log.d(LOG_TAG, "delete data from " + Main.TABLE_NAME);
         dbHelper = DBHelper.getInstance(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        db.execSQL("DELETE FROM " + tableName + " WHERE _id=" + id);
+        db.execSQL("DELETE FROM " + Main.TABLE_NAME + " WHERE _id=" + id);
+        dbHelper.close();
+    }
+
+    public void delResultsByIDPerson(Context context, String id) {
+        Log.d(LOG_TAG, "delete data from " + Main.TABLE_RESULTS);
+        dbHelper = DBHelper.getInstance(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.execSQL("DELETE FROM " + Main.TABLE_RESULTS + " WHERE id_person=" + id);
         dbHelper.close();
     }
 

@@ -21,7 +21,7 @@
         android:choiceMode="singleChoice"
         android:clickable="true"
         android:listSelector="@color/button_material_light"
-        android:longClickable="false"
+        android:longClickable="true"
         android:smoothScrollbar="true"
         android:visibility="visible" />
 

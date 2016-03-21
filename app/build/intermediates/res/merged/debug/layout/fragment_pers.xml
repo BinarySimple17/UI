@@ -21,7 +21,7 @@
         android:choiceMode="singleChoice"
         android:clickable="true"
         android:listSelector="@color/button_material_light"
-        android:longClickable="false"
+        android:longClickable="true"
         android:smoothScrollbar="true"
         android:visibility="visible" />
 
@@ -36,4 +36,4 @@
     <!--    </ScrollView>-->
     <!--android:layout_gravity="end|bottom"-->
     <!--android:layout_margin="@dimen/fab_margin"-->
-</FrameLayout><!-- From: file:/F:/android5/projects/UI/app/src/main/res/layout/fragment_pers.xml -->
+</FrameLayout><!-- From: file:/C:/android5/projects/UI/app/src/main/res/layout/fragment_pers.xml -->

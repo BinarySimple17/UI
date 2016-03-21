@@ -18,8 +18,10 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -290,7 +292,42 @@ public class Main extends AppCompatActivity {
                 //              Log.d(LOG_TAG, tab.getPosition() + " onTabReselected");
             }
         });
-        //loadParams();
+    }
+//TODO CONTEXT MENU
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenu.ContextMenuInfo menuInfo)
+    {
+        super.onCreateContextMenu(menu, v, menuInfo);
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_del_person, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item)
+    {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch (item.getItemId())
+        {
+            case R.id.action_delPerson:
+                if (fragmentPers != null) {
+                    deleteOnePerson(fragmentPers.persons.get(info.position));
+                    fragmentPers.persons.remove(info.position);
+                    fragmentPers.myAdapter.notifyDataSetChanged();
+                }
+                break;
+            default:
+                return super.onContextItemSelected(item);
+        }
+        return true;
+    }
+
+    void deleteOnePerson (Person person){
+        Log.d(LOG_TAG, "deleteOnePerson "+person.name);
+        WorkDB workDB = new WorkDB();
+        workDB.delResultsByIDPerson(this.getMainContext(),person.id.toString());
+        workDB.delOnePersonByID(this.getMainContext(),person.id.toString());
     }
 
     void loadParams() {
@@ -397,6 +434,10 @@ public class Main extends AppCompatActivity {
             menu.setGroupVisible(R.id.grPersAdd, false);
         }
 
+        if (item.getItemId() == R.id.action_delOrg) {
+            Log.d(LOG_TAG, "delete org menu item pressed");
+        }
+
         if (item.getItemId() == R.id.action_newOrg) {
             Log.d(LOG_TAG, "menu newOrg pressed");
             TextView etCompName = (TextView) findViewById(R.id.etCompName);
@@ -417,6 +458,44 @@ public class Main extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    void deleteOrgBySavedID (){
+        //√ получаю список людей по ид конторы - persons
+        //удаляю все результаты по каждому ид сотрудника
+        //удаляю всех сотрудников по ид конторы
+        //удаляю контору по ид
+        // очищаю сПреф
+        //лоадпарамс()
+        // обновляю спиннер с параметром -1
+
+        ArrayList<Person> persons = new ArrayList<Person>();
+
+        sPref = getSharedPreferences("mPref", MODE_PRIVATE); // get preferences
+        Integer c_id = sPref.getInt("c_id", -1);
+        if (c_id < 0) return;
+
+        WorkDB workDB = new WorkDB();
+        Cursor c = workDB.getData(this,
+                "select * from " + TABLE_NAME + " where comp_id=" + c_id, null);
+        if (c != null) {
+            if (c.getCount() > 0) {
+                c.moveToFirst();
+                for (int i = 0; i < c.getCount(); i++) {
+                    Person person = new Person(c.getString(c.getColumnIndex("name")),
+                            c.getString(c.getColumnIndex("pos")),
+                            c.getString(c.getColumnIndex("sal")),
+                            c.getLong(c.getColumnIndex("_id")),
+                            c.getInt(c.getColumnIndex("comp_id")));
+                    persons.add(i, person);
+                    c.move(1);
+                }
+            }
+            c.close();
+        }
+
+
+
     }
 
     //TODO ACTIVITY RESULT
@@ -805,7 +884,6 @@ public class Main extends AppCompatActivity {
                         data.getStringExtra("salary"),
                         data.getLongExtra("id", -1),
                         data.getIntExtra("comp_id", c_id)));
-
                 myAdapter.notifyDataSetChanged();
                 lvMain.setAdapter(myAdapter);
             } catch (Exception e) {
@@ -828,6 +906,14 @@ public class Main extends AppCompatActivity {
             myAdapter.notifyDataSetChanged();
             lvMain.setAdapter(myAdapter);
 
+        }
+
+        public void deleteOnePerson (){
+            persons.size();
+            Log.d(LOG_TAG, "deleteOnePerson "+persons.get(lvMain.getCheckedItemPosition()).name);
+            WorkDB workDB = new WorkDB();
+            workDB.delResultsByIDPerson(this.getContext(),persons.get(lvMain.getCheckedItemPosition()).id.toString());
+            workDB.delOnePersonByID(this.getContext(),persons.get(lvMain.getCheckedItemPosition()).id.toString());
         }
 
         public void savePersonsListToDB() {
@@ -950,8 +1036,12 @@ public class Main extends AppCompatActivity {
             });
 
             loadPersonsListFromDB();
+            registerForContextMenu(lvMain);
+
             return rootView;
         }
+
+
 
         /**
          * LOGS

@@ -46,12 +46,14 @@
     <string name="par_ffoms_hint">5,10</string>
     <string name="par_fss_hint">2,90</string>
     <string name="title_activity_pers">Сотрудник</string>
-    <string name="title_person_list">Расчеты</string>
-    <string name="title_person_detail">Расчет</string>
-    <string name="title_saved_results">Расчеты для </string>
+    <string name="title_person_list">Новый расчет</string>
+    <string name="title_person_detail">Детали</string>
+    <string name="title_saved_results"></string>
 
     <string name="dlg_org_caption">Название</string>
     <string name="dlg_org_cancel">Отмена</string>
     <string name="dlg_org_OK">OK</string>
+
+    <string name="menu_delete">Удалить</string>
 
 </resources>
