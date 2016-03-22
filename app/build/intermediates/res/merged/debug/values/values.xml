@@ -334,12 +334,17 @@
     <string name="dialog_1">Dialog 1</string>
     <string name="dialog_2">Организация</string>
     <string name="dialog_2_text">Сохранить изменения?</string>
+    <string name="dlg_delorg_OK">Да</string>
+    <string name="dlg_delorg_cancel">Нет</string>
+    <string name="dlg_delorg_caption">Внимание!</string>
+    <string name="dlg_delorg_text">Удалить орагнизацию?</string>
     <string name="dlg_org_OK">OK</string>
     <string name="dlg_org_cancel">Отмена</string>
     <string name="dlg_org_caption">Название</string>
     <string name="maybe">Maybe</string>
     <string name="menu_delete">Удалить</string>
     <string name="no">Нет</string>
+    <string name="no_data">Нет данных</string>
     <string name="org_edit1">Название</string>
     <string name="org_name_error">Неверное имя организации</string>
     <string name="org_spOrg">Список</string>
@@ -357,6 +362,7 @@
     <string name="par_txt5">ФФОМС,%</string>
     <string name="par_txt6">ФСС,%</string>
     <string name="par_year_hint">Год</string>
+    <string name="results_is_saved">Расчет сохранен</string>
     <string name="section1">Организация</string>
     <string name="section2">Параметры</string>
     <string name="section3">Сотрудники</string>

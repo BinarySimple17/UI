@@ -19,6 +19,13 @@
             android:icon="@drawable/ic_neworg"
             android:orderInCategory="100"
             app:showAsAction="ifRoom" />
+
+        <item
+            android:id="@+id/action_delOrg"
+            android:title="@string/menu_delete"
+            android:icon="@drawable/ic_cancelorg"
+            android:orderInCategory="100"
+            app:showAsAction="ifRoom" />
     </group>
 
     <group

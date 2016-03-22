@@ -62,6 +62,14 @@ public class WorkDB {
         dbHelper.close();
     }
 
+    public void delOneOrgByID(Context context, String id) {
+        Log.d(LOG_TAG, "delete data from " + Main.TABLE_NAME_C);
+        dbHelper = DBHelper.getInstance(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.execSQL("DELETE FROM " + Main.TABLE_NAME_C + " WHERE _id=" + id);
+        dbHelper.close();
+    }
+
     public void delResultsByIDPerson(Context context, String id) {
         Log.d(LOG_TAG, "delete data from " + Main.TABLE_RESULTS);
         dbHelper = DBHelper.getInstance(context);

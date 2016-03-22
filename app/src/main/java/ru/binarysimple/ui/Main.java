@@ -35,6 +35,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import ru.binarysimple.ui.dialogs.Dlg_DelOrg;
 import ru.binarysimple.ui.dialogs.Dlg_Org;
 
 public class Main extends AppCompatActivity {
@@ -436,6 +437,9 @@ public class Main extends AppCompatActivity {
 
         if (item.getItemId() == R.id.action_delOrg) {
             Log.d(LOG_TAG, "delete org menu item pressed");
+            //deleteOrgBySavedID();
+            DialogFragment dlg2 = new Dlg_DelOrg();
+            dlg2.show(getFragmentManager(), "del_org");
         }
 
         if (item.getItemId() == R.id.action_newOrg) {
@@ -460,12 +464,12 @@ public class Main extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    void deleteOrgBySavedID (){
-        //√ получаю список людей по ид конторы - persons
-        //удаляю все результаты по каждому ид сотрудника
-        //удаляю всех сотрудников по ид конторы
-        //удаляю контору по ид
-        // очищаю сПреф
+    public void deleteOrgBySavedID (){
+        //TODO√ получаю список людей по ид конторы - persons
+        //√     удаляю все результаты по каждому ид сотрудника
+        //√     удаляю всех сотрудников по ид конторы
+        //√     удаляю контору по ид
+        //√     очищаю сПреф
         //лоадпарамс()
         // обновляю спиннер с параметром -1
 
@@ -482,20 +486,34 @@ public class Main extends AppCompatActivity {
             if (c.getCount() > 0) {
                 c.moveToFirst();
                 for (int i = 0; i < c.getCount(); i++) {
-                    Person person = new Person(c.getString(c.getColumnIndex("name")),
-                            c.getString(c.getColumnIndex("pos")),
-                            c.getString(c.getColumnIndex("sal")),
-                            c.getLong(c.getColumnIndex("_id")),
-                            c.getInt(c.getColumnIndex("comp_id")));
-                    persons.add(i, person);
+                    workDB.delResultsByIDPerson(this,Long.toString(c.getLong(c.getColumnIndex("_id"))));
+              //      Person person = new Person(c.getString(c.getColumnIndex("name")),
+              //              c.getString(c.getColumnIndex("pos")),
+              //              c.getString(c.getColumnIndex("sal")),
+               //             c.getLong(c.getColumnIndex("_id")),
+               //             c.getInt(c.getColumnIndex("comp_id")));
+               //     persons.add(i, person);
                     c.move(1);
                 }
             }
             c.close();
         }
+        workDB.delPersons(this, c_id.toString());
+        workDB.delOneOrgByID(this, c_id.toString());
 
-
-
+        SharedPreferences.Editor ed = sPref.edit();
+        ed.putString("cn", ""); //put company name
+        ed.putInt("c_id", -1); // put company id
+        ed.putInt("sp_id", 0);
+        ed.putInt("month", Calendar.getInstance().get(Calendar.MONTH));
+        ed.putString("year", "" + Calendar.getInstance().get(Calendar.YEAR));
+        ed.putString("ndfl", getResources().getString(R.string.par_ndfl_hint));
+        ed.putString("pfr", getResources().getString(R.string.par_pfr_hint));
+        ed.putString("fss", getResources().getString(R.string.par_fss_hint));
+        ed.putString("ffoms", getResources().getString(R.string.par_ffoms_hint));
+        ed.apply(); // save pref
+        //loadParams();
+        setSpinner(this.getOrgView(),-1);
     }
 
     //TODO ACTIVITY RESULT

@@ -157,7 +157,7 @@ public class PersonListActivity extends AppCompatActivity {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         if (results.size() < 1) {
             fab.hide();
-            Snackbar.make(recyclerView, "Нет данных", Snackbar.LENGTH_LONG)
+            Snackbar.make(recyclerView, getResources().getString(R.string.no_data), Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
         }
         if (startedForCalc) { //started for calc new results. Button onClick - save results to DB
@@ -186,7 +186,7 @@ public class PersonListActivity extends AppCompatActivity {
                         workDB.insertRecordOnConflict(view.getContext(), Main.TABLE_RESULTS, cv);
                         cv.clear();
                     }
-                    Snackbar.make(view, "Результаты сохранены", Snackbar.LENGTH_LONG)
+                    Snackbar.make(view,  getResources().getString(R.string.results_is_saved), Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 }
             });

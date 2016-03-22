@@ -2211,7 +2211,7 @@ containing a value of this type.
     }
     public static final class id {
         public static final int action0=0x7f0c00a7;
-        public static final int action_addPers=0x7f0c00bd;
+        public static final int action_addPers=0x7f0c00bf;
         public static final int action_bar=0x7f0c005a;
         public static final int action_bar_activity_content=0x7f0c0000;
         public static final int action_bar_container=0x7f0c0059;
@@ -2220,16 +2220,18 @@ containing a value of this type.
         public static final int action_bar_subtitle=0x7f0c003b;
         public static final int action_bar_title=0x7f0c003a;
         public static final int action_context_bar=0x7f0c005b;
+        public static final int action_delOrg=0x7f0c00bd;
         public static final int action_delPerson=0x7f0c00b9;
+        public static final int action_delRes=0x7f0c00ba;
         public static final int action_divider=0x7f0c00ab;
-        public static final int action_editPers=0x7f0c00be;
+        public static final int action_editPers=0x7f0c00c0;
         public static final int action_menu_divider=0x7f0c0002;
         public static final int action_menu_presenter=0x7f0c0003;
         public static final int action_mode_bar=0x7f0c0057;
         public static final int action_mode_bar_stub=0x7f0c0056;
         public static final int action_mode_close_button=0x7f0c003c;
-        public static final int action_newOrg=0x7f0c00bb;
-        public static final int action_savePers=0x7f0c00c0;
+        public static final int action_newOrg=0x7f0c00bc;
+        public static final int action_savePers=0x7f0c00c2;
         public static final int activity_chooser_view_content=0x7f0c003d;
         public static final int alertTitle=0x7f0c0049;
         public static final int always=0x7f0c0032;
@@ -2290,9 +2292,9 @@ containing a value of this type.
         public static final int fixed=0x7f0c0037;
         public static final int frameLayout=0x7f0c0074;
         public static final int grDelPerson=0x7f0c00b8;
-        public static final int grOrg=0x7f0c00ba;
-        public static final int grPers=0x7f0c00bc;
-        public static final int grPersAdd=0x7f0c00bf;
+        public static final int grOrg=0x7f0c00bb;
+        public static final int grPers=0x7f0c00be;
+        public static final int grPersAdd=0x7f0c00c1;
         public static final int home=0x7f0c0004;
         public static final int homeAsUp=0x7f0c000f;
         public static final int icon=0x7f0c0042;
@@ -2483,7 +2485,8 @@ containing a value of this type.
     }
     public static final class menu {
         public static final int menu_del_person=0x7f0d0000;
-        public static final int menu_main=0x7f0d0001;
+        public static final int menu_del_res=0x7f0d0001;
+        public static final int menu_main=0x7f0d0002;
     }
     public static final class mipmap {
         public static final int ic_editorg_button=0x7f030000;
@@ -2524,42 +2527,48 @@ containing a value of this type.
         public static final int dialog_1=0x7f060020;
         public static final int dialog_2=0x7f060021;
         public static final int dialog_2_text=0x7f060022;
-        public static final int dlg_org_OK=0x7f060023;
-        public static final int dlg_org_cancel=0x7f060024;
-        public static final int dlg_org_caption=0x7f060025;
-        public static final int maybe=0x7f060026;
-        public static final int menu_delete=0x7f060027;
-        public static final int no=0x7f060028;
-        public static final int org_edit1=0x7f060029;
-        public static final int org_name_error=0x7f06002a;
-        public static final int org_spOrg=0x7f06002b;
-        public static final int org_txt1=0x7f06002c;
-        public static final int org_txt2=0x7f06002d;
-        public static final int par_ffoms_hint=0x7f06002e;
-        public static final int par_fss_hint=0x7f06002f;
-        public static final int par_month_hint=0x7f060030;
-        public static final int par_ndfl_hint=0x7f060031;
-        public static final int par_pfr_hint=0x7f060032;
-        public static final int par_txt1=0x7f060033;
-        public static final int par_txt2=0x7f060034;
-        public static final int par_txt3=0x7f060035;
-        public static final int par_txt4=0x7f060036;
-        public static final int par_txt5=0x7f060037;
-        public static final int par_txt6=0x7f060038;
-        public static final int par_year_hint=0x7f060039;
-        public static final int section1=0x7f06003a;
-        public static final int section2=0x7f06003b;
-        public static final int section3=0x7f06003c;
-        public static final int sectionP1=0x7f06003d;
-        public static final int sectionP2=0x7f06003e;
-        public static final int section_format=0x7f06003f;
+        public static final int dlg_delorg_OK=0x7f060023;
+        public static final int dlg_delorg_cancel=0x7f060024;
+        public static final int dlg_delorg_caption=0x7f060025;
+        public static final int dlg_delorg_text=0x7f060026;
+        public static final int dlg_org_OK=0x7f060027;
+        public static final int dlg_org_cancel=0x7f060028;
+        public static final int dlg_org_caption=0x7f060029;
+        public static final int maybe=0x7f06002a;
+        public static final int menu_delete=0x7f06002b;
+        public static final int no=0x7f06002c;
+        public static final int no_data=0x7f06002d;
+        public static final int org_edit1=0x7f06002e;
+        public static final int org_name_error=0x7f06002f;
+        public static final int org_spOrg=0x7f060030;
+        public static final int org_txt1=0x7f060031;
+        public static final int org_txt2=0x7f060032;
+        public static final int par_ffoms_hint=0x7f060033;
+        public static final int par_fss_hint=0x7f060034;
+        public static final int par_month_hint=0x7f060035;
+        public static final int par_ndfl_hint=0x7f060036;
+        public static final int par_pfr_hint=0x7f060037;
+        public static final int par_txt1=0x7f060038;
+        public static final int par_txt2=0x7f060039;
+        public static final int par_txt3=0x7f06003a;
+        public static final int par_txt4=0x7f06003b;
+        public static final int par_txt5=0x7f06003c;
+        public static final int par_txt6=0x7f06003d;
+        public static final int par_year_hint=0x7f06003e;
+        public static final int results_is_saved=0x7f06003f;
+        public static final int section1=0x7f060040;
+        public static final int section2=0x7f060041;
+        public static final int section3=0x7f060042;
+        public static final int sectionP1=0x7f060043;
+        public static final int sectionP2=0x7f060044;
+        public static final int section_format=0x7f060045;
         public static final int status_bar_notification_info_overflow=0x7f060013;
-        public static final int title_activity_pers=0x7f060040;
-        public static final int title_person_detail=0x7f060041;
-        public static final int title_person_list=0x7f060042;
-        public static final int title_saved_results=0x7f060043;
-        public static final int toastAddPers=0x7f060044;
-        public static final int yes=0x7f060045;
+        public static final int title_activity_pers=0x7f060046;
+        public static final int title_person_detail=0x7f060047;
+        public static final int title_person_list=0x7f060048;
+        public static final int title_saved_results=0x7f060049;
+        public static final int toastAddPers=0x7f06004a;
+        public static final int yes=0x7f06004b;
     }
     public static final class style {
         public static final int AlertDialog_AppCompat=0x7f09007f;

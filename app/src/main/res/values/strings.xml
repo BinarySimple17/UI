@@ -54,6 +54,13 @@
     <string name="dlg_org_cancel">Отмена</string>
     <string name="dlg_org_OK">OK</string>
 
+    <string name="dlg_delorg_caption">Внимание!</string>
+    <string name="dlg_delorg_text">Удалить орагнизацию?</string>
+    <string name="dlg_delorg_cancel">Нет</string>
+    <string name="dlg_delorg_OK">Да</string>
+
     <string name="menu_delete">Удалить</string>
+    <string name="no_data">Нет данных</string>
+    <string name="results_is_saved">Расчет сохранен</string>
 
 </resources>
