@@ -88,7 +88,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/etSalary"
-                android:inputType="number"
+                android:inputType="number|numberDecimal"
                 android:maxLength="15"
                 android:singleLine="true"
                 android:imeOptions="actionNext"/>

@@ -31,6 +31,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -174,7 +176,7 @@ public class Main extends AppCompatActivity {
     }
 
     public String getName() {
-        etCompName = (TextView) findViewById(R.id.etCompName); //find object edittext
+        etCompName = (TextView) findViewById(R.id.etCompName);
         return etCompName.getText().toString();
     }
 
@@ -183,13 +185,14 @@ public class Main extends AppCompatActivity {
         //ишем Все организации в базе, если есть, то заполняем спиннер, если нет, то  хинт
         try {
             WorkDB workDB = new WorkDB();
+            Spinner spinner = (Spinner) rootView.findViewById(R.id.spOrgs);
+            TextView etCompName = (TextView) rootView.findViewById(R.id.etCompName);
+            if (spAdapter == null) {
+                spAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
+                spAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            }
             Cursor c = workDB.getData(this, "select * from " + TABLE_NAME_C, null);
             if (c.getCount() > 0) { //if found some
-                if (spAdapter == null) {
-                    spAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
-                    spAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                }
-                Spinner spinner = (Spinner) rootView.findViewById(R.id.spOrgs);
                 spinner.setAdapter(spAdapter);
                 spAdapter.clear();
                 if (c.moveToFirst()) {
@@ -202,10 +205,14 @@ public class Main extends AppCompatActivity {
                 if (pos > -1) {
                     spinner.setSelection(pos);
                     if (fragmentPers != null) fragmentPers.loadPersonsListFromDB();
+
                 } else if (pos == -2) {
                     spinner.setSelection(spinner.getCount() - 1);
                 }
-
+            }
+            else {
+                spAdapter.clear();
+                etCompName.setText("");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -228,16 +235,7 @@ public class Main extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        // Create the spAdapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        /*
-      The {@link android.support.v4.view.PagerAdapter} that will provide
-      fragments for each of the sections. We use a
-      {@link FragmentPagerAdapter} derivative, which will keep every
-      loaded fragment in memory. If this becomes too memory intensive, it
-      may be best to switch to a
-      {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
+
         SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager) findViewById(R.id.container); //container - viewPager from activity_main
         mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -293,6 +291,8 @@ public class Main extends AppCompatActivity {
                 //              Log.d(LOG_TAG, tab.getPosition() + " onTabReselected");
             }
         });
+
+
     }
 //TODO CONTEXT MENU
     @Override
@@ -603,6 +603,13 @@ public class Main extends AppCompatActivity {
                                  Bundle savedInstanceState) {
             final View rootView = inflater.inflate(R.layout.fragment_params, container, false);
             rootView.setTag("param");
+
+            //** ADS
+            AdView mAdView = (AdView) rootView.findViewById(R.id.adView);
+            AdRequest adRequest = new AdRequest.Builder().build();
+            mAdView.loadAd(adRequest);
+
+
             Spinner spinner = (Spinner) rootView.findViewById(R.id.spMonth);
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
                     android.R.layout.simple_spinner_item, data);
@@ -747,13 +754,19 @@ public class Main extends AppCompatActivity {
             final View rootView = inflater.inflate(R.layout.fragment_org, container, false);
             rootView.setTag("org");
             String name;
+
+            //** ADS
+            AdView mAdView = (AdView) rootView.findViewById(R.id.adView);
+            AdRequest adRequest = new AdRequest.Builder().build();
+            mAdView.loadAd(adRequest);
+
             /**
              * fill spinner
              */
             sPref = getActivity().getSharedPreferences("mPref", MODE_PRIVATE); // get preferences
             final Main main = ((Main) getActivity());
             main.setSpinner(rootView, sPref.getInt("sp_id", -1));
-            //main.loadParams();
+
 
             /**
              * fill etCompName from Preferences or set it to default value
@@ -1009,6 +1022,12 @@ public class Main extends AppCompatActivity {
                                  Bundle savedInstanceState) {
             final View rootView = inflater.inflate(R.layout.fragment_pers, container, false);
             rootView.setTag("pers");
+
+            //** ADS
+            //TODO close ad by click
+            AdView mAdView = (AdView) rootView.findViewById(R.id.adView);
+            AdRequest adRequest = new AdRequest.Builder().build();
+            mAdView.loadAd(adRequest);
 
             saveFragment = (SaveFragment) getFragmentManager().findFragmentByTag("SAVE_FRAGMENT");
             fab = (FloatingActionButton) rootView.findViewById(R.id.fab);

@@ -11,6 +11,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import java.util.ArrayList;
 
 public class SavedResultsList extends AppCompatActivity {
@@ -28,6 +31,13 @@ public class SavedResultsList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_saved_results_list);
+
+        //** ADS
+        //TODO close ad by click
+        AdView mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
         sPref = getSharedPreferences("mPref", MODE_PRIVATE);
         comp_id = sPref.getInt("c_id", -1);
         lvPeriods = (ListView) findViewById(R.id.lvPeriods);

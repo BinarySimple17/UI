@@ -8,6 +8,10 @@
         android:minSdkVersion="15"
         android:targetSdkVersion="16" />
 
+    <!-- Include required permissions for Google Mobile Ads to run -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -41,7 +45,22 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ru.binarysimple.ui.PersonListActivity" />
         </activity>
-        <activity android:name="ru.binarysimple.ui.SavedResultsList" />
+        <activity
+            android:name="ru.binarysimple.ui.SavedResultsList"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <!-- Include the AdActivity and InAppPurchaseActivity configChanges and themes. -->
+        <activity
+            android:name="com.google.android.gms.ads.AdActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:theme="@android:style/Theme.Translucent" />
+        <activity
+            android:name="com.google.android.gms.ads.purchase.InAppPurchaseActivity"
+            android:theme="@style/Theme.IAPTheme" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
     </application>
 
 </manifest>

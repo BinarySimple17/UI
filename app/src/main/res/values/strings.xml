@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Расчет отчислений</string>
+    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+
     <string name="action_settings">Настройки</string>
     <string name="action_addPers">Добавить</string>
     <string name="action_addPersSave">Сохранить</string>
@@ -43,10 +45,11 @@
     <string name="par_txt6">ФСС,%</string>
     <string name="par_ndfl_hint">13</string>
     <string name="par_pfr_hint">22</string>
-    <string name="par_ffoms_hint">5,10</string>
-    <string name="par_fss_hint">2,90</string>
+    <string name="par_ffoms_hint">5.10</string>
+    <string name="par_fss_hint">2.90</string>
     <string name="title_activity_pers">Сотрудник</string>
     <string name="title_person_list">Новый расчет</string>
+    <string name="title_saved_person_list">Сохраненный расчет</string>
     <string name="title_person_detail">Детали</string>
     <string name="title_saved_results"></string>
 

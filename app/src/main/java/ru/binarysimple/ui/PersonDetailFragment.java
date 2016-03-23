@@ -9,6 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import ru.binarysimple.ui.content.PersonContent;
 
 /**
@@ -59,9 +62,16 @@ public class PersonDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.person_detail, container, false);
 
+/*        /*//** ADS
+        //TODO close ad by click
+        AdView mAdView = (AdView) rootView.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);*/
+
         // Show the dummy content as text in a TextView.
         if (mItem != null) {
             ((TextView) rootView.findViewById(R.id.person_detail)).setText(
+                    //TODO delete hardcoded string
                     "Оклад, руб. = " + mItem.getSalary() + "\n" +
                             "НДФЛ, руб. = " + mItem.getNdfl() + "\n" +
                             "ПФР, руб. = " + mItem.getPfr() + "\n" +

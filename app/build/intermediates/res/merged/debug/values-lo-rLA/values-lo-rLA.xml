@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
     <!-- From: file:/C:/android5/projects/UI/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values-lo-rLA/values-lo-rLA.xml -->
     <eat-comment/>
     <string msgid="4600421777120114993" name="abc_action_bar_home_description">"ກັບໄປໜ້າຫຼັກ"</string>
@@ -21,5 +21,10 @@
     <string msgid="3421042268587513524" name="abc_shareactionprovider_share_with">"ແບ່ງປັນກັບ"</string>
     <string msgid="7165123711973476752" name="abc_shareactionprovider_share_with_application">"ແບ່ງ​ປັນ​ກັບ​ %s"</string>
     <string msgid="1603543279005712093" name="abc_toolbar_collapse_description">"ຫຍໍ້"</string>
+    <!-- From: file:/C:/android5/projects/UI/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/res/values-lo-rLA/common_strings.xml -->
+    <eat-comment/>
+    <string msgid="7170719956698345984" name="common_google_play_services_unknown_issue">"<ns1:g id="APP_NAME">%1$s</ns1:g> ກຳ​ລັງ​ມີ​ບັນ​ຫາ​ກັບ​ການ​ບໍ​ລິ​ການ Google Play. ຖ້າ​ບັນ​ຫາ​ຍັງ​ສືບ​ຕໍ່, ກະ​ລຸ​ນາ​ຕິດ​ຕໍ່​​ຜູ້​ພັດ​ທະ​ນາ ເພື່ອ​ຂໍ​ຄວາມ​ຊ່ວຍ​ເຫຼືອ."</string>
+    <!-- From: file:/C:/android5/projects/UI/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values-lo-rLA/values-lo-rLA.xml -->
+    <eat-comment/>
     <string msgid="2869576371154716097" name="status_bar_notification_info_overflow">"999+"</string>
 </resources>

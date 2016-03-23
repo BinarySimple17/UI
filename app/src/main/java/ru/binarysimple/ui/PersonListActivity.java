@@ -22,6 +22,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import ru.binarysimple.ui.content.PersonContent;
 
 import java.util.ArrayList;
@@ -131,6 +134,12 @@ public class PersonListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
 
+        //** ADS
+        //TODO close ad by click
+        AdView mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
         View recyclerView = findViewById(R.id.person_list);
         assert recyclerView != null;
 
@@ -146,6 +155,7 @@ public class PersonListActivity extends AppCompatActivity {
             String comp_id = Integer.toString(sPref.getInt("c_id", -1));
             String year = sPref.getString(Main.RESULTS_REQUEST_YEAR, "-1");
             String month = sPref.getString(Main.RESULTS_REQUEST_MONTH, "-1");//int
+            this.setTitle(R.string.title_saved_person_list);
             results = loadResults(comp_id, year, month);
         }
         setupRecyclerViewArray((RecyclerView) recyclerView, results);
@@ -271,25 +281,6 @@ public class PersonListActivity extends AppCompatActivity {
         public int getItemCount() {
             return mValues.size();
         }
-
-        /*        public class ViewHolder extends RecyclerView.ViewHolder {
-                    public final View mView;
-                    public final TextView mIdView;
-                    public final TextView mContentView;
-                    public Result mItem;
-
-                    public ViewHolder(View view) {
-                        super(view);
-                        mView = view;
-                        mIdView = (TextView) view.findViewById(R.id.id);
-                        mContentView = (TextView) view.findViewById(R.id.content);
-                    }
-
-                    @Override
-                    public String toString() {
-                        return super.toString() + " '" + mContentView.getText() + "'";
-                    }
-                }*/
 
             public class ViewHolder extends RecyclerView.ViewHolder {
             public final View mView;
