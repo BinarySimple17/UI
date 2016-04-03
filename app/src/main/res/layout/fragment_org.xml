@@ -89,13 +89,6 @@
 
     </TableLayout>
 
-    <android.support.design.widget.FloatingActionButton android:id="@+id/fab_org"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:layout_margin="16dp"
-        android:src="@drawable/ic_calc" />
-
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
         android:layout_width="match_parent"
@@ -106,5 +99,13 @@
         ads:adUnitId="@string/banner_ad_unit_id"
         android:layout_gravity="bottom|center_horizontal">
     </com.google.android.gms.ads.AdView>
+
+
+    <android.support.design.widget.FloatingActionButton android:id="@+id/fab_org"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_calc" />
 
 </FrameLayout>
