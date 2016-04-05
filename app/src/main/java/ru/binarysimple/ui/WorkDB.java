@@ -83,7 +83,7 @@ public class WorkDB {
         Log.d(LOG_TAG, "delete data from Results");
         dbHelper = DBHelper.getInstance(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        db.execSQL("DELETE FROM RESULTS WHERE comp_id=" + comp_id + " and month=" + month + " and year=" + year);
+        db.execSQL("DELETE FROM "+Main.TABLE_RESULTS+" WHERE comp_id =" + comp_id + " and month=" + month + " and year=" + year);
         dbHelper.close();
     }
 

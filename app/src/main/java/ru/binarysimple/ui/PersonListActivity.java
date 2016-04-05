@@ -74,13 +74,13 @@ public class PersonListActivity extends AppCompatActivity {
                     .setId_person(c.getLong(c.getColumnIndex("_id")))
                     .setMonth(Integer.parseInt(month))
                     .setYear(Integer.parseInt(year))
-                    .setNdfl(CurrOps.mult(curr, ndfl, c.getString(c.getColumnIndex("sal"))))
+                    .setNdfl(CurrOps.currRound(CurrOps.mult(curr, ndfl, c.getString(c.getColumnIndex("sal"))), 0))
                     .setFfoms(CurrOps.mult(curr, ffoms, c.getString(c.getColumnIndex("sal"))))
                     .setPfr(CurrOps.mult(curr, pfr, c.getString(c.getColumnIndex("sal"))))
                     .setFss(CurrOps.mult(curr, fss, c.getString(c.getColumnIndex("sal"))))
                     .setName(c.getString(c.getColumnIndex("name")))
                     .setPosition(c.getString(c.getColumnIndex("pos")))
-                    .setSalary(c.getString(c.getColumnIndex("sal")))
+                    .setSalary(CurrOps.convertToCurr(c.getString(c.getColumnIndex("sal"))))
                     .setComp_id(comp_id.toString())
                     .build();
             results.add(i, result);
@@ -110,7 +110,7 @@ public class PersonListActivity extends AppCompatActivity {
                     .setFss(c.getString(c.getColumnIndex("fss")))
                     .setName(c.getString(c.getColumnIndex("name")))
                     .setPosition(c.getString(c.getColumnIndex("position")))
-                    .setSalary(c.getString(c.getColumnIndex("salary")))
+                    .setSalary(CurrOps.convertToCurr(c.getString(c.getColumnIndex("salary"))))
                     .setComp_id(comp_id)
                     .build();
             results.add(i, result);

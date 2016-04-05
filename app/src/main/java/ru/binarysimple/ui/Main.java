@@ -989,7 +989,9 @@ public class Main extends AppCompatActivity {
 
                         Person person = new Person(c.getString(c.getColumnIndex("name")),
                                 c.getString(c.getColumnIndex("pos")),
-                                c.getString(c.getColumnIndex("sal")),
+
+                                //TODO куда деваются копейки?????
+                                CurrOps.convertToCurr(c.getString(c.getColumnIndex("sal"))),
                                 c.getLong(c.getColumnIndex("_id")),
                                 c.getInt(c.getColumnIndex("comp_id")));
                         persons.add(i, person);

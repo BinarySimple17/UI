@@ -3,10 +3,24 @@ package ru.binarysimple.ui;
 import java.math.*;
 import java.util.*;
 
+import static java.lang.String.format;
+
 class CurrOps {
 
     private static String replace(String str1) {
         return str1.replace(",", ".");
+    }
+
+
+    public static String convertToCurr(String num) {
+        BigDecimal d1 = new BigDecimal(num);
+        return format("%.2f", d1);//mult(curr, num, "1");
+    }
+
+    public static String currRound(String num, Integer precizion){
+        num = replace(num);
+        BigDecimal d1 = new BigDecimal(num);
+        return format("%.2f", d1.setScale(precizion, RoundingMode.HALF_UP));
     }
 
     public static String mult(Currency curr, String num, String denom) {

@@ -19,6 +19,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Currency;
+import java.util.Locale;
+
 public class PersActivity extends AppCompatActivity {
 
     private FragmentPersInfo fragmentPersInfo;
@@ -102,7 +105,7 @@ public class PersActivity extends AppCompatActivity {
             Intent intent = new Intent();
             intent.putExtra("name", etFio.getText().toString());
             intent.putExtra("position",etPosition.getText().toString());
-            intent.putExtra("salary",etSalary.getText().toString());
+            intent.putExtra("salary",CurrOps.convertToCurr(etSalary.getText().toString()));
             //put here id of person from DB or -1 if new person
             intent.putExtra("id", this.person.id);
             if (this.person.id > -1) {
