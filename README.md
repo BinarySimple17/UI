@@ -1,2 +1,3 @@
 # UI
-readme
+
+Study project. Dead now.
